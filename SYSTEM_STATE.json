@@ -1,0 +1,44 @@
+{
+  "projectName": "The I Company",
+  "appId": "com.theicompany.app",
+  "version": "1.0.0",
+  "lastSyncTimestamp": "2026-11-09T20:10:30.436Z",
+  "gitCommit": "a61c2d1",
+  "gitBranch": "main",
+  "lastCommitMessage": "docs: add master system blueprint and developer architecture documentation",
+  "lastCommitDate": "2026-11-10 01:34:27 +0530",
+  "systemIntegrity": {
+    "cloudDatabaseConnected": true,
+    "capacitorAndroidReady": true,
+    "roleIsolationActive": true,
+    "portalsCount": 3,
+    "modalsCount": 4
+  },
+  "architectureInventory": {
+    "stakeholderPortals": [
+      "AdminMasterView.tsx",
+      "BrandPortalView.tsx",
+      "CreatorPortalView.tsx"
+    ],
+    "interactiveModals": [
+      "AddBrandModal.tsx",
+      "AddInfluencerModal.tsx",
+      "InstagramInsightsModal.tsx",
+      "SmartCampaignGeneratorModal.tsx"
+    ],
+    "coreLibraries": [
+      "databaseService.ts",
+      "instagramService.ts",
+      "mockData.ts",
+      "supabase.ts"
+    ],
+    "dataModels": [
+      "index.ts"
+    ]
+  },
+  "liveEndpoints": {
+    "productionWeb": "https://theicompany.netlify.app",
+    "gitHubRepository": "https://github.com/Menticore3321/the-i-company",
+    "databaseRegion": "South Asia (Mumbai) - Supabase"
+  }
+}

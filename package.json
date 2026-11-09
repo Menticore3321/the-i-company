@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "node scripts/sync-architecture.js && tsc && vite build",
+    "verify": "node scripts/verify-system.js",
+    "sync:arch": "node scripts/sync-architecture.js",
     "preview": "vite preview",
     "cap:sync": "npm run build && npx cap sync",
     "cap:open:android": "npx cap open android",
