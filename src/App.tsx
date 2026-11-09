@@ -10,19 +10,12 @@ import { InstagramInsightsModal } from './components/modals/InstagramInsightsMod
 import { AddInfluencerModal } from './components/modals/AddInfluencerModal';
 import { AddBrandModal } from './components/modals/AddBrandModal';
 import { SmartCampaignGeneratorModal } from './components/modals/SmartCampaignGeneratorModal';
+import { databaseService } from './lib/databaseService';
 import { Check } from 'lucide-react';
 
 export const App: React.FC = () => {
   // Authentication & Session
-  const [accounts, setAccounts] = useState<UserAccount[]>(() => {
-    try {
-      const saved = localStorage.getItem('the_i_company_accounts');
-      return saved ? JSON.parse(saved) : INITIAL_ACCOUNTS;
-    } catch {
-      return INITIAL_ACCOUNTS;
-    }
-  });
-
+  const [accounts, setAccounts] = useState<UserAccount[]>(INITIAL_ACCOUNTS);
   const [currentUser, setCurrentUser] = useState<UserAccount | null>(() => {
     try {
       const saved = localStorage.getItem('the_i_company_user');
@@ -32,20 +25,34 @@ export const App: React.FC = () => {
     }
   });
 
-  // State persistence
-  useEffect(() => {
-    try {
-      localStorage.setItem('the_i_company_accounts', JSON.stringify(accounts));
-    } catch (e) {
-      // Ignore
-    }
-  }, [accounts]);
-
   // Core Data
   const [influencers, setInfluencers] = useState<Influencer[]>(INITIAL_INFLUENCERS);
   const [brands, setBrands] = useState<Brand[]>(INITIAL_BRANDS);
   const [campaigns, setCampaigns] = useState<Campaign[]>(INITIAL_CAMPAIGNS);
   const [financials, setFinancials] = useState<FinancialLedger>(INITIAL_FINANCIALS);
+
+  // Load from Supabase Cloud or Local Persistence on mount
+  useEffect(() => {
+    async function initDatabase() {
+      try {
+        const [loadedAccounts, loadedInfluencers, loadedBrands, loadedCampaigns, loadedFinancials] = await Promise.all([
+          databaseService.getAccounts(),
+          databaseService.getInfluencers(),
+          databaseService.getBrands(),
+          databaseService.getCampaigns(),
+          databaseService.getFinancials()
+        ]);
+        if (loadedAccounts?.length) setAccounts(loadedAccounts);
+        if (loadedInfluencers?.length) setInfluencers(loadedInfluencers);
+        if (loadedBrands?.length) setBrands(loadedBrands);
+        if (loadedCampaigns?.length) setCampaigns(loadedCampaigns);
+        if (loadedFinancials) setFinancials(loadedFinancials);
+      } catch (e) {
+        console.warn('Using offline persistence layer:', e);
+      }
+    }
+    initDatabase();
+  }, []);
 
   // Modal states
   const [selectedInfluencer, setSelectedInfluencer] = useState<Influencer | null>(null);
@@ -86,6 +93,8 @@ export const App: React.FC = () => {
   const handleAddInfluencer = (newInf: Influencer, newAcc: UserAccount) => {
     setInfluencers([newInf, ...influencers]);
     setAccounts([newAcc, ...accounts]);
+    databaseService.saveInfluencer(newInf);
+    databaseService.saveAccount(newAcc);
     showToast(`Creator Added: @${newInf.handle} onboarded. Login credentials generated & activated!`);
   };
 
@@ -93,32 +102,40 @@ export const App: React.FC = () => {
   const handleAddBrand = (newBrand: Brand, newAcc: UserAccount) => {
     setBrands([newBrand, ...brands]);
     setAccounts([newAcc, ...accounts]);
+    databaseService.saveBrand(newBrand);
+    databaseService.saveAccount(newAcc);
     showToast(`Brand Client Added: ${newBrand.name} onboarded. Portal credentials generated & activated!`);
   };
 
   // Create new campaign
   const handleCreateCampaign = (newCamp: Campaign) => {
-    setCampaigns([newCamp, ...campaigns]);
+    const updatedCampaigns = [newCamp, ...campaigns];
+    setCampaigns(updatedCampaigns);
+    databaseService.saveCampaign(newCamp);
 
-    setFinancials(prev => ({
-      ...prev,
-      totalGMV: prev.totalGMV + newCamp.totalBudget,
-      agencyRevenue: prev.agencyRevenue + Math.round(newCamp.totalBudget * newCamp.agencyMarginRate),
-      escrowHeld: prev.escrowHeld + newCamp.spentBudget,
-      activeDealsCount: prev.activeDealsCount + 1,
-      recentTransactions: [
-        {
-          id: `tx-${Date.now()}`,
-          timestamp: 'Just now',
-          type: 'brand_deposit',
-          partyName: newCamp.brandName,
-          campaignName: newCamp.name,
-          amount: newCamp.totalBudget,
-          status: 'escrow_hold'
-        },
-        ...prev.recentTransactions
-      ]
-    }));
+    setFinancials(prev => {
+      const updated = {
+        ...prev,
+        totalGMV: prev.totalGMV + newCamp.totalBudget,
+        agencyRevenue: prev.agencyRevenue + Math.round(newCamp.totalBudget * newCamp.agencyMarginRate),
+        escrowHeld: prev.escrowHeld + newCamp.spentBudget,
+        activeDealsCount: prev.activeDealsCount + 1,
+        recentTransactions: [
+          {
+            id: `tx-${Date.now()}`,
+            timestamp: 'Just now',
+            type: 'brand_deposit' as const,
+            partyName: newCamp.brandName,
+            campaignName: newCamp.name,
+            amount: newCamp.totalBudget,
+            status: 'escrow_hold' as const
+          },
+          ...prev.recentTransactions
+        ]
+      };
+      databaseService.saveFinancials(updated);
+      return updated;
+    });
 
     showToast(`Campaign Brief Deployed: ${newCamp.name} launched with ${newCamp.assignedInfluencers.length} creators.`);
   };
