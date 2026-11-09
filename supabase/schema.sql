@@ -116,3 +116,4 @@ CREATE INDEX IF NOT EXISTS idx_influencers_category ON public.influencers(catego
 CREATE INDEX IF NOT EXISTS idx_influencers_handle ON public.influencers(handle);
 CREATE INDEX IF NOT EXISTS idx_campaigns_brand_id ON public.campaigns(brand_id);
 CREATE INDEX IF NOT EXISTS idx_accounts_email ON public.accounts(email);
+
