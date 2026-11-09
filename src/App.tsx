@@ -142,52 +142,66 @@ export const App: React.FC = () => {
 
   // Approve deliverable
   const handleApproveDeliverable = (campaignId: string, deliverableId: string) => {
-    setCampaigns(prev => prev.map(camp => {
-      if (camp.id !== campaignId) return camp;
-      return {
-        ...camp,
-        deliverables: camp.deliverables.map(del => {
-          if (del.id !== deliverableId) return del;
-          return {
-            ...del,
-            status: 'live',
-            liveViews: 540000,
-            liveLikes: 68000
-          };
-        })
-      };
-    }));
+    setCampaigns(prev => {
+      const updated = prev.map(camp => {
+        if (camp.id !== campaignId) return camp;
+        return {
+          ...camp,
+          deliverables: camp.deliverables.map(del => {
+            if (del.id !== deliverableId) return del;
+            return {
+              ...del,
+              status: 'live' as const,
+              liveViews: 540000,
+              liveLikes: 68000
+            };
+          })
+        };
+      });
+      const targetCamp = updated.find(c => c.id === campaignId);
+      if (targetCamp) databaseService.saveCampaign(targetCamp);
+      return updated;
+    });
 
     showToast('Content Approved: Deliverable verified & milestone escrow released to creator.');
   };
 
   // Submit deliverable URL
   const handleSubmitDeliverableUrl = (campaignId: string, deliverableId: string, url: string) => {
-    setCampaigns(prev => prev.map(camp => {
-      if (camp.id !== campaignId) return camp;
-      return {
-        ...camp,
-        deliverables: camp.deliverables.map(del => {
-          if (del.id !== deliverableId) return del;
-          return {
-            ...del,
-            status: 'draft_submitted',
-            submittedUrl: url
-          };
-        })
-      };
-    }));
+    setCampaigns(prev => {
+      const updated = prev.map(camp => {
+        if (camp.id !== campaignId) return camp;
+        return {
+          ...camp,
+          deliverables: camp.deliverables.map(del => {
+            if (del.id !== deliverableId) return del;
+            return {
+              ...del,
+              status: 'draft_submitted' as const,
+              submittedUrl: url
+            };
+          })
+        };
+      });
+      const targetCamp = updated.find(c => c.id === campaignId);
+      if (targetCamp) databaseService.saveCampaign(targetCamp);
+      return updated;
+    });
 
     showToast('Draft Submitted: Sent to client brand for review.');
   };
 
   // Request payout
   const handleRequestPayout = (amount: number) => {
-    setFinancials(prev => ({
-      ...prev,
-      creatorsPaid: prev.creatorsPaid + amount,
-      escrowHeld: Math.max(0, prev.escrowHeld - amount)
-    }));
+    setFinancials(prev => {
+      const updated = {
+        ...prev,
+        creatorsPaid: prev.creatorsPaid + amount,
+        escrowHeld: Math.max(0, prev.escrowHeld - amount)
+      };
+      databaseService.saveFinancials(updated);
+      return updated;
+    });
 
     showToast(`Disbursement Cleared: ₹${amount.toLocaleString()} transferred via escrow banking rail.`);
   };
