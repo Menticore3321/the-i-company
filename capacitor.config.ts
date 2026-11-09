@@ -5,9 +5,10 @@ const config: CapacitorConfig = {
   appName: 'The I Company',
   webDir: 'dist',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'https',
+    url: 'https://theicompany.netlify.app',
+    cleartext: true
   }
 };
 
 export default config;
-
