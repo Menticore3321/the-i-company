@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { UserAccount, UserRole } from '../../types';
+import { INITIAL_ACCOUNTS } from '../../lib/mockData';
 import { 
   Lock, 
   Mail, 
@@ -29,8 +30,10 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
     e.preventDefault();
     setErrorMessage(null);
 
-    const found = accounts.find(
-      acc => acc.email.toLowerCase() === email.trim().toLowerCase() && acc.password === password
+    const cleanEmail = email.trim().toLowerCase();
+    const allKnownAccounts = [...accounts, ...INITIAL_ACCOUNTS];
+    const found = allKnownAccounts.find(
+      acc => acc.email.toLowerCase() === cleanEmail && acc.password === password
     );
 
     if (found) {
@@ -41,7 +44,20 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
   };
 
   const handleQuickDemoLogin = (accountId: string) => {
-    const found = accounts.find(acc => acc.id === accountId);
+    const allKnownAccounts = [...accounts, ...INITIAL_ACCOUNTS];
+    let found = allKnownAccounts.find(acc => acc.id === accountId);
+    
+    // Robust fallback by role if exact ID differed
+    if (!found) {
+      if (accountId.includes('br-') || accountId.includes('brand')) {
+        found = allKnownAccounts.find(acc => acc.role === 'brand');
+      } else if (accountId.includes('inf-') || accountId.includes('creator')) {
+        found = allKnownAccounts.find(acc => acc.role === 'influencer');
+      } else {
+        found = allKnownAccounts.find(acc => acc.role === 'agency');
+      }
+    }
+
     if (found) {
       setEmail(found.email);
       setPassword(found.password);
