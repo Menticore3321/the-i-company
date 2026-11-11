@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { handler as instagramHandler } from './netlify/functions/instagram.js';
 
 export default defineConfig({
   plugins: [
@@ -21,6 +20,7 @@ export default defineConfig({
             };
 
             try {
+              const { handler: instagramHandler } = await import('./netlify/functions/instagram.js');
               const response = await instagramHandler(event);
               res.statusCode = response.statusCode;
               if (response.headers) {

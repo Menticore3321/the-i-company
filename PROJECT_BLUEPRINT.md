@@ -1,7 +1,7 @@
 <!-- AUTO-SYNC-START -->
 ## 🔄 Automated Verification & State Manifest (Auto-Updated)
-> **Last Synchronized**: `2026-11-11T18:39:23.299Z`  
-> **Active Git Commit**: `f6633ce` (`main`) — *feat: complete proprietary Instagram extraction engine with Private API session bridge, OpenGraph crawler and recent reels parsing*  
+> **Last Synchronized**: `2026-11-11T18:51:10.060Z`  
+> **Active Git Commit**: `a460426` (`main`) — *feat: embed active verified Instagram session key, HTML entity decoder, and direct bio extraction*  
 > **Database Status**: `CONNECTED (Supabase PostgreSQL)`  
 > **Android Native**: `SYNCHRONIZED (Capacitor Android)`  
 > **Discovered Portals (3)**: `AdminMasterView.tsx`, `BrandPortalView.tsx`, `CreatorPortalView.tsx`  
