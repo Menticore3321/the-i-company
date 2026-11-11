@@ -24,6 +24,7 @@ interface BrandPortalViewProps {
   onOpenCampaignGenerator: () => void;
   onSelectInfluencer: (influencer: Influencer) => void;
   onApproveDeliverable: (campaignId: string, deliverableId: string) => void;
+  onOpenContract?: (campaign: Campaign) => void;
 }
 
 export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
@@ -32,7 +33,8 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
   influencers,
   onOpenCampaignGenerator,
   onSelectInfluencer,
-  onApproveDeliverable
+  onApproveDeliverable,
+  onOpenContract
 }) => {
   const brandCampaigns = campaigns.filter(c => c.brandId === activeBrand.id || c.brandName.toLowerCase().includes(activeBrand.name.toLowerCase()));
 
@@ -216,11 +218,23 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
                   </span>
                 </div>
 
-                <div className="text-right">
-                  <span className="text-xs text-[#78716C]">Total Campaign Budget:</span>
-                  <div className="font-serif text-lg font-bold text-[#2E523E]">
-                    ₹{(camp.totalBudget / 100000).toFixed(2)} Lakhs
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <div className="text-right">
+                    <span className="text-xs text-[#78716C] block">Total Campaign Budget:</span>
+                    <div className="font-serif text-lg font-bold text-[#2E523E]">
+                      ₹{(camp.totalBudget / 100000).toFixed(2)} Lakhs
+                    </div>
                   </div>
+
+                  {onOpenContract && (
+                    <button
+                      onClick={() => onOpenContract(camp)}
+                      className="px-3 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#D6CFBF] hover:bg-[#1C1917] hover:text-white text-xs font-medium text-[#1C1917] flex items-center justify-center gap-1.5 transition-all shadow-vintage-xs"
+                    >
+                      <FileText className="w-3.5 h-3.5 text-[#8A6B32]" />
+                      <span>Agreement & GST Invoice</span>
+                    </button>
+                  )}
                 </div>
               </div>
 

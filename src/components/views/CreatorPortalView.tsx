@@ -14,7 +14,8 @@ import {
   Wallet, 
   ShieldCheck, 
   Award,
-  AlertCircle
+  AlertCircle,
+  FileText
 } from 'lucide-react';
 
 interface CreatorPortalViewProps {
@@ -22,13 +23,15 @@ interface CreatorPortalViewProps {
   campaigns: Campaign[];
   onSubmitDeliverableUrl: (campaignId: string, deliverableId: string, url: string) => void;
   onRequestPayout: (amount: number) => void;
+  onOpenContract?: (campaign: Campaign) => void;
 }
 
 export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
   creator,
   campaigns,
   onSubmitDeliverableUrl,
-  onRequestPayout
+  onRequestPayout,
+  onOpenContract
 }) => {
   const [inputUrls, setInputUrls] = useState<Record<string, string>>({});
   const [payoutRequested, setPayoutRequested] = useState(false);
@@ -159,11 +162,20 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
                     <p className="text-xs text-[#78716C]">Format: {del.type} · Deadline: {del.dueDate}</p>
                   </div>
 
-                  <div className="text-right">
+                  <div className="flex flex-col sm:items-end">
                     <span className="text-xs text-[#78716C] block">Contracted Compensation:</span>
                     <div className="font-serif text-lg font-bold text-[#2E523E]">
                       ₹{del.agreedPayout.toLocaleString()}
                     </div>
+                    {onOpenContract && (
+                      <button
+                        onClick={() => onOpenContract(campaign)}
+                        className="mt-1 px-2.5 py-1 rounded bg-[#FAF8F5] border border-[#D6CFBF] hover:bg-[#1C1917] hover:text-white text-[11px] font-medium text-[#1C1917] flex items-center gap-1 transition-all shadow-vintage-xs"
+                      >
+                        <FileText className="w-3 h-3 text-[#8A6B32]" />
+                        <span>View Deal Voucher (TDS)</span>
+                      </button>
+                    )}
                   </div>
                 </div>
 

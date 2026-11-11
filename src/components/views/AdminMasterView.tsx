@@ -23,7 +23,8 @@ import {
   Wallet,
   Lock,
   Copy,
-  Key
+  Key,
+  FileText
 } from 'lucide-react';
 
 interface AdminMasterViewProps {
@@ -37,6 +38,7 @@ interface AdminMasterViewProps {
   onOpenAddBrandModal: () => void;
   onOpenCampaignGenerator: () => void;
   onApproveDeliverable: (campaignId: string, deliverableId: string) => void;
+  onOpenContract?: (campaign: Campaign) => void;
 }
 
 export const AdminMasterView: React.FC<AdminMasterViewProps> = ({
@@ -49,7 +51,8 @@ export const AdminMasterView: React.FC<AdminMasterViewProps> = ({
   onOpenAddModal,
   onOpenAddBrandModal,
   onOpenCampaignGenerator,
-  onApproveDeliverable
+  onApproveDeliverable,
+  onOpenContract
 }) => {
   const [activeTab, setActiveTab] = useState<'roster' | 'brands' | 'campaigns' | 'geo' | 'accounts' | 'ledger'>('roster');
   const [searchQuery, setSearchQuery] = useState('');
@@ -482,14 +485,26 @@ Password: ${acc.password}`);
                     </span>
                   </div>
 
-                  <div className="text-right">
-                    <span className="text-xs text-[#78716C] block">Total Campaign Budget:</span>
-                    <div className="font-serif text-lg font-bold text-[#2E523E]">
-                      ₹{(camp.totalBudget / 100000).toFixed(2)} Lakhs
-                      <span className="text-xs font-sans text-[#78716C] font-normal ml-2">
-                        (Agency Margin: ₹{((camp.totalBudget * 0.2) / 100000).toFixed(2)}L)
-                      </span>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <div className="text-right">
+                      <span className="text-xs text-[#78716C] block">Total Campaign Budget:</span>
+                      <div className="font-serif text-lg font-bold text-[#2E523E]">
+                        ₹{(camp.totalBudget / 100000).toFixed(2)} Lakhs
+                        <span className="text-xs font-sans text-[#78716C] font-normal ml-2">
+                          (Agency Margin: ₹{((camp.totalBudget * 0.2) / 100000).toFixed(2)}L)
+                        </span>
+                      </div>
                     </div>
+
+                    {onOpenContract && (
+                      <button
+                        onClick={() => onOpenContract(camp)}
+                        className="px-3 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#D6CFBF] hover:bg-[#1C1917] hover:text-white text-xs font-medium text-[#1C1917] flex items-center justify-center gap-1.5 transition-all shadow-vintage-xs"
+                      >
+                        <FileText className="w-3.5 h-3.5 text-[#8A6B32]" />
+                        <span>Contract & Invoice</span>
+                      </button>
+                    )}
                   </div>
                 </div>
 

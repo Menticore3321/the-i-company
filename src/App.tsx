@@ -10,6 +10,7 @@ import { InstagramInsightsModal } from './components/modals/InstagramInsightsMod
 import { AddInfluencerModal } from './components/modals/AddInfluencerModal';
 import { AddBrandModal } from './components/modals/AddBrandModal';
 import { SmartCampaignGeneratorModal } from './components/modals/SmartCampaignGeneratorModal';
+import { DealContractModal } from './components/modals/DealContractModal';
 import { databaseService } from './lib/databaseService';
 import { Check } from 'lucide-react';
 
@@ -59,6 +60,7 @@ export const App: React.FC = () => {
   const [isAddCreatorModalOpen, setIsAddCreatorModalOpen] = useState(false);
   const [isAddBrandModalOpen, setIsAddBrandModalOpen] = useState(false);
   const [isCampaignGeneratorOpen, setIsCampaignGeneratorOpen] = useState(false);
+  const [selectedContractCampaign, setSelectedContractCampaign] = useState<Campaign | null>(null);
 
   // Notification toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -247,6 +249,7 @@ export const App: React.FC = () => {
             onOpenAddBrandModal={() => setIsAddBrandModalOpen(true)}
             onOpenCampaignGenerator={() => setIsCampaignGeneratorOpen(true)}
             onApproveDeliverable={handleApproveDeliverable}
+            onOpenContract={(camp) => setSelectedContractCampaign(camp)}
           />
         )}
 
@@ -259,6 +262,7 @@ export const App: React.FC = () => {
             onOpenCampaignGenerator={() => setIsCampaignGeneratorOpen(true)}
             onSelectInfluencer={(inf) => setSelectedInfluencer(inf)}
             onApproveDeliverable={handleApproveDeliverable}
+            onOpenContract={(camp) => setSelectedContractCampaign(camp)}
           />
         )}
 
@@ -269,6 +273,7 @@ export const App: React.FC = () => {
             campaigns={campaigns}
             onSubmitDeliverableUrl={handleSubmitDeliverableUrl}
             onRequestPayout={handleRequestPayout}
+            onOpenContract={(camp) => setSelectedContractCampaign(camp)}
           />
         )}
       </main>
@@ -313,6 +318,16 @@ export const App: React.FC = () => {
         onClose={() => setIsCampaignGeneratorOpen(false)}
         availableInfluencers={influencers}
         onCreateCampaign={handleCreateCampaign}
+      />
+
+      {/* Deal Memo, Agreement & Invoicing Modal */}
+      <DealContractModal
+        isOpen={!!selectedContractCampaign}
+        onClose={() => setSelectedContractCampaign(null)}
+        campaign={selectedContractCampaign}
+        brand={brands.find(b => b.id === selectedContractCampaign?.brandId || b.name === selectedContractCampaign?.brandName)}
+        influencer={influencers.find(i => i.id === currentUser?.associatedId)}
+        userRole={currentUser.role}
       />
 
       {/* Minimal Vintage Footer */}
