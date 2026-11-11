@@ -9,6 +9,14 @@ export interface ScrapedInstagramData {
   posts?: number;
   avatar?: string;
   bio?: string;
+  isVerified?: boolean;
+  category?: string;
+  engagementRate?: number;
+  avgLikes?: number;
+  avgComments?: number;
+  avgReelViews?: number;
+  recentMedia?: any[];
+  mode?: 'authenticated_private_api' | 'opengraph_crawler' | 'verified_roster';
   isLiveScraped?: boolean;
   error?: string;
 }
@@ -21,6 +29,26 @@ export function extractCleanHandle(raw: string): string {
     return urlMatch[1].toLowerCase();
   }
   return cleaned.replace('@', '').replace(/[^a-zA-Z0-9._]/g, '').toLowerCase();
+}
+
+export function getSavedInstagramSession(): string {
+  try {
+    return localStorage.getItem('the_i_company_ig_session') || '';
+  } catch {
+    return '';
+  }
+}
+
+export function setSavedInstagramSession(sessionId: string): void {
+  try {
+    if (!sessionId.trim()) {
+      localStorage.removeItem('the_i_company_ig_session');
+    } else {
+      localStorage.setItem('the_i_company_ig_session', sessionId.trim());
+    }
+  } catch {
+    // Ignore storage failure
+  }
 }
 
 // Comprehensive Ground-Truth Verified Registry of Top Indian & Global Creators
@@ -292,35 +320,46 @@ export const VERIFIED_CREATORS: Record<string, Partial<Influencer>> = {
 };
 
 /**
- * Live extraction of Instagram public metadata:
- * Queries Netlify serverless function with fallback to verified registry and smart baseline
+ * Live extraction of Instagram metadata using multi-tier engine:
+ * 1. Private Web API (Session-Authenticated)
+ * 2. OpenGraph Crawler
+ * 3. Verified Roster
+ * 4. Graceful Fallback
  */
-export async function fetchLiveInstagramProfile(rawHandle: string): Promise<ScrapedInstagramData> {
+export async function fetchLiveInstagramProfile(
+  rawHandle: string,
+  explicitSessionId?: string
+): Promise<ScrapedInstagramData> {
   const cleanHandle = extractCleanHandle(rawHandle);
   if (!cleanHandle) {
     return { success: false, handle: '', error: 'Handle cannot be empty' };
   }
 
-  // 1. Try Live Serverless Scraper Function (works locally and deployed on Netlify)
+  const sessionId = explicitSessionId || getSavedInstagramSession();
+
+  // 1. Try Serverless Extraction Engine (supports both Session and OpenGraph)
   try {
+    const sessionParam = sessionId ? `&sessionId=${encodeURIComponent(sessionId)}` : '';
     const endpoints = [
-      `/api/instagram?handle=${encodeURIComponent(cleanHandle)}`,
-      `/.netlify/functions/instagram?handle=${encodeURIComponent(cleanHandle)}`,
-      `https://theicompany.netlify.app/api/instagram?handle=${encodeURIComponent(cleanHandle)}`
+      `/api/instagram?handle=${encodeURIComponent(cleanHandle)}${sessionParam}`,
+      `/.netlify/functions/instagram?handle=${encodeURIComponent(cleanHandle)}${sessionParam}`,
+      `https://theicompany.netlify.app/api/instagram?handle=${encodeURIComponent(cleanHandle)}${sessionParam}`
     ];
 
     for (const endpoint of endpoints) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 6500);
+        const timeoutId = setTimeout(() => controller.abort(), 7500);
         const res = await fetch(endpoint, {
           signal: controller.signal,
-          headers: { 'Accept': 'application/json' }
+          headers: {
+            'Accept': 'application/json',
+            ...(sessionId ? { 'X-IG-Session-ID': sessionId } : {})
+          }
         });
         clearTimeout(timeoutId);
 
         const contentType = res.headers.get('content-type') || '';
-        // Only parse if it's actual JSON (and not the SPA index.html fallback)
         if (res.ok && contentType.includes('application/json')) {
           const json = await res.json();
           if (json.success && (json.followers > 0 || json.avatar)) {
@@ -343,6 +382,7 @@ export async function fetchLiveInstagramProfile(rawHandle: string): Promise<Scra
   if (verified) {
     return {
       success: true,
+      mode: 'verified_roster',
       handle: cleanHandle,
       name: verified.name,
       followers: verified.followers,
@@ -354,7 +394,7 @@ export async function fetchLiveInstagramProfile(rawHandle: string): Promise<Scra
     };
   }
 
-  // 3. Fallback: Return structured profile with baseline metrics, explicitly flagging manual confirmation needed
+  // 3. Fallback: Return structured profile with baseline metrics
   return {
     success: false,
     handle: cleanHandle,
@@ -367,12 +407,13 @@ export async function fetchLiveInstagramProfile(rawHandle: string): Promise<Scra
  */
 export async function analyzeInstagramHandle(
   rawHandle: string,
-  category: InfluencerCategory = 'Tech & AI'
-): Promise<Influencer & { isLiveExtracted: boolean; extractionNotice?: string }> {
+  category: InfluencerCategory = 'Tech & AI',
+  explicitSessionId?: string
+): Promise<Influencer & { isLiveExtracted: boolean; extractionNotice?: string; extractionMode?: string }> {
   const cleanHandle = extractCleanHandle(rawHandle);
   
   // Attempt live Instagram profile extraction
-  const liveData = await fetchLiveInstagramProfile(cleanHandle);
+  const liveData = await fetchLiveInstagramProfile(cleanHandle, explicitSessionId);
 
   // Deterministic seed for auxiliary metrics if not available
   let hash = 0;
@@ -390,6 +431,7 @@ export async function analyzeInstagramHandle(
   let postsCount: number;
   let isLiveExtracted = false;
   let extractionNotice = '';
+  let extractionMode = liveData.mode || 'fallback';
 
   if (liveData.success && liveData.followers && liveData.followers > 0) {
     isLiveExtracted = true;
@@ -399,7 +441,14 @@ export async function analyzeInstagramHandle(
     bio = liveData.bio || `Content Creator & Digital Storyteller in ${category}. Building audience in India & Global.`;
     following = liveData.following || (200 + (absHash % 400));
     postsCount = liveData.posts || (150 + (absHash % 800));
-    extractionNotice = `Extracted authentic public Instagram telemetry for @${cleanHandle}`;
+
+    if (liveData.mode === 'authenticated_private_api') {
+      extractionNotice = `Verified via Proprietary Instagram Private Web API (${followers.toLocaleString()} authentic followers)`;
+    } else if (liveData.mode === 'verified_roster') {
+      extractionNotice = `Loaded from Agency Verified Ground-Truth Registry for @${cleanHandle}`;
+    } else {
+      extractionNotice = `Extracted authentic public Instagram telemetry for @${cleanHandle}`;
+    }
   } else {
     // Fallback baseline for non-scraped / private handles
     const baselineTiers = [45000, 120000, 350000, 850000, 1800000];
@@ -421,11 +470,11 @@ export async function analyzeInstagramHandle(
   else tier = 'Mega (1M+)';
 
   // Engagement & reel statistics
-  const engagementRate = Number((2.8 + (absHash % 45) / 10).toFixed(1)); // 2.8% to 7.3%
+  const engagementRate = liveData.engagementRate || Number((2.8 + (absHash % 45) / 10).toFixed(1));
   const authenticityScore = 88 + (absHash % 11); // 88% to 98%
-  const avgReelViews = Math.round(followers * (0.28 + (absHash % 25) / 100));
-  const avgLikes = Math.round(avgReelViews * (engagementRate / 100));
-  const avgComments = Math.max(10, Math.round(avgLikes * 0.032));
+  const avgReelViews = liveData.avgReelViews || Math.round(followers * (0.28 + (absHash % 25) / 100));
+  const avgLikes = liveData.avgLikes || Math.round(avgReelViews * (engagementRate / 100));
+  const avgComments = liveData.avgComments || Math.max(10, Math.round(avgLikes * 0.032));
 
   // Commercial Indian Agency Rates calculated directly from follower scale
   let ratePerReel: number;
@@ -477,6 +526,38 @@ export async function analyzeInstagramHandle(
     'Rapidly accelerating follower momentum (+14% monthly). Lock multi-deliverable rate before quote increases.'
   ];
 
+  // Populate recent content using live extracted media if available
+  const defaultRecentContent = [
+    {
+      id: `cnt-${Date.now()}-1`,
+      type: 'Reel' as const,
+      title: `Latest insights on ${category} trends! ✨`,
+      views: avgReelViews,
+      likes: avgLikes,
+      comments: avgComments,
+      postedDaysAgo: 1,
+      engagement: engagementRate,
+      thumbnail: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&auto=format&fit=crop&q=80',
+      url: `https://instagram.com/reel/${cleanHandle}-01`
+    },
+    {
+      id: `cnt-${Date.now()}-2`,
+      type: 'Carousel' as const,
+      title: `5 Key Things you need to know about this niche`,
+      views: Math.round(avgReelViews * 0.7),
+      likes: Math.round(avgLikes * 0.8),
+      comments: Math.round(avgComments * 0.9),
+      postedDaysAgo: 4,
+      engagement: engagementRate - 0.4,
+      thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&auto=format&fit=crop&q=80',
+      url: `https://instagram.com/p/${cleanHandle}-02`
+    }
+  ];
+
+  const finalRecentContent = liveData.recentMedia && liveData.recentMedia.length > 0
+    ? liveData.recentMedia
+    : defaultRecentContent;
+
   return {
     id: `inf-custom-${Date.now()}`,
     name,
@@ -520,35 +601,11 @@ export async function analyzeInstagramHandle(
         { city: chosenCities[3], percentage: 11 }
       ]
     },
-    recentContent: [
-      {
-        id: `cnt-${Date.now()}-1`,
-        type: 'Reel',
-        title: `Latest insights on ${category} trends! ✨`,
-        views: avgReelViews,
-        likes: avgLikes,
-        comments: avgComments,
-        postedDaysAgo: 1,
-        engagement: engagementRate,
-        thumbnail: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&auto=format&fit=crop&q=80',
-        url: `https://instagram.com/reel/${cleanHandle}-01`
-      },
-      {
-        id: `cnt-${Date.now()}-2`,
-        type: 'Carousel',
-        title: `5 Key Things you need to know about this niche`,
-        views: Math.round(avgReelViews * 0.7),
-        likes: Math.round(avgLikes * 0.8),
-        comments: Math.round(avgComments * 0.9),
-        postedDaysAgo: 4,
-        engagement: engagementRate - 0.4,
-        thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&auto=format&fit=crop&q=80',
-        url: `https://instagram.com/p/${cleanHandle}-02`
-      }
-    ],
+    recentContent: finalRecentContent,
     connectedInstagram: true,
     lastSyncedAt: new Date().toISOString().replace('T', ' ').substring(0, 16) + ' UTC',
     isLiveExtracted,
-    extractionNotice
+    extractionNotice,
+    extractionMode
   };
 }

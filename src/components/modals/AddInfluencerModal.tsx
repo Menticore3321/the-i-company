@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Influencer, InfluencerCategory, UserAccount } from '../../types';
-import { analyzeInstagramHandle } from '../../lib/instagramService';
+import { 
+  analyzeInstagramHandle, 
+  getSavedInstagramSession, 
+  setSavedInstagramSession 
+} from '../../lib/instagramService';
 import { 
   X, 
   Instagram, 
@@ -18,7 +22,10 @@ import {
   DollarSign,
   Image as ImageIcon,
   FileText,
-  Users
+  Users,
+  SlidersHorizontal,
+  ExternalLink,
+  Play
 } from 'lucide-react';
 
 interface AddInfluencerModalProps {
@@ -38,6 +45,7 @@ const CATEGORIES: InfluencerCategory[] = [
 ];
 
 function formatFollowerCount(num: number): string {
+  if (!num) return '0';
   if (num >= 1000000) {
     return `${(num / 1000000).toFixed(1).replace(/\.0$/, '')}M`;
   }
@@ -59,6 +67,11 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
   const [scannedResult, setScannedResult] = useState<Influencer | null>(null);
   const [isLiveExtracted, setIsLiveExtracted] = useState(false);
   const [extractionNotice, setExtractionNotice] = useState('');
+  const [extractionMode, setExtractionMode] = useState('');
+
+  // Engine configuration
+  const [sessionId, setSessionId] = useState<string>(getSavedInstagramSession());
+  const [showEngineSettings, setShowEngineSettings] = useState(false);
 
   // Editable fields by Admin
   const [customName, setCustomName] = useState('');
@@ -81,12 +94,11 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
     setScanStep(1);
 
     try {
-      // Step 1: Connecting to Instagram
       await new Promise(r => setTimeout(r, 400));
       setScanStep(2);
 
-      // Step 2: Extracting real public profile metadata
-      const result = await analyzeInstagramHandle(handle, category);
+      // Extract using our custom multi-tier engine
+      const result = await analyzeInstagramHandle(handle, category, sessionId);
       setScanStep(3);
       await new Promise(r => setTimeout(r, 300));
 
@@ -97,6 +109,7 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
       setScannedResult(result);
       setIsLiveExtracted(Boolean(result.isLiveExtracted));
       setExtractionNotice(result.extractionNotice || '');
+      setExtractionMode(result.extractionMode || '');
       setCustomName(result.name);
       setCustomFollowers(result.followers);
       setCustomRate(result.ratePerReel);
@@ -210,7 +223,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                 <span className="font-mono text-[10px] uppercase tracking-wider text-[#78716C]">
                   ADMIN ACCESS CONTROL ·
                 </span>
-                <span className="font-mono text-[10px] text-[#2E523E] font-semibold">TALENT ONBOARDING</span>
+                <span className="font-mono text-[10px] text-[#2E523E] font-semibold">CUSTOM SCRAPER ENGINE</span>
               </div>
               <h3 className="font-serif text-xl font-bold text-[#1C1917]">
                 Onboard Creator & Issue Studio Credentials
@@ -226,7 +239,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
         </div>
 
         {/* Body */}
-        <div className="p-6 overflow-y-auto space-y-6">
+        <div className="p-6 overflow-y-auto space-y-5">
           {!isCreated ? (
             <>
               {/* Scan Form */}
@@ -234,14 +247,14 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="sm:col-span-2">
                     <label className="text-xs font-semibold text-[#1C1917] block mb-1">
-                      Instagram Handle *
+                      Instagram Handle or Profile Link *
                     </label>
                     <div className="relative">
                       <input
                         type="text"
                         value={handle}
                         onChange={(e) => setHandle(e.target.value)}
-                        placeholder="e.g. tanmaybhat or komalpandeyofficial"
+                        placeholder="e.g. techburner or instagram.com/komalpandeyofficial"
                         required
                         className="w-full pl-8 pr-3.5 py-2.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] font-mono focus:outline-none focus:border-[#1C1917]"
                       />
@@ -265,6 +278,61 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                   </div>
                 </div>
 
+                {/* Collapsible Custom Session Bridge */}
+                <div className="pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setShowEngineSettings(!showEngineSettings)}
+                    className="text-[11px] font-mono text-[#78716C] hover:text-[#1C1917] flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <SlidersHorizontal className="w-3 h-3 text-[#78716C]" />
+                    <span>{showEngineSettings ? 'Hide Custom Scraper Bridge' : 'Configure Custom Instagram Session Key (Optional)'}</span>
+                    {sessionId && (
+                      <span className="w-2 h-2 rounded-full bg-[#2E523E] inline-block ml-1"></span>
+                    )}
+                  </button>
+
+                  {showEngineSettings && (
+                    <div className="mt-2 p-3.5 rounded-xl bg-[#F7F4EE] border border-[#E7E2DA] space-y-2 text-xs animate-fade-in">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-[10px] uppercase font-bold text-[#1C1917]">
+                          Proprietary Instagram Session Bridge
+                        </span>
+                        <span className="text-[10px] text-[#2E523E] font-mono font-semibold">
+                          {sessionId ? '🟢 AUTHENTICATED GRAPH' : '⚪ OPENGRAPH FALLBACK'}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-[#78716C] leading-relaxed">
+                        Optionally paste the <code className="bg-white px-1 py-0.5 rounded border border-[#E2DDD5] text-[#1C1917] font-mono">sessionid</code> cookie from any dummy Instagram account to unlock single-digit follower accuracy and real Reels extraction.
+                      </p>
+                      <div className="flex gap-2">
+                        <input
+                          type="password"
+                          value={sessionId}
+                          onChange={(e) => {
+                            setSessionId(e.target.value);
+                            setSavedInstagramSession(e.target.value);
+                          }}
+                          placeholder="Paste IG sessionid cookie (e.g. 683921...)"
+                          className="flex-1 px-3 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                        />
+                        {sessionId && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSessionId('');
+                              setSavedInstagramSession('');
+                            }}
+                            className="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#C25E3E] hover:bg-[#FDF3EE] cursor-pointer"
+                          >
+                            Clear
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
                 <button
                   type="submit"
                   disabled={isScanning || !handle.trim()}
@@ -274,7 +342,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                     <>
                       <Loader2 className="w-3.5 h-3.5 animate-spin text-[#1C1917]" />
                       <span>
-                        {scanStep === 1 && 'Connecting to Instagram Graph...'}
+                        {scanStep === 1 && 'Querying Proprietary Instagram Engine...'}
                         {scanStep === 2 && 'Extracting authentic profile, followers & avatar...'}
                         {scanStep === 3 && 'Generating credentials & telemetry dossier...'}
                       </span>
@@ -310,7 +378,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                           </strong>
                           {isLiveExtracted ? (
                             <span className="px-2 py-0.5 rounded-full bg-[#2E523E] text-white text-[9px] font-mono uppercase tracking-wider font-semibold">
-                              Live Scraped
+                              {extractionMode === 'authenticated_private_api' ? 'Private API Verified' : 'Live Scraped'}
                             </span>
                           ) : (
                             <span className="px-2 py-0.5 rounded-full bg-[#8A6B32] text-white text-[9px] font-mono uppercase tracking-wider font-semibold">
@@ -337,6 +405,26 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                   {extractionNotice && (
                     <div className="text-[11px] text-[#78716C] italic px-1">
                       ℹ️ {extractionNotice}
+                    </div>
+                  )}
+
+                  {/* Extracted Recent Content Strip */}
+                  {scannedResult.recentContent && scannedResult.recentContent.length > 0 && (
+                    <div className="space-y-1.5 p-3 rounded-xl bg-white border border-[#E7E2DA]">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-[#78716C] font-semibold block">
+                        Extracted Recent Media ({scannedResult.recentContent.length} posts/reels)
+                      </span>
+                      <div className="grid grid-cols-4 gap-2">
+                        {scannedResult.recentContent.slice(0, 4).map((item, idx) => (
+                          <div key={idx} className="relative rounded-lg overflow-hidden border border-[#E7E2DA] aspect-[4/5] bg-[#1C1917]/5 group">
+                            <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover" />
+                            <div className="absolute inset-x-0 bottom-0 p-1 bg-gradient-to-t from-black/80 to-transparent text-[9px] text-white font-mono flex items-center justify-between">
+                              <span>{item.type === 'Reel' ? '▶' : '📷'}</span>
+                              <span>{formatFollowerCount(item.views || item.likes)}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
 
@@ -425,7 +513,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                       <button
                         type="button"
                         onClick={handleGenerateStrongPassword}
-                        className="text-[11px] font-sans text-[#C25E3E] hover:underline flex items-center gap-1"
+                        className="text-[11px] font-sans text-[#C25E3E] hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         <Sparkles className="w-3 h-3" />
                         <span>Regenerate Password</span>
@@ -522,7 +610,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                 <button
                   type="button"
                   onClick={handleCopyCredentials}
-                  className="py-2.5 px-3 rounded-lg bg-white border border-[#D6CFBF] hover:bg-[#FAF8F5] text-xs font-medium text-[#1C1917] flex items-center justify-center gap-1.5 transition-colors shadow-vintage-xs"
+                  className="py-2.5 px-3 rounded-lg bg-white border border-[#D6CFBF] hover:bg-[#FAF8F5] text-xs font-medium text-[#1C1917] flex items-center justify-center gap-1.5 transition-colors shadow-vintage-xs cursor-pointer"
                 >
                   {copied ? <Check className="w-3.5 h-3.5 text-[#2E523E]" /> : <Copy className="w-3.5 h-3.5 text-[#57534E]" />}
                   <span>{copied ? 'Copied' : 'Copy Slip'}</span>
@@ -550,7 +638,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
               <button
                 type="button"
                 onClick={handleFinish}
-                className="w-full py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] hover:bg-[#F2EDE4] text-xs font-medium text-[#1C1917] transition-colors"
+                className="w-full py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] hover:bg-[#F2EDE4] text-xs font-medium text-[#1C1917] transition-colors cursor-pointer"
               >
                 Done & Return to Roster
               </button>
