@@ -1,7 +1,7 @@
 <!-- AUTO-SYNC-START -->
 ## 🔄 Automated Verification & State Manifest (Auto-Updated)
-> **Last Synchronized**: `2026-11-11T19:04:09.029Z`  
-> **Active Git Commit**: `67d37c8` (`main`) — *chore: trigger netlify deploy on public repository*  
+> **Last Synchronized**: `2026-11-11T19:25:28.428Z`  
+> **Active Git Commit**: `bf6d50a` (`main`) — *fix: set direct netlify functions endpoint as primary for live instagram extraction*  
 > **Database Status**: `CONNECTED (Supabase PostgreSQL)`  
 > **Android Native**: `SYNCHRONIZED (Capacitor Android)`  
 > **Discovered Portals (3)**: `AdminMasterView.tsx`, `BrandPortalView.tsx`, `CreatorPortalView.tsx`  

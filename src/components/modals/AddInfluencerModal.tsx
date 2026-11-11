@@ -25,7 +25,9 @@ import {
   Users,
   SlidersHorizontal,
   ExternalLink,
-  Play
+  Play,
+  Trash2,
+  Plus
 } from 'lucide-react';
 
 interface AddInfluencerModalProps {
@@ -84,6 +86,14 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
   const [isCreated, setIsCreated] = useState(false);
   const [copied, setCopied] = useState(false);
 
+  // Editable Recent Media
+  const [editableMedia, setEditableMedia] = useState<Influencer['recentContent']>([]);
+  const [showAddMedia, setShowAddMedia] = useState(false);
+  const [newMediaTitle, setNewMediaTitle] = useState('');
+  const [newMediaUrl, setNewMediaUrl] = useState('');
+  const [newMediaViews, setNewMediaViews] = useState('');
+  const [newMediaType, setNewMediaType] = useState<'Reel' | 'Carousel' | 'Post'>('Reel');
+
   if (!isOpen) return null;
 
   const handleStartScan = async (e: React.FormEvent) => {
@@ -107,6 +117,7 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
       const pwd = `creator#${Math.floor(1000 + Math.random() * 9000)}`;
 
       setScannedResult(result);
+      setEditableMedia(result.recentContent || []);
       setIsLiveExtracted(Boolean(result.isLiveExtracted));
       setExtractionNotice(result.extractionNotice || '');
       setExtractionMode(result.extractionMode || '');
@@ -130,6 +141,46 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
     setCreatorPassword(`${cleanHandle}@${Math.floor(10000 + Math.random() * 90000)}!`);
   };
 
+  const handleDeleteMedia = (id: string) => {
+    setEditableMedia(prev => prev.filter(m => m.id !== id));
+  };
+
+  const handleAddCustomMedia = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newMediaTitle.trim() && !newMediaUrl.trim()) return;
+
+    const viewsNum = parseInt(newMediaViews.replace(/[^0-9]/g, ''), 10) || Math.round((Number(customFollowers) || scannedResult?.followers || 100000) * 0.35);
+    const likesNum = Math.round(viewsNum * 0.065);
+    const commentsNum = Math.max(10, Math.round(likesNum * 0.03));
+
+    let finalUrl = newMediaUrl.trim();
+    if (finalUrl && !finalUrl.startsWith('http')) {
+      finalUrl = `https://${finalUrl}`;
+    }
+    if (!finalUrl) {
+      finalUrl = `https://instagram.com/${handle.replace('@', '')}`;
+    }
+
+    const newCard = {
+      id: `custom-media-${Date.now()}`,
+      type: newMediaType,
+      title: newMediaTitle.trim() || `Featured ${newMediaType} on @${handle.replace('@', '')}`,
+      views: viewsNum,
+      likes: likesNum,
+      comments: commentsNum,
+      postedDaysAgo: 1,
+      engagement: Number((3.5 + (Math.random() * 4)).toFixed(1)),
+      thumbnail: customAvatar || scannedResult?.avatar || 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&auto=format&fit=crop&q=80',
+      url: finalUrl
+    };
+
+    setEditableMedia(prev => [newCard, ...prev]);
+    setNewMediaTitle('');
+    setNewMediaUrl('');
+    setNewMediaViews('');
+    setShowAddMedia(false);
+  };
+
   const handleSave = () => {
     if (scannedResult) {
       const followersNum = Number(customFollowers) || scannedResult.followers;
@@ -149,6 +200,7 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
         bio: customBio.trim() || scannedResult.bio,
         tier: calculatedTier,
         category,
+        recentContent: editableMedia.length > 0 ? editableMedia : (scannedResult.recentContent || []),
         loginEmail: creatorEmail.trim(),
         loginPassword: creatorPassword.trim()
       };
@@ -204,6 +256,8 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
     setIsCreated(false);
     setHandle('');
     setScannedResult(null);
+    setEditableMedia([]);
+    setShowAddMedia(false);
     setCreatorEmail('');
     setCreatorPassword('');
     onClose();
@@ -408,25 +462,165 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                     </div>
                   )}
 
-                  {/* Extracted Recent Content Strip */}
-                  {scannedResult.recentContent && scannedResult.recentContent.length > 0 && (
-                    <div className="space-y-1.5 p-3 rounded-xl bg-white border border-[#E7E2DA]">
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-[#78716C] font-semibold block">
-                        Extracted Recent Media ({scannedResult.recentContent.length} posts/reels)
-                      </span>
-                      <div className="grid grid-cols-4 gap-2">
-                        {scannedResult.recentContent.slice(0, 4).map((item, idx) => (
-                          <div key={idx} className="relative rounded-lg overflow-hidden border border-[#E7E2DA] aspect-[4/5] bg-[#1C1917]/5 group">
-                            <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover" />
-                            <div className="absolute inset-x-0 bottom-0 p-1 bg-gradient-to-t from-black/80 to-transparent text-[9px] text-white font-mono flex items-center justify-between">
-                              <span>{item.type === 'Reel' ? '▶' : '📷'}</span>
-                              <span>{formatFollowerCount(item.views || item.likes)}</span>
+                  {/* Extracted Recent Content Manager */}
+                  <div className="space-y-3 p-4 rounded-xl bg-white border border-[#E7E2DA]">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-[#78716C] font-semibold block">
+                          Recent Media & Viral Reels ({editableMedia.length})
+                        </span>
+                        <span className="text-[11px] text-[#A8A29E]">
+                          Tailored to creator category · Edit, remove or paste live Instagram Reel links
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setShowAddMedia(!showAddMedia)}
+                        className="px-2.5 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] hover:bg-[#F2EDE4] text-xs text-[#1C1917] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+                      >
+                        <Plus className="w-3.5 h-3.5 text-[#1C1917]" />
+                        <span>{showAddMedia ? 'Cancel' : '+ Add Live Reel'}</span>
+                      </button>
+                    </div>
+
+                    {/* Inline Add Live Reel / Post Form */}
+                    {showAddMedia && (
+                      <div className="p-3.5 rounded-xl bg-[#F7F4EE] border border-[#E7E2DA] space-y-3 animate-fade-in">
+                        <div className="flex items-center justify-between border-b border-[#E7E2DA] pb-2">
+                          <span className="text-xs font-semibold text-[#1C1917] flex items-center gap-1.5">
+                            <Play className="w-3.5 h-3.5 text-[#C25E3E]" />
+                            Add Live Instagram Reel / Deliverable
+                          </span>
+                          <div className="flex gap-1">
+                            {(['Reel', 'Carousel', 'Post'] as const).map(t => (
+                              <button
+                                key={t}
+                                type="button"
+                                onClick={() => setNewMediaType(t)}
+                                className={`px-2 py-0.5 rounded text-[10px] font-mono transition-colors ${
+                                  newMediaType === t 
+                                    ? 'bg-[#1C1917] text-white font-semibold' 
+                                    : 'bg-white border border-[#E7E2DA] text-[#78716C]'
+                                }`}
+                              >
+                                {t}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                          <div>
+                            <label className="text-[10px] font-mono text-[#78716C] uppercase block mb-1">
+                              Instagram Reel / Post URL *
+                            </label>
+                            <input
+                              type="text"
+                              value={newMediaUrl}
+                              onChange={(e) => setNewMediaUrl(e.target.value)}
+                              placeholder="e.g. instagram.com/reel/C8xYz123"
+                              className="w-full px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-[10px] font-mono text-[#78716C] uppercase block mb-1">
+                              Views / Reach Count
+                            </label>
+                            <input
+                              type="text"
+                              value={newMediaViews}
+                              onChange={(e) => setNewMediaViews(e.target.value)}
+                              placeholder="e.g. 1500000 or 1.5M"
+                              className="w-full px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                            />
+                          </div>
+
+                          <div className="sm:col-span-2">
+                            <label className="text-[10px] font-mono text-[#78716C] uppercase block mb-1">
+                              Reel Title / Caption Hook
+                            </label>
+                            <input
+                              type="text"
+                              value={newMediaTitle}
+                              onChange={(e) => setNewMediaTitle(e.target.value)}
+                              placeholder="e.g. Top 5 Tech Gadgets Every Student Needs! 📱"
+                              className="w-full px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex justify-end gap-2 pt-1">
+                          <button
+                            type="button"
+                            onClick={() => setShowAddMedia(false)}
+                            className="px-3 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#78716C] hover:text-[#1C1917]"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleAddCustomMedia}
+                            className="px-3.5 py-1.5 rounded-lg bg-[#2E523E] text-white text-xs font-medium hover:bg-[#254232] shadow-vintage-xs cursor-pointer"
+                          >
+                            Add to Creator Portfolio
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Media Cards Grid */}
+                    {editableMedia.length === 0 ? (
+                      <div className="p-4 rounded-lg bg-[#FAF8F5] border border-dashed border-[#D6CFBF] text-center text-xs text-[#78716C]">
+                        No recent media attached yet. Click "+ Add Live Reel" to attach creator reels.
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        {editableMedia.map((item) => (
+                          <div key={item.id} className="relative rounded-xl overflow-hidden border border-[#E7E2DA] bg-[#FAF8F5] flex flex-col group hover:border-[#1C1917] transition-all">
+                            <div className="relative aspect-[4/5] overflow-hidden bg-[#1C1917]/5">
+                              <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                              <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/75 text-[9px] text-white font-mono flex items-center gap-1">
+                                <span>{item.type === 'Reel' ? '▶' : item.type === 'Carousel' ? '📷' : '🖼️'}</span>
+                                <span>{item.type}</span>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteMedia(item.id)}
+                                className="absolute top-1.5 right-1.5 p-1 rounded-full bg-black/70 hover:bg-[#C25E3E] text-white transition-colors opacity-0 group-hover:opacity-100 cursor-pointer"
+                                title="Delete media"
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </button>
+                              <div className="absolute inset-x-0 bottom-0 p-1.5 bg-gradient-to-t from-black/85 via-black/40 to-transparent text-[10px] text-white font-mono flex items-center justify-between">
+                                <span className="font-semibold">{formatFollowerCount(item.views || item.likes)} views</span>
+                                {item.url && (
+                                  <a
+                                    href={item.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-0.5 rounded hover:bg-white/20 text-white"
+                                    title="Open on Instagram"
+                                  >
+                                    <ExternalLink className="w-3 h-3" />
+                                  </a>
+                                )}
+                              </div>
+                            </div>
+                            <div className="p-2 flex-1 flex flex-col justify-between">
+                              <p className="text-[11px] text-[#1C1917] font-medium line-clamp-2 leading-tight">
+                                {item.title}
+                              </p>
+                              <div className="flex items-center justify-between text-[9px] text-[#78716C] font-mono mt-1 pt-1 border-t border-[#EFECE6]">
+                                <span>{item.postedDaysAgo}d ago</span>
+                                <span className="text-[#2E523E] font-semibold">{item.engagement}% ER</span>
+                              </div>
                             </div>
                           </div>
                         ))}
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
 
                   {/* Editable Specs */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
