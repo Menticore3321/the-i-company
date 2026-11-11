@@ -343,9 +343,9 @@ export async function fetchLiveInstagramProfile(
   try {
     const sessionParam = sessionId ? `&sessionId=${encodeURIComponent(sessionId)}` : '';
     const endpoints = [
-      `/api/instagram?handle=${encodeURIComponent(cleanHandle)}${sessionParam}`,
       `/.netlify/functions/instagram?handle=${encodeURIComponent(cleanHandle)}${sessionParam}`,
-      `https://theicompany.netlify.app/api/instagram?handle=${encodeURIComponent(cleanHandle)}${sessionParam}`
+      `https://theicompany.netlify.app/.netlify/functions/instagram?handle=${encodeURIComponent(cleanHandle)}${sessionParam}`,
+      `/api/instagram?handle=${encodeURIComponent(cleanHandle)}${sessionParam}`
     ];
 
     for (const endpoint of endpoints) {
