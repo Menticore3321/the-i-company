@@ -106,61 +106,6 @@ export function scrapeInstagramProfile(handle, customSessionId = '') {
         const avgLikes = Math.round(avgReelViews * (engagementRate / 100));
         const avgComments = Math.max(15, Math.round(avgLikes * 0.035));
 
-        const topViews = Math.round(followers * 0.42) || 45000;
-        const midViews = Math.round(followers * 0.28) || 30000;
-        const normalViews = Math.round(followers * 0.16) || 16000;
-
-        const generatedRecentMedia = [
-          {
-            id: `cnt-${cleanHandle}-1`,
-            type: 'Reel',
-            title: `Latest viral release & community spotlight ✨`,
-            views: topViews,
-            likes: Math.round(topViews * (engagementRate / 100)),
-            comments: Math.max(25, Math.round(topViews * 0.002)),
-            postedDaysAgo: 2,
-            engagement: engagementRate,
-            thumbnail: rawImg || 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&auto=format&fit=crop&q=80',
-            url: `https://instagram.com/${cleanHandle}`
-          },
-          {
-            id: `cnt-${cleanHandle}-2`,
-            type: 'Reel',
-            title: `Behind the scenes & unedited workflow deep-dive 🎬`,
-            views: midViews,
-            likes: Math.round(midViews * (engagementRate / 100)),
-            comments: Math.max(15, Math.round(midViews * 0.0018)),
-            postedDaysAgo: 5,
-            engagement: Number((engagementRate * 0.9).toFixed(1)),
-            thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&auto=format&fit=crop&q=80',
-            url: `https://instagram.com/${cleanHandle}`
-          },
-          {
-            id: `cnt-${cleanHandle}-3`,
-            type: 'Carousel',
-            title: `Top 5 insights, recommendations & checklist for this month 📌`,
-            views: normalViews,
-            likes: Math.round(normalViews * (engagementRate / 100)),
-            comments: Math.max(10, Math.round(normalViews * 0.0015)),
-            postedDaysAgo: 9,
-            engagement: Number((engagementRate * 0.85).toFixed(1)),
-            thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&auto=format&fit=crop&q=80',
-            url: `https://instagram.com/${cleanHandle}`
-          },
-          {
-            id: `cnt-${cleanHandle}-4`,
-            type: 'Reel',
-            title: `Special brand announcement & limited collaboration ⚡`,
-            views: Math.round(normalViews * 0.85),
-            likes: Math.round(normalViews * 0.85 * (engagementRate / 100)),
-            comments: Math.max(8, Math.round(normalViews * 0.001)),
-            postedDaysAgo: 14,
-            engagement: Number((engagementRate * 0.8).toFixed(1)),
-            thumbnail: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&auto=format&fit=crop&q=80',
-            url: `https://instagram.com/${cleanHandle}`
-          }
-        ];
-
         if (followers > 0 || rawImg) {
           resolve({
             success: true,
@@ -176,7 +121,7 @@ export function scrapeInstagramProfile(handle, customSessionId = '') {
             avgReelViews,
             avgLikes,
             avgComments,
-            recentMedia: generatedRecentMedia,
+            recentMedia: [],
             isLiveScraped: true
           });
         } else {

@@ -435,8 +435,8 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                               {extractionMode === 'authenticated_private_api' ? 'Private API Verified' : 'Live Scraped'}
                             </span>
                           ) : (
-                            <span className="px-2 py-0.5 rounded-full bg-[#8A6B32] text-white text-[9px] font-mono uppercase tracking-wider font-semibold">
-                              Verified Baseline
+                            <span className="px-2 py-0.5 rounded-full bg-[#78716C] text-white text-[9px] font-mono uppercase tracking-wider font-semibold">
+                              Manual Entry
                             </span>
                           )}
                         </div>
