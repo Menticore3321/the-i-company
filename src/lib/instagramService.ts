@@ -31,11 +31,13 @@ export function extractCleanHandle(raw: string): string {
   return cleaned.replace('@', '').replace(/[^a-zA-Z0-9._]/g, '').toLowerCase();
 }
 
+export const DEFAULT_SESSION_ID = '54562708342%3AmbRrBJq1xH52BF%3A17%3AAYna7xgKpztuJFTj_zditYqhUWX7f7Z3zc61zTnRZQ';
+
 export function getSavedInstagramSession(): string {
   try {
-    return localStorage.getItem('the_i_company_ig_session') || '';
+    return localStorage.getItem('the_i_company_ig_session') || DEFAULT_SESSION_ID;
   } catch {
-    return '';
+    return DEFAULT_SESSION_ID;
   }
 }
 
