@@ -24,7 +24,9 @@ import {
   Lock,
   Copy,
   Key,
-  FileText
+  FileText,
+  Send,
+  Mail
 } from 'lucide-react';
 
 interface AdminMasterViewProps {
@@ -76,11 +78,14 @@ export const AdminMasterView: React.FC<AdminMasterViewProps> = ({
   );
 
   const handleCopyCredentials = (acc: UserAccount) => {
-    navigator.clipboard.writeText(`The I Company Portal Credentials:
-URL: http://localhost:3000
-Portal Type: ${acc.role.toUpperCase()}
-Email: ${acc.email}
-Password: ${acc.password}`);
+    navigator.clipboard.writeText(`THE I COMPANY · SECURE PORTAL CREDENTIALS
+Access URL: https://theicompany.netlify.app
+Account Name: ${acc.name}
+Role Type: ${acc.role.toUpperCase()}
+Assigned Email: ${acc.email}
+Password: ${acc.password}
+
+Please sign in and access your designated workspace.`);
     setCopiedAccountId(acc.id);
     setTimeout(() => setCopiedAccountId(null), 3000);
   };
@@ -636,22 +641,40 @@ Password: ${acc.password}`);
                     </td>
 
                     <td className="py-3 px-4 text-right font-sans">
-                      <button
-                        onClick={() => handleCopyCredentials(acc)}
-                        className="px-2.5 py-1 rounded bg-[#FAF8F5] hover:bg-[#1C1917] text-[#1C1917] hover:text-white border border-[#E2DDD5] text-xs transition-colors inline-flex items-center gap-1.5"
-                      >
-                        {copiedAccountId === acc.id ? (
-                          <>
+                      <div className="flex items-center justify-end gap-1.5">
+                        <button
+                          onClick={() => handleCopyCredentials(acc)}
+                          title="Copy login slip"
+                          className="p-1.5 rounded bg-[#FAF8F5] hover:bg-[#1C1917] text-[#1C1917] hover:text-white border border-[#E2DDD5] text-xs transition-colors inline-flex items-center gap-1"
+                        >
+                          {copiedAccountId === acc.id ? (
                             <Check className="w-3.5 h-3.5 text-[#2E523E]" />
-                            <span className="text-[#2E523E] font-medium">Copied!</span>
-                          </>
-                        ) : (
-                          <>
+                          ) : (
                             <Copy className="w-3.5 h-3.5" />
-                            <span>Copy Login Packet</span>
-                          </>
-                        )}
-                      </button>
+                          )}
+                          <span className="text-[11px] hidden sm:inline">{copiedAccountId === acc.id ? 'Copied' : 'Copy'}</span>
+                        </button>
+
+                        <a
+                          href={`https://wa.me/?text=${encodeURIComponent(`*The I Company · Portal Access Credentials*\nHello ${acc.name},\n\nYour ${acc.role.toUpperCase()} portal is active:\nURL: https://theicompany.netlify.app\nEmail: ${acc.email}\nPassword: ${acc.password}\n\nPlease log in to access your designated workspace.`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="Dispatch via WhatsApp"
+                          className="p-1.5 rounded bg-[#EEF5F1] hover:bg-[#2E523E] text-[#2E523E] hover:text-white border border-[#D1E3D8] text-xs transition-colors inline-flex items-center gap-1"
+                        >
+                          <Send className="w-3.5 h-3.5" />
+                          <span className="text-[11px] hidden sm:inline">WhatsApp</span>
+                        </a>
+
+                        <a
+                          href={`mailto:${acc.email}?subject=${encodeURIComponent(`The I Company · Your Portal Credentials (${acc.role.toUpperCase()})`)}&body=${encodeURIComponent(`Hello ${acc.name},\n\nYour platform account credentials for The I Company are ready:\n\nAccess URL: https://theicompany.netlify.app\nAssigned Email: ${acc.email}\nPassword: ${acc.password}\n\nPlease sign in to access your dashboard.\n\nBest regards,\nThe I Company Atelier`)}`}
+                          title="Dispatch via Email"
+                          className="p-1.5 rounded bg-[#FAF8F5] hover:bg-[#1C1917] text-[#1C1917] hover:text-white border border-[#E2DDD5] text-xs transition-colors inline-flex items-center gap-1"
+                        >
+                          <Mail className="w-3.5 h-3.5" />
+                          <span className="text-[11px] hidden sm:inline">Email</span>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 ))}

@@ -11,7 +11,11 @@ import {
   Sparkles, 
   Lock,
   Copy,
-  Check
+  Check,
+  Send,
+  Mail,
+  Key,
+  DollarSign
 } from 'lucide-react';
 
 interface AddInfluencerModalProps {
@@ -41,9 +45,13 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
   const [scanStep, setScanStep] = useState(0);
   const [scannedResult, setScannedResult] = useState<Influencer | null>(null);
 
-  // Credentials
+  // Editable fields by Admin
+  const [customName, setCustomName] = useState('');
+  const [customFollowers, setCustomFollowers] = useState(0);
+  const [customRate, setCustomRate] = useState(0);
   const [creatorEmail, setCreatorEmail] = useState('');
   const [creatorPassword, setCreatorPassword] = useState('');
+  const [isCreated, setIsCreated] = useState(false);
   const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
@@ -55,245 +63,375 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
     setIsScanning(true);
     setScanStep(1);
 
-    setTimeout(() => setScanStep(2), 500);
-    setTimeout(() => setScanStep(3), 1000);
+    setTimeout(() => setScanStep(2), 400);
+    setTimeout(() => setScanStep(3), 800);
     setTimeout(() => {
       const result = analyzeInstagramHandle(handle, category);
       const cleanHandle = handle.replace('@', '').toLowerCase().replace(/[^a-z0-9]/g, '');
       const email = `${cleanHandle}@creators.theicompany.com`;
       const pwd = `creator#${Math.floor(1000 + Math.random() * 9000)}`;
 
+      setScannedResult(result);
+      setCustomName(result.name);
+      setCustomFollowers(result.followers);
+      setCustomRate(result.ratePerReel);
       setCreatorEmail(email);
       setCreatorPassword(pwd);
-      setScannedResult(result);
       setIsScanning(false);
       setScanStep(0);
-    }, 1500);
+    }, 1200);
+  };
+
+  const handleGenerateStrongPassword = () => {
+    const cleanHandle = handle.replace('@', '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 5) || 'talent';
+    setCreatorPassword(`${cleanHandle}@${Math.floor(10000 + Math.random() * 90000)}!`);
   };
 
   const handleSave = () => {
     if (scannedResult) {
       const finalInfluencer: Influencer = {
         ...scannedResult,
-        loginEmail: creatorEmail,
-        loginPassword: creatorPassword
+        name: customName.trim() || scannedResult.name,
+        followers: Number(customFollowers) || scannedResult.followers,
+        ratePerReel: Number(customRate) || scannedResult.ratePerReel,
+        category,
+        loginEmail: creatorEmail.trim(),
+        loginPassword: creatorPassword.trim()
       };
 
       const newAccount: UserAccount = {
         id: `acc-${scannedResult.id}`,
-        email: creatorEmail,
-        password: creatorPassword,
+        email: creatorEmail.trim().toLowerCase(),
+        password: creatorPassword.trim(),
         role: 'influencer',
-        name: `${scannedResult.name} (@${scannedResult.handle})`,
+        name: `${finalInfluencer.name} (@${finalInfluencer.handle})`,
         associatedId: scannedResult.id,
         status: 'active',
         lastLogin: 'Never (Newly Onboarded)'
       };
 
       onAddInfluencer(finalInfluencer, newAccount);
-      onClose();
-      setHandle('');
-      setScannedResult(null);
+      setIsCreated(true);
     }
   };
 
+  const portalUrl = 'https://theicompany.netlify.app';
+
+  const credentialsSummary = `THE I COMPANY · OFFICIAL CREATOR STUDIO ACCESS
+Creator: ${customName || handle}
+Handle: @${handle.replace('@', '')}
+Studio URL: ${portalUrl}
+Assigned Login Email: ${creatorEmail}
+Temporary Password: ${creatorPassword}
+Account Security: Verified Talent Rail
+
+Please log in to review contracted campaigns, submit video drafts, and withdraw earnings.`;
+
   const handleCopyCredentials = () => {
-    navigator.clipboard.writeText(`Creator Studio Login Access:
-URL: http://localhost:3000
-Email: ${creatorEmail}
-Password: ${creatorPassword}`);
+    navigator.clipboard.writeText(credentialsSummary);
     setCopied(true);
     setTimeout(() => setCopied(false), 3000);
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#1C1917]/50 backdrop-blur-sm">
-      <div className="relative w-full max-w-xl bg-white border border-[#E7E2DA] rounded-2xl shadow-vintage-lg text-[#1C1917] overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 bg-[#FAF8F5] border-b border-[#E7E2DA]">
-          <div>
-            <span className="font-mono text-[10px] tracking-wider uppercase text-[#78716C]">CREATOR ONBOARDING</span>
-            <h3 className="font-serif text-lg font-bold text-[#1C1917]">
-              Link Instagram Creator Profile & Issue Login
-            </h3>
-          </div>
+  const whatsappMessage = encodeURIComponent(
+    `*The I Company · Creator Studio Login Credentials*\n` +
+    `Hey ${customName || handle}!\n\n` +
+    `Your verified agency talent desk is now active:\n` +
+    `🔗 *URL:* ${portalUrl}\n` +
+    `📧 *Email:* ${creatorEmail}\n` +
+    `🔑 *Password:* ${creatorPassword}\n\n` +
+    `Log in to view assigned brand campaigns, submit Reel drafts, and request instant payouts to your bank account.`
+  );
 
+  const emailSubject = encodeURIComponent(`The I Company · Creator Studio Login Credentials for @${handle.replace('@', '')}`);
+  const emailBody = encodeURIComponent(credentialsSummary);
+
+  const handleFinish = () => {
+    setIsCreated(false);
+    setHandle('');
+    setScannedResult(null);
+    setCreatorEmail('');
+    setCreatorPassword('');
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 bg-[#1C1917]/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in overflow-y-auto">
+      <div className="bg-[#FAF8F5] border border-[#E7E2DA] rounded-2xl w-full max-w-xl shadow-vintage-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
+        {/* Header */}
+        <div className="p-6 border-b border-[#E7E2DA] bg-[#F7F4EE] flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#1C1917] text-white flex items-center justify-center shadow-vintage-sm">
+              <Instagram className="w-5 h-5 text-[#FAF8F5]" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#78716C]">
+                  ADMIN ACCESS CONTROL ·
+                </span>
+                <span className="font-mono text-[10px] text-[#2E523E] font-semibold">TALENT ONBOARDING</span>
+              </div>
+              <h3 className="font-serif text-xl font-bold text-[#1C1917]">
+                Onboard Creator & Issue Studio Credentials
+              </h3>
+            </div>
+          </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-[#78716C] hover:text-[#1C1917] hover:bg-[#F5F2EB] transition-colors"
+            className="p-1.5 rounded-lg bg-white border border-[#E2DDD5] text-[#78716C] hover:text-[#1C1917] hover:bg-[#FAF8F5] transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="p-6 space-y-5">
-          {!scannedResult ? (
-            <form onSubmit={handleStartScan} className="space-y-4">
-              <div>
-                <label className="text-xs font-medium text-[#1C1917] block mb-1.5">
-                  Instagram Handle or URL
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#78716C]">
-                    <Instagram className="w-4 h-4 text-[#C25E3E]" />
+        {/* Body */}
+        <div className="p-6 overflow-y-auto space-y-6">
+          {!isCreated ? (
+            <>
+              {/* Scan Form */}
+              <form onSubmit={handleStartScan} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="sm:col-span-2">
+                    <label className="text-xs font-semibold text-[#1C1917] block mb-1">
+                      Instagram Handle *
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={handle}
+                        onChange={(e) => setHandle(e.target.value)}
+                        placeholder="e.g. @tanmaybhat or @komalpandeyofficial"
+                        required
+                        className="w-full pl-8 pr-3.5 py-2.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] font-mono focus:outline-none focus:border-[#1C1917]"
+                      />
+                      <span className="absolute left-3 top-2.5 text-xs text-[#78716C] font-mono">@</span>
+                    </div>
                   </div>
-                  <input
-                    type="text"
-                    value={handle}
-                    onChange={(e) => setHandle(e.target.value)}
-                    placeholder="e.g. @techburner, @komalpandeyofficial, @virat.kohli"
-                    required
-                    className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] focus:border-[#1C1917] focus:bg-white text-xs text-[#1C1917] placeholder-[#A8A29E] transition-all font-mono"
-                  />
-                </div>
-                <p className="text-[11px] text-[#78716C] mt-1 font-sans">
-                  The system connects to telemetry, verifies follower authenticity, and automatically configures creator login credentials.
-                </p>
-              </div>
 
-              <div>
-                <label className="text-xs font-medium text-[#1C1917] block mb-1.5">
-                  Primary Niche Category
-                </label>
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value as InfluencerCategory)}
-                  className="w-full px-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] focus:border-[#1C1917] text-xs text-[#1C1917]"
-                >
-                  {CATEGORIES.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Progress Scanner Indicator */}
-              {isScanning && (
-                <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E7E2DA] space-y-2">
-                  <div className="flex items-center justify-between text-xs text-[#1C1917]">
-                    <span className="flex items-center gap-2">
-                      <Loader2 className="w-4 h-4 animate-spin text-[#C25E3E]" />
-                      <span className="font-medium">
-                        {scanStep === 1 && 'Connecting to Instagram Profile Graph...'}
-                        {scanStep === 2 && 'Auditing engagement metrics & bot index...'}
-                        {scanStep === 3 && 'Formulating commercial rate matrix & issuing credentials...'}
-                      </span>
-                    </span>
-                    <span className="font-mono">{scanStep * 33}%</span>
-                  </div>
-                  <div className="w-full h-1.5 rounded-full bg-[#E7E2DA] overflow-hidden">
-                    <div 
-                      className="bg-[#1C1917] h-full transition-all duration-300 rounded-full"
-                      style={{ width: `${scanStep * 33}%` }}
-                    />
+                  <div>
+                    <label className="text-xs font-semibold text-[#1C1917] block mb-1">
+                      Niche Category
+                    </label>
+                    <select
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value as InfluencerCategory)}
+                      className="w-full px-3 py-2.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                    >
+                      {CATEGORIES.map((cat) => (
+                        <option key={cat} value={cat}>{cat}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
-              )}
 
-              <div className="pt-2 flex justify-end gap-2.5">
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="px-4 py-2 rounded-lg bg-white border border-[#E2DDD5] text-xs font-medium text-[#1C1917] hover:bg-[#FAF8F5]"
-                >
-                  Cancel
-                </button>
                 <button
                   type="submit"
                   disabled={isScanning || !handle.trim()}
-                  className="px-5 py-2 rounded-lg bg-[#1C1917] hover:bg-[#2E2A27] text-white font-medium text-xs shadow-vintage-sm disabled:opacity-50 transition-all flex items-center gap-2"
+                  className="w-full py-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F2EDE4] border border-[#D6CFBF] text-[#1C1917] font-medium text-xs shadow-vintage-xs flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50"
                 >
-                  <Search className="w-3.5 h-3.5" />
-                  <span>Analyze Handle & Generate Login</span>
+                  {isScanning ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-[#1C1917]" />
+                      <span>
+                        {scanStep === 1 && 'Scanning public Instagram graph...'}
+                        {scanStep === 2 && 'Computing audience authenticity & reel views...'}
+                        {scanStep === 3 && 'Generating credentials & telemetry dossier...'}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <Search className="w-3.5 h-3.5 text-[#1C1917]" />
+                      <span>{scannedResult ? 'Re-scan Profile Telemetry' : 'Scan & Prepare Onboarding'}</span>
+                    </>
+                  )}
                 </button>
-              </div>
-            </form>
-          ) : (
-            /* Scanned Result Preview with Login Credentials */
-            <div className="space-y-4">
-              <div className="p-5 rounded-xl bg-[#FAF8F5] border border-[#E7E2DA] space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={scannedResult.avatar}
-                      alt={scannedResult.name}
-                      className="w-12 h-12 rounded-full object-cover border border-[#E2DDD5]"
-                    />
+              </form>
+
+              {/* Scanned & Editable Dossier */}
+              {scannedResult && (
+                <div className="space-y-4 pt-4 border-t border-[#E7E2DA] animate-fade-in">
+                  <div className="p-3.5 rounded-xl bg-[#EEF5F1] border border-[#D1E3D8] flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2.5">
+                      <img
+                        src={scannedResult.avatar}
+                        alt={scannedResult.name}
+                        className="w-10 h-10 rounded-full object-cover border border-[#1C1917]"
+                      />
+                      <div>
+                        <strong className="text-[#1C1917] block font-serif text-sm">{scannedResult.name}</strong>
+                        <span className="text-[11px] text-[#2E523E]">@{scannedResult.handle} · {scannedResult.tier}</span>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-mono font-bold text-[#2E523E] text-xs">
+                        {scannedResult.authenticityScore}% Authenticity
+                      </span>
+                      <span className="text-[10px] text-[#78716C] block">{scannedResult.engagementRate}% Engagement</span>
+                    </div>
+                  </div>
+
+                  {/* Editable Specs */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
-                      <h4 className="font-serif text-base font-bold text-[#1C1917] flex items-center gap-1">
-                        <span>{scannedResult.name}</span>
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#2E523E]" />
-                      </h4>
-                      <span className="text-xs text-[#78716C]">@{scannedResult.handle}</span>
+                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1">Creator Name</label>
+                      <input
+                        type="text"
+                        value={customName}
+                        onChange={(e) => setCustomName(e.target.value)}
+                        className="w-full px-3 py-2 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1">Followers Count</label>
+                      <input
+                        type="number"
+                        value={customFollowers}
+                        onChange={(e) => setCustomFollowers(Number(e.target.value))}
+                        className="w-full px-3 py-2 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1">Rate Per Reel (₹)</label>
+                      <input
+                        type="number"
+                        value={customRate}
+                        onChange={(e) => setCustomRate(Number(e.target.value))}
+                        className="w-full px-3 py-2 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                      />
                     </div>
                   </div>
-                  <span className="px-2.5 py-1 rounded bg-[#EEF5F1] text-[#2E523E] border border-[#D1E3D8] text-[11px] font-semibold">
-                    {scannedResult.tier}
-                  </span>
+
+                  {/* Credentials Setup */}
+                  <div className="p-4 rounded-xl bg-white border border-[#E2DDD5] space-y-3.5 shadow-vintage-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-[#78716C] font-semibold flex items-center gap-1.5">
+                        <Key className="w-3.5 h-3.5 text-[#C25E3E]" />
+                        <span>Admin-Assigned Login Credentials</span>
+                      </span>
+                      <button
+                        type="button"
+                        onClick={handleGenerateStrongPassword}
+                        className="text-[11px] font-sans text-[#C25E3E] hover:underline flex items-center gap-1"
+                      >
+                        <Sparkles className="w-3 h-3" />
+                        <span>Regenerate Password</span>
+                      </button>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div>
+                        <label className="text-[11px] text-[#78716C] block mb-0.5">Assigned Login Email</label>
+                        <div className="relative">
+                          <input
+                            type="email"
+                            required
+                            value={creatorEmail}
+                            onChange={(e) => setCreatorEmail(e.target.value)}
+                            placeholder="creator@creators.theicompany.com"
+                            className="w-full pl-8 pr-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:bg-white focus:outline-none focus:border-[#1C1917]"
+                          />
+                          <Mail className="w-3.5 h-3.5 text-[#78716C] absolute left-2.5 top-3" />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="text-[11px] text-[#78716C] block mb-0.5">Assigned Password</label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            required
+                            value={creatorPassword}
+                            onChange={(e) => setCreatorPassword(e.target.value)}
+                            placeholder="creator#123"
+                            className="w-full pl-8 pr-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] text-xs font-mono font-semibold text-[#1C1917] focus:bg-white focus:outline-none focus:border-[#1C1917]"
+                          />
+                          <Lock className="w-3.5 h-3.5 text-[#78716C] absolute left-2.5 top-3" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleSave}
+                    className="w-full py-3 rounded-lg bg-[#1C1917] hover:bg-[#2E2A27] text-white font-medium text-xs shadow-vintage-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <CheckCircle2 className="w-4 h-4 text-[#FBF9F5]" />
+                    <span>Confirm Onboarding & Issue Studio Credentials</span>
+                  </button>
                 </div>
+              )}
+            </>
+          ) : (
+            /* SUCCESS CREDENTIALS PACKET */
+            <div className="space-y-5">
+              <div className="p-4 rounded-xl bg-[#EEF5F1] border border-[#D1E3D8] text-center space-y-1">
+                <Check className="w-8 h-8 text-[#2E523E] mx-auto" />
+                <h4 className="font-serif text-lg font-bold text-[#1C1917]">
+                  Creator Added to Roster & Credentials Live!
+                </h4>
+                <p className="text-xs text-[#2E523E]">
+                  @{scannedResult?.handle} is registered in Supabase Cloud Database and ready to log in.
+                </p>
+              </div>
 
-                <div className="grid grid-cols-3 gap-2 pt-3 border-t border-[#EFECE6] text-xs">
-                  <div>
-                    <span className="text-[#A8A29E] block text-[10px]">Followers</span>
-                    <strong className="font-serif text-sm text-[#1C1917]">{(scannedResult.followers / 1000).toFixed(0)}k</strong>
-                  </div>
-                  <div>
-                    <span className="text-[#A8A29E] block text-[10px]">Engagement</span>
-                    <strong className="font-mono text-xs text-[#2E523E]">{scannedResult.engagementRate}%</strong>
-                  </div>
-                  <div>
-                    <span className="text-[#A8A29E] block text-[10px]">Authenticity</span>
-                    <strong className="font-mono text-xs text-[#1C1917]">{scannedResult.authenticityScore}%</strong>
-                  </div>
+              {/* Copyable Slip */}
+              <div className="p-4 rounded-xl bg-white border border-[#E7E2DA] font-mono text-xs space-y-2.5 shadow-vintage-xs">
+                <div className="flex justify-between items-center pb-2 border-b border-[#F0ECE4]">
+                  <span className="text-[#78716C] text-[10px] uppercase font-sans font-semibold">CREATOR CREDENTIALS SLIP</span>
+                  <span className="text-[10px] text-[#2E523E] font-sans font-semibold">ACTIVE TALENT DESK</span>
                 </div>
-
-                {/* Generated Creator Credentials Box */}
-                <div className="p-3.5 rounded-lg bg-white border border-[#E7E2DA] space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-medium text-[#1C1917] flex items-center gap-1.5">
-                      <Lock className="w-3.5 h-3.5 text-[#C25E3E]" />
-                      <span>Issued Creator Studio Login</span>
-                    </span>
-                    <button
-                      type="button"
-                      onClick={handleCopyCredentials}
-                      className="text-[11px] text-[#78716C] hover:text-[#1C1917] flex items-center gap-1 font-mono"
-                    >
-                      {copied ? <Check className="w-3 h-3 text-[#2E523E]" /> : <Copy className="w-3 h-3" />}
-                      <span>{copied ? 'Copied' : 'Copy'}</span>
-                    </button>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                    <div className="p-2 rounded bg-[#FAF8F5] border border-[#E7E2DA]">
-                      <span className="text-[10px] text-[#A8A29E] block">Login Email:</span>
-                      <span className="text-[#1C1917] text-[11px] truncate block">{creatorEmail}</span>
-                    </div>
-                    <div className="p-2 rounded bg-[#FAF8F5] border border-[#E7E2DA]">
-                      <span className="text-[10px] text-[#A8A29E] block">Password:</span>
-                      <span className="text-[#1C1917] text-[11px] block">{creatorPassword}</span>
-                    </div>
-                  </div>
+                <div className="flex justify-between">
+                  <span className="text-[#78716C]">Studio URL:</span>
+                  <span className="font-semibold text-[#1C1917]">{portalUrl}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#78716C]">Assigned Email:</span>
+                  <span className="font-semibold text-[#1C1917]">{creatorEmail}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#78716C]">Password:</span>
+                  <span className="font-bold text-[#C25E3E] bg-[#FDF3EE] px-1.5 py-0.5 rounded border border-[#F2DACF]">{creatorPassword}</span>
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2.5">
+              {/* Quick Dispatch Actions */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 <button
                   type="button"
-                  onClick={() => setScannedResult(null)}
-                  className="px-4 py-2 rounded-lg bg-white border border-[#E2DDD5] text-xs font-medium text-[#1C1917] hover:bg-[#FAF8F5]"
+                  onClick={handleCopyCredentials}
+                  className="py-2.5 px-3 rounded-lg bg-white border border-[#D6CFBF] hover:bg-[#FAF8F5] text-xs font-medium text-[#1C1917] flex items-center justify-center gap-1.5 transition-colors shadow-vintage-xs"
                 >
-                  Scan Another
+                  {copied ? <Check className="w-3.5 h-3.5 text-[#2E523E]" /> : <Copy className="w-3.5 h-3.5 text-[#57534E]" />}
+                  <span>{copied ? 'Copied' : 'Copy Slip'}</span>
                 </button>
-                <button
-                  type="button"
-                  onClick={handleSave}
-                  className="px-5 py-2 rounded-lg bg-[#2E523E] hover:bg-[#244231] text-white font-medium text-xs shadow-vintage-sm transition-all"
+
+                <a
+                  href={`https://wa.me/?text=${whatsappMessage}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-2.5 px-3 rounded-lg bg-[#2E523E] hover:bg-[#244231] text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-colors shadow-vintage-xs"
                 >
-                  Add Creator & Activate Credentials
-                </button>
+                  <Send className="w-3.5 h-3.5" />
+                  <span>WhatsApp</span>
+                </a>
+
+                <a
+                  href={`mailto:${creatorEmail}?subject=${emailSubject}&body=${emailBody}`}
+                  className="py-2.5 px-3 rounded-lg bg-[#1C1917] hover:bg-[#2E2A27] text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-colors shadow-vintage-xs"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>Email Creator</span>
+                </a>
               </div>
+
+              <button
+                type="button"
+                onClick={handleFinish}
+                className="w-full py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] hover:bg-[#F2EDE4] text-xs font-medium text-[#1C1917] transition-colors"
+              >
+                Done & Return to Roster
+              </button>
             </div>
           )}
         </div>

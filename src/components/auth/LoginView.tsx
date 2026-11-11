@@ -24,6 +24,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showQuickAccess, setShowQuickAccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -159,76 +160,89 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
             </button>
           </form>
 
-          {/* Quick Demo Switcher */}
-          <div className="pt-4 border-t border-[#F0ECE4] space-y-3">
-            <div className="flex items-center justify-between text-[11px] text-[#78716C]">
-              <span className="font-mono uppercase tracking-wider text-[10px]">Instant Local Access:</span>
-              <span>Click to auto-login</span>
-            </div>
-
-            <div className="grid grid-cols-1 gap-2">
-              {/* Admin Button */}
-              <button
-                type="button"
-                onClick={() => handleQuickDemoLogin('acc-admin')}
-                className="p-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F5F2EB] border border-[#E7E2DA] text-left transition-colors flex items-center justify-between text-xs group"
-              >
-                <div className="flex items-center gap-2.5">
-                  <span className="w-7 h-7 rounded-md bg-[#1C1917] text-white flex items-center justify-center font-bold text-xs">
-                    👑
-                  </span>
-                  <div>
-                    <div className="font-semibold text-[#1C1917] group-hover:text-[#C25E3E]">
-                      Super Admin (Agency HQ)
-                    </div>
-                    <span className="text-[10px] text-[#78716C] font-mono">admin@theicompany.com</span>
-                  </div>
-                </div>
-                <span className="text-[10px] text-[#2E523E] font-medium px-2 py-0.5 rounded bg-[#EEF5F1] border border-[#D1E3D8]">
-                  Full Control
+          {/* Quick Demo Switcher - Collapsible */}
+          <div className="pt-3 border-t border-[#F0ECE4] space-y-2">
+            <button
+              type="button"
+              onClick={() => setShowQuickAccess(!showQuickAccess)}
+              className="w-full flex items-center justify-between text-xs text-[#78716C] hover:text-[#1C1917] transition-colors py-1.5 font-sans"
+            >
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#2E523E]" />
+                <span className="font-medium text-[11px]">
+                  {showQuickAccess ? 'Hide Demo Logins' : 'Agency Reference Logins (Admin, Brand, Creator)'}
                 </span>
-              </button>
+              </div>
+              <span className="text-[10px] font-mono text-[#78716C] bg-[#FAF8F5] px-2 py-0.5 rounded border border-[#E7E2DA]">
+                {showQuickAccess ? '▲ Close' : '▼ View'}
+              </span>
+            </button>
 
-              {/* Brand 1: Nothing India */}
-              <button
-                type="button"
-                onClick={() => handleQuickDemoLogin('acc-br-1')}
-                className="p-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F5F2EB] border border-[#E7E2DA] text-left transition-colors flex items-center justify-between text-xs group"
-              >
-                <div className="flex items-center gap-2.5">
-                  <span className="w-7 h-7 rounded-md bg-[#FAF8F5] border border-[#E2DDD5] flex items-center justify-center text-xs">
-                    🏢
-                  </span>
-                  <div>
-                    <div className="font-semibold text-[#1C1917] group-hover:text-[#C25E3E]">
-                      Nothing India (Brand Client)
+            {showQuickAccess && (
+              <div className="grid grid-cols-1 gap-2 pt-1 animate-fade-in">
+                {/* Admin Button */}
+                <button
+                  type="button"
+                  onClick={() => handleQuickDemoLogin('acc-admin')}
+                  className="p-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F5F2EB] border border-[#E7E2DA] text-left transition-colors flex items-center justify-between text-xs group"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-7 h-7 rounded-md bg-[#1C1917] text-white flex items-center justify-center font-bold text-xs">
+                      👑
+                    </span>
+                    <div>
+                      <div className="font-semibold text-[#1C1917] group-hover:text-[#C25E3E]">
+                        Super Admin (Agency HQ)
+                      </div>
+                      <span className="text-[10px] text-[#78716C] font-mono">admin@theicompany.com · admin123</span>
                     </div>
-                    <span className="text-[10px] text-[#78716C] font-mono">nothing@brands.theicompany.com</span>
                   </div>
-                </div>
-                <span className="text-[10px] text-[#78716C] font-mono">₹18.5L Budget</span>
-              </button>
+                  <span className="text-[10px] text-[#2E523E] font-medium px-2 py-0.5 rounded bg-[#EEF5F1] border border-[#D1E3D8]">
+                    Full Control
+                  </span>
+                </button>
 
-              {/* Creator 1: Tech Burner */}
-              <button
-                type="button"
-                onClick={() => handleQuickDemoLogin('acc-inf-1')}
-                className="p-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F5F2EB] border border-[#E7E2DA] text-left transition-colors flex items-center justify-between text-xs group"
-              >
-                <div className="flex items-center gap-2.5">
-                  <span className="w-7 h-7 rounded-md bg-[#FAF8F5] border border-[#E2DDD5] flex items-center justify-center text-xs">
-                    ✨
-                  </span>
-                  <div>
-                    <div className="font-semibold text-[#1C1917] group-hover:text-[#C25E3E]">
-                      Shlok Srivastava (@techburner)
+                {/* Brand 1: Nothing India */}
+                <button
+                  type="button"
+                  onClick={() => handleQuickDemoLogin('acc-br-1')}
+                  className="p-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F5F2EB] border border-[#E7E2DA] text-left transition-colors flex items-center justify-between text-xs group"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-7 h-7 rounded-md bg-[#FAF8F5] border border-[#E2DDD5] flex items-center justify-center text-xs">
+                      🏢
+                    </span>
+                    <div>
+                      <div className="font-semibold text-[#1C1917] group-hover:text-[#C25E3E]">
+                        Nothing India (Brand Client)
+                      </div>
+                      <span className="text-[10px] text-[#78716C] font-mono">nothing@brands.theicompany.com · nothing123</span>
                     </div>
-                    <span className="text-[10px] text-[#78716C] font-mono">techburner@creators.theicompany.com</span>
                   </div>
-                </div>
-                <span className="text-[10px] text-[#2E523E] font-mono">4.3M Reach</span>
-              </button>
-            </div>
+                  <span className="text-[10px] text-[#78716C] font-mono">Brand Portal</span>
+                </button>
+
+                {/* Creator 1: Tech Burner */}
+                <button
+                  type="button"
+                  onClick={() => handleQuickDemoLogin('acc-inf-1')}
+                  className="p-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F5F2EB] border border-[#E7E2DA] text-left transition-colors flex items-center justify-between text-xs group"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-7 h-7 rounded-md bg-[#FAF8F5] border border-[#E2DDD5] flex items-center justify-center text-xs">
+                      ✨
+                    </span>
+                    <div>
+                      <div className="font-semibold text-[#1C1917] group-hover:text-[#C25E3E]">
+                        Shlok Srivastava (@techburner)
+                      </div>
+                      <span className="text-[10px] text-[#78716C] font-mono">techburner@creators.theicompany.com · tech123</span>
+                    </div>
+                  </div>
+                  <span className="text-[10px] text-[#2E523E] font-mono">Creator Desk</span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

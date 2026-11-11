@@ -1,7 +1,7 @@
 <!-- AUTO-SYNC-START -->
 ## 🔄 Automated Verification & State Manifest (Auto-Updated)
-> **Last Synchronized**: `2026-11-11T16:42:48.879Z`  
-> **Active Git Commit**: `be24491` (`main`) — *feat: add Legal Contract Agreement, GST Tax Invoicing, and 1-Click WhatsApp Dispatch*  
+> **Last Synchronized**: `2026-11-11T16:57:36.929Z`  
+> **Active Git Commit**: `1d2044b` (`main`) — *fix: populate all demo accounts in Supabase and ensure fail-safe quick login*  
 > **Database Status**: `CONNECTED (Supabase PostgreSQL)`  
 > **Android Native**: `SYNCHRONIZED (Capacitor Android)`  
 > **Discovered Portals (3)**: `AdminMasterView.tsx`, `BrandPortalView.tsx`, `CreatorPortalView.tsx`  
