@@ -1,4 +1,4 @@
-const https = require('https');
+import https from 'node:https';
 
 function parseFollowerString(str) {
   if (!str) return 0;
@@ -12,7 +12,7 @@ function parseFollowerString(str) {
   return parseInt(cleaned, 10) || 0;
 }
 
-function scrapeInstagram(handle) {
+export function scrapeInstagram(handle) {
   return new Promise((resolve) => {
     const cleanHandle = handle.replace(/[^a-zA-Z0-9._]/g, '').toLowerCase();
     const url = `https://www.instagram.com/${cleanHandle}/`;
@@ -28,7 +28,7 @@ function scrapeInstagram(handle) {
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
-        if (res.statusCode >= 400) {
+        if (res.statusCode && res.statusCode >= 400) {
           return resolve({ success: false, error: `Instagram returned HTTP ${res.statusCode}` });
         }
 
@@ -93,10 +93,10 @@ function scrapeInstagram(handle) {
   });
 }
 
-exports.handler = async (event) => {
+export async function handler(event) {
   const headers = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, Accept',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Content-Type': 'application/json'
   };
@@ -132,4 +132,4 @@ exports.handler = async (event) => {
       body: JSON.stringify({ success: false, error: err.message })
     };
   }
-};
+}

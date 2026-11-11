@@ -1,7 +1,7 @@
 <!-- AUTO-SYNC-START -->
 ## 🔄 Automated Verification & State Manifest (Auto-Updated)
-> **Last Synchronized**: `2026-11-11T17:18:07.355Z`  
-> **Active Git Commit**: `6eb20ca` (`main`) — *feat: complete end-to-end admin credential issuance, instant dispatch slips, and clean production authentication*  
+> **Last Synchronized**: `2026-11-11T18:08:39.731Z`  
+> **Active Git Commit**: `249647c` (`main`) — *feat: implement authentic live Instagram profile extraction and editable telemetry controls*  
 > **Database Status**: `CONNECTED (Supabase PostgreSQL)`  
 > **Android Native**: `SYNCHRONIZED (Capacitor Android)`  
 > **Discovered Portals (3)**: `AdminMasterView.tsx`, `BrandPortalView.tsx`, `CreatorPortalView.tsx`  

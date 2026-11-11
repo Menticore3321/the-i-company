@@ -93,7 +93,7 @@ export default defineConfig({
       name: 'instagram-proxy-middleware',
       configureServer(server) {
         server.middlewares.use(async (req, res, next) => {
-          if (req.url && req.url.startsWith('/.netlify/functions/instagram')) {
+          if (req.url && (req.url.startsWith('/api/instagram') || req.url.startsWith('/.netlify/functions/instagram'))) {
             const urlObj = new URL(req.url, 'http://localhost:3000');
             const handle = urlObj.searchParams.get('handle') || '';
             res.setHeader('Content-Type', 'application/json');
