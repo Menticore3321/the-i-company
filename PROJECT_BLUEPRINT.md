@@ -1,7 +1,7 @@
 <!-- AUTO-SYNC-START -->
 ## 🔄 Automated Verification & State Manifest (Auto-Updated)
-> **Last Synchronized**: `2026-11-11T16:57:36.929Z`  
-> **Active Git Commit**: `1d2044b` (`main`) — *fix: populate all demo accounts in Supabase and ensure fail-safe quick login*  
+> **Last Synchronized**: `2026-11-11T17:18:07.355Z`  
+> **Active Git Commit**: `6eb20ca` (`main`) — *feat: complete end-to-end admin credential issuance, instant dispatch slips, and clean production authentication*  
 > **Database Status**: `CONNECTED (Supabase PostgreSQL)`  
 > **Android Native**: `SYNCHRONIZED (Capacitor Android)`  
 > **Discovered Portals (3)**: `AdminMasterView.tsx`, `BrandPortalView.tsx`, `CreatorPortalView.tsx`  

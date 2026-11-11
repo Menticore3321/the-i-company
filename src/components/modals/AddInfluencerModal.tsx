@@ -9,13 +9,16 @@ import {
   CheckCircle2, 
   ShieldCheck, 
   Sparkles, 
-  Lock,
-  Copy,
-  Check,
-  Send,
-  Mail,
-  Key,
-  DollarSign
+  Lock, 
+  Copy, 
+  Check, 
+  Send, 
+  Mail, 
+  Key, 
+  DollarSign,
+  Image as ImageIcon,
+  FileText,
+  Users
 } from 'lucide-react';
 
 interface AddInfluencerModalProps {
@@ -34,6 +37,16 @@ const CATEGORIES: InfluencerCategory[] = [
   'Lifestyle & Entertainment'
 ];
 
+function formatFollowerCount(num: number): string {
+  if (num >= 1000000) {
+    return `${(num / 1000000).toFixed(1).replace(/\.0$/, '')}M`;
+  }
+  if (num >= 1000) {
+    return `${(num / 1000).toFixed(1).replace(/\.0$/, '')}K`;
+  }
+  return num.toLocaleString();
+}
+
 export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
   isOpen,
   onClose,
@@ -44,11 +57,15 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
   const [isScanning, setIsScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
   const [scannedResult, setScannedResult] = useState<Influencer | null>(null);
+  const [isLiveExtracted, setIsLiveExtracted] = useState(false);
+  const [extractionNotice, setExtractionNotice] = useState('');
 
   // Editable fields by Admin
   const [customName, setCustomName] = useState('');
   const [customFollowers, setCustomFollowers] = useState(0);
   const [customRate, setCustomRate] = useState(0);
+  const [customAvatar, setCustomAvatar] = useState('');
+  const [customBio, setCustomBio] = useState('');
   const [creatorEmail, setCreatorEmail] = useState('');
   const [creatorPassword, setCreatorPassword] = useState('');
   const [isCreated, setIsCreated] = useState(false);
@@ -56,30 +73,43 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleStartScan = (e: React.FormEvent) => {
+  const handleStartScan = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!handle.trim()) return;
 
     setIsScanning(true);
     setScanStep(1);
 
-    setTimeout(() => setScanStep(2), 400);
-    setTimeout(() => setScanStep(3), 800);
-    setTimeout(() => {
-      const result = analyzeInstagramHandle(handle, category);
+    try {
+      // Step 1: Connecting to Instagram
+      await new Promise(r => setTimeout(r, 400));
+      setScanStep(2);
+
+      // Step 2: Extracting real public profile metadata
+      const result = await analyzeInstagramHandle(handle, category);
+      setScanStep(3);
+      await new Promise(r => setTimeout(r, 300));
+
       const cleanHandle = handle.replace('@', '').toLowerCase().replace(/[^a-z0-9]/g, '');
       const email = `${cleanHandle}@creators.theicompany.com`;
       const pwd = `creator#${Math.floor(1000 + Math.random() * 9000)}`;
 
       setScannedResult(result);
+      setIsLiveExtracted(Boolean(result.isLiveExtracted));
+      setExtractionNotice(result.extractionNotice || '');
       setCustomName(result.name);
       setCustomFollowers(result.followers);
       setCustomRate(result.ratePerReel);
+      setCustomAvatar(result.avatar);
+      setCustomBio(result.bio);
       setCreatorEmail(email);
       setCreatorPassword(pwd);
+    } catch (err) {
+      console.error('Scan error:', err);
+    } finally {
       setIsScanning(false);
       setScanStep(0);
-    }, 1200);
+    }
   };
 
   const handleGenerateStrongPassword = () => {
@@ -89,11 +119,22 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
 
   const handleSave = () => {
     if (scannedResult) {
+      const followersNum = Number(customFollowers) || scannedResult.followers;
+      let calculatedTier = scannedResult.tier;
+      if (followersNum < 10000) calculatedTier = 'Nano (1k-10k)';
+      else if (followersNum < 50000) calculatedTier = 'Micro (10k-50k)';
+      else if (followersNum < 500000) calculatedTier = 'Mid (50k-500k)';
+      else if (followersNum < 1000000) calculatedTier = 'Macro (500k-1M)';
+      else calculatedTier = 'Mega (1M+)';
+
       const finalInfluencer: Influencer = {
         ...scannedResult,
         name: customName.trim() || scannedResult.name,
-        followers: Number(customFollowers) || scannedResult.followers,
+        followers: followersNum,
         ratePerReel: Number(customRate) || scannedResult.ratePerReel,
+        avatar: customAvatar.trim() || scannedResult.avatar,
+        bio: customBio.trim() || scannedResult.bio,
+        tier: calculatedTier,
         category,
         loginEmail: creatorEmail.trim(),
         loginPassword: creatorPassword.trim()
@@ -157,7 +198,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
 
   return (
     <div className="fixed inset-0 z-50 bg-[#1C1917]/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in overflow-y-auto">
-      <div className="bg-[#FAF8F5] border border-[#E7E2DA] rounded-2xl w-full max-w-xl shadow-vintage-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
+      <div className="bg-[#FAF8F5] border border-[#E7E2DA] rounded-2xl w-full max-w-xl shadow-vintage-2xl overflow-hidden my-auto max-h-[94vh] flex flex-col">
         {/* Header */}
         <div className="p-6 border-b border-[#E7E2DA] bg-[#F7F4EE] flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -200,7 +241,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                         type="text"
                         value={handle}
                         onChange={(e) => setHandle(e.target.value)}
-                        placeholder="e.g. @tanmaybhat or @komalpandeyofficial"
+                        placeholder="e.g. tanmaybhat or komalpandeyofficial"
                         required
                         className="w-full pl-8 pr-3.5 py-2.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] font-mono focus:outline-none focus:border-[#1C1917]"
                       />
@@ -233,15 +274,15 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                     <>
                       <Loader2 className="w-3.5 h-3.5 animate-spin text-[#1C1917]" />
                       <span>
-                        {scanStep === 1 && 'Scanning public Instagram graph...'}
-                        {scanStep === 2 && 'Computing audience authenticity & reel views...'}
+                        {scanStep === 1 && 'Connecting to Instagram Graph...'}
+                        {scanStep === 2 && 'Extracting authentic profile, followers & avatar...'}
                         {scanStep === 3 && 'Generating credentials & telemetry dossier...'}
                       </span>
                     </>
                   ) : (
                     <>
                       <Search className="w-3.5 h-3.5 text-[#1C1917]" />
-                      <span>{scannedResult ? 'Re-scan Profile Telemetry' : 'Scan & Prepare Onboarding'}</span>
+                      <span>{scannedResult ? 'Re-scan Live Instagram Data' : 'Extract Live Instagram Data'}</span>
                     </>
                   )}
                 </button>
@@ -250,30 +291,61 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
               {/* Scanned & Editable Dossier */}
               {scannedResult && (
                 <div className="space-y-4 pt-4 border-t border-[#E7E2DA] animate-fade-in">
-                  <div className="p-3.5 rounded-xl bg-[#EEF5F1] border border-[#D1E3D8] flex items-center justify-between text-xs">
+                  {/* Status Banner */}
+                  <div className={`p-3 rounded-xl border flex items-center justify-between text-xs ${
+                    isLiveExtracted 
+                      ? 'bg-[#EEF5F1] border-[#D1E3D8]' 
+                      : 'bg-[#FAF4E8] border-[#E9DFCE]'
+                  }`}>
                     <div className="flex items-center gap-2.5">
                       <img
-                        src={scannedResult.avatar}
-                        alt={scannedResult.name}
-                        className="w-10 h-10 rounded-full object-cover border border-[#1C1917]"
+                        src={customAvatar || scannedResult.avatar}
+                        alt={customName || scannedResult.name}
+                        className="w-11 h-11 rounded-full object-cover border border-[#1C1917] shadow-vintage-xs"
                       />
                       <div>
-                        <strong className="text-[#1C1917] block font-serif text-sm">{scannedResult.name}</strong>
-                        <span className="text-[11px] text-[#2E523E]">@{scannedResult.handle} · {scannedResult.tier}</span>
+                        <div className="flex items-center gap-2">
+                          <strong className="text-[#1C1917] font-serif text-sm">
+                            {customName || scannedResult.name}
+                          </strong>
+                          {isLiveExtracted ? (
+                            <span className="px-2 py-0.5 rounded-full bg-[#2E523E] text-white text-[9px] font-mono uppercase tracking-wider font-semibold">
+                              Live Scraped
+                            </span>
+                          ) : (
+                            <span className="px-2 py-0.5 rounded-full bg-[#8A6B32] text-white text-[9px] font-mono uppercase tracking-wider font-semibold">
+                              Verified Baseline
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[11px] text-[#78716C]">
+                          @{scannedResult.handle} · {formatFollowerCount(customFollowers || scannedResult.followers)} followers
+                        </span>
                       </div>
                     </div>
+
                     <div className="text-right">
-                      <span className="font-mono font-bold text-[#2E523E] text-xs">
+                      <span className="font-mono font-bold text-[#2E523E] text-xs block">
                         {scannedResult.authenticityScore}% Authenticity
                       </span>
-                      <span className="text-[10px] text-[#78716C] block">{scannedResult.engagementRate}% Engagement</span>
+                      <span className="text-[10px] text-[#78716C] block">
+                        {scannedResult.engagementRate}% Engagement
+                      </span>
                     </div>
                   </div>
+
+                  {extractionNotice && (
+                    <div className="text-[11px] text-[#78716C] italic px-1">
+                      ℹ️ {extractionNotice}
+                    </div>
+                  )}
 
                   {/* Editable Specs */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
-                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1">Creator Name</label>
+                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1">
+                        Creator Full Name
+                      </label>
                       <input
                         type="text"
                         value={customName}
@@ -281,8 +353,16 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                         className="w-full px-3 py-2 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
                       />
                     </div>
+
                     <div>
-                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1">Followers Count</label>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="text-[11px] font-semibold text-[#1C1917]">
+                          Followers Count
+                        </label>
+                        <span className="text-[10px] font-mono text-[#2E523E] font-semibold">
+                          ({formatFollowerCount(customFollowers)})
+                        </span>
+                      </div>
                       <input
                         type="number"
                         value={customFollowers}
@@ -290,13 +370,47 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                         className="w-full px-3 py-2 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
                       />
                     </div>
+
                     <div>
-                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1">Rate Per Reel (₹)</label>
+                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1">
+                        Rate Per Reel (₹)
+                      </label>
                       <input
                         type="number"
                         value={customRate}
                         onChange={(e) => setCustomRate(Number(e.target.value))}
                         className="w-full px-3 py-2 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Profile Pic & Bio Inputs */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1 flex items-center gap-1">
+                        <ImageIcon className="w-3 h-3 text-[#78716C]" />
+                        <span>Profile Picture Avatar URL</span>
+                      </label>
+                      <input
+                        type="url"
+                        value={customAvatar}
+                        onChange={(e) => setCustomAvatar(e.target.value)}
+                        placeholder="https://images.unsplash.com/... or Instagram CDN link"
+                        className="w-full px-3 py-2 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1 flex items-center gap-1">
+                        <FileText className="w-3 h-3 text-[#78716C]" />
+                        <span>Profile Bio</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={customBio}
+                        onChange={(e) => setCustomBio(e.target.value)}
+                        placeholder="Digital Creator, YouTuber & Storyteller"
+                        className="w-full px-3 py-2 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
                       />
                     </div>
                   </div>
@@ -380,6 +494,14 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                 <div className="flex justify-between items-center pb-2 border-b border-[#F0ECE4]">
                   <span className="text-[#78716C] text-[10px] uppercase font-sans font-semibold">CREATOR CREDENTIALS SLIP</span>
                   <span className="text-[10px] text-[#2E523E] font-sans font-semibold">ACTIVE TALENT DESK</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#78716C]">Creator Name:</span>
+                  <span className="font-semibold text-[#1C1917]">{customName} (@{handle.replace('@', '')})</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#78716C]">Followers:</span>
+                  <span className="font-bold text-[#2E523E]">{formatFollowerCount(customFollowers)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#78716C]">Studio URL:</span>
