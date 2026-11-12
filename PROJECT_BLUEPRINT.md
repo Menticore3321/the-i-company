@@ -1,7 +1,7 @@
 <!-- AUTO-SYNC-START -->
 ## 🔄 Automated Verification & State Manifest (Auto-Updated)
-> **Last Synchronized**: `2026-11-12T09:26:58.980Z`  
-> **Active Git Commit**: `432b196` (`main`) — *chore: update verification stamp for commit 65e2921*  
+> **Last Synchronized**: `2026-11-12T09:27:23.292Z`  
+> **Active Git Commit**: `f7a30af` (`main`) — *fix: persist onboarded creators to Supabase without schema errors and support carousel media shortcodes*  
 > **Database Status**: `CONNECTED (Supabase PostgreSQL)`  
 > **Android Native**: `SYNCHRONIZED (Capacitor Android)`  
 > **Discovered Portals (3)**: `AdminMasterView.tsx`, `BrandPortalView.tsx`, `CreatorPortalView.tsx`  
