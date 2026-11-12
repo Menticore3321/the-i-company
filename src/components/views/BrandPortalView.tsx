@@ -46,32 +46,32 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
   return (
     <div className="space-y-6">
       {/* Brand Header Banner (Light Glass) */}
-      <div className="p-6 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-2xl shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden">
+      <div className="p-6 rounded-3xl weather-glass-card weather-glass-card-hover flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
         
         <div className="flex items-center gap-4">
           <img
             src={activeBrand.logo}
             alt={activeBrand.name}
-            className="w-14 h-14 rounded-2xl object-cover border border-slate-200 shadow-sm"
+            className="w-14 h-14 rounded-2xl object-cover border border-slate-200 shadow-xs"
           />
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-bold">
-                ENTERPRISE CLIENT PORTAL ·
+              <span className="text-[11px] font-semibold text-blue-600 tracking-wide uppercase">
+                Enterprise Client Portal
               </span>
-              <h2 className="font-sans text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">{activeBrand.name}</h2>
             </div>
-            <p className="text-xs text-slate-500 mt-1 font-medium">
-              {activeBrand.industry} · Primary Contact: {activeBrand.contactEmail}
+            <h2 className="font-sans text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mt-0.5">{activeBrand.name}</h2>
+            <p className="text-xs text-slate-500 mt-1 font-normal">
+              {activeBrand.industry} · Contact: {activeBrand.contactEmail}
             </p>
           </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <div className="px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono text-slate-700 shadow-xs">
-            <span className="text-slate-400 font-bold">Account: </span>
-            <strong className="text-slate-900">{activeBrand.loginEmail || activeBrand.contactEmail}</strong>
+          <div className="px-3.5 py-2 rounded-xl weather-glass-pod text-xs text-slate-700 shadow-xs">
+            <span className="text-slate-400 font-medium">Account: </span>
+            <strong className="text-slate-900 font-semibold">{activeBrand.loginEmail || activeBrand.contactEmail}</strong>
           </div>
 
           <button
@@ -88,41 +88,41 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">ACTIVE CAMPAIGNS</span>
+          <span className="text-xs font-semibold text-slate-500 block">Active Campaigns</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
-            {brandCampaigns.length} Active
+            {brandCampaigns.length} <span className="text-base font-semibold text-slate-500">Live</span>
           </div>
-          <span className="text-[11px] text-slate-500 mt-1 block font-mono">Live across India creator networks</span>
+          <span className="text-xs text-slate-500 mt-1.5 block">Managed creator networks</span>
         </div>
 
         <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">PROJECTED IMPRESSIONS</span>
+          <span className="text-xs font-semibold text-slate-500 block">Projected Reach</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             {(totalImpressions / 1000000).toFixed(1)}M
           </div>
-          <span className="text-[11px] text-emerald-700 mt-1 block font-mono font-bold flex items-center gap-1">
+          <span className="text-xs text-emerald-700 mt-1.5 block font-medium flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Blended multi-tier reach
+            Blended multi-tier audience
           </span>
         </div>
 
         <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">DEPLOYED BUDGET</span>
+          <span className="text-xs font-semibold text-slate-500 block">Deployed Budget</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
-            ₹{(totalSpent / 100000).toFixed(1)} Lakhs
+            ₹{(totalSpent / 100000).toFixed(1)} <span className="text-base font-semibold text-slate-500">Lakhs</span>
           </div>
-          <span className="text-[11px] text-slate-500 mt-1 block font-mono">Contracted across deliverables</span>
+          <span className="text-xs text-slate-500 mt-1.5 block">Contracted across deliverables</span>
         </div>
 
         <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">PENDING REVIEWS</span>
+          <span className="text-xs font-semibold text-slate-500 block">Pending Reviews</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-amber-600 mt-1 tracking-tight">
-            {pendingApprovals.length} Drafts
+            {pendingApprovals.length} <span className="text-base font-semibold text-amber-600/80">Drafts</span>
           </div>
-          <span className="text-[11px] text-slate-500 mt-1 block font-mono">Awaiting client sign-off</span>
+          <span className="text-xs text-slate-500 mt-1.5 block">Awaiting client sign-off</span>
         </div>
       </div>
 

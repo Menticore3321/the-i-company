@@ -96,15 +96,15 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
 
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-bold">
-                TALENT ACCOUNT ·
+              <span className="text-[11px] font-semibold text-blue-600 tracking-wide uppercase">
+                Creator Profile
               </span>
-              <h2 className="font-sans text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">{creator.name}</h2>
+              <h2 className="font-sans text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">{creator.name}</h2>
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span className="px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] font-mono font-semibold text-slate-700">
+              <span className="px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-medium text-slate-700">
                 {creator.tier}
               </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-[10px] font-mono font-bold text-emerald-700 flex items-center gap-1 shadow-xs">
+              <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-700 flex items-center gap-1 shadow-xs">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 {creator.authenticityScore}% Verified
               </span>
@@ -115,7 +115,7 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
                 href={`https://instagram.com/${cleanHandle}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors font-mono"
+                className="font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors font-mono"
               >
                 <span>@{cleanHandle}</span>
                 <ExternalLink className="w-3 h-3 text-blue-400" />
@@ -127,7 +127,7 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
             </div>
 
             {creator.bio && (
-              <p className="text-xs text-slate-600 italic mt-2 max-w-2xl line-clamp-2 font-serif">
+              <p className="text-xs text-slate-600 italic mt-2 max-w-2xl line-clamp-2">
                 "{creator.bio}"
               </p>
             )}
@@ -135,9 +135,9 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
         </div>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 self-stretch lg:self-auto">
-          <div className="px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono shadow-xs">
-            <span className="text-[10px] text-slate-400 block uppercase font-bold">Talent Access Email</span>
-            <strong className="text-slate-800 text-[11px]">{creator.loginEmail || `${cleanHandle}@creators.theicompany.com`}</strong>
+          <div className="px-3.5 py-2 rounded-xl weather-glass-pod text-xs shadow-xs">
+            <span className="text-[10px] text-slate-400 block uppercase font-medium">Talent Access Email</span>
+            <strong className="text-slate-800 text-xs font-mono">{creator.loginEmail || `${cleanHandle}@creators.theicompany.com`}</strong>
           </div>
           <a
             href={`https://instagram.com/${cleanHandle}`}
@@ -146,7 +146,7 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
             className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-[0_4px_14px_rgba(37,99,235,0.25)] transition-all cursor-pointer"
           >
             <Instagram className="w-3.5 h-3.5" />
-            <span>Open Instagram Profile</span>
+            <span>Open Profile</span>
           </a>
         </div>
       </div>
@@ -155,11 +155,11 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">AUDIENCE REACH</span>
+          <span className="text-xs font-semibold text-slate-500 block">Audience Reach</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             {formatFollowerCount(creator.followers)}
           </div>
-          <span className="text-[11px] text-emerald-700 mt-1 block font-bold font-mono flex items-center gap-1">
+          <span className="text-xs text-emerald-700 mt-1.5 block font-semibold flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             {creator.engagementRate}% Engagement Rate
           </span>
@@ -167,33 +167,33 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
 
         <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">AVG REEL PERFORMANCE</span>
+          <span className="text-xs font-semibold text-slate-500 block">Avg Reel Views</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
-            ~{formatFollowerCount(creator.avgReelViews)} views
+            ~{formatFollowerCount(creator.avgReelViews)}
           </div>
-          <span className="text-[11px] text-slate-500 mt-1 block font-mono">
+          <span className="text-xs text-slate-500 mt-1.5 block">
             ~{formatFollowerCount(creator.avgLikes)} likes · ~{creator.avgComments} comments
           </span>
         </div>
 
         <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">COMMERCIAL RATE CARD</span>
+          <span className="text-xs font-semibold text-slate-500 block">Commercial Rate</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             ₹{creator.ratePerReel.toLocaleString()}
           </div>
-          <span className="text-[11px] text-slate-500 mt-1 block font-mono">
+          <span className="text-xs text-slate-500 mt-1.5 block">
             Story: ₹{(creator.ratePerStory / 1000).toFixed(0)}k · Post: ₹{(creator.ratePerPost / 1000).toFixed(0)}k
           </span>
         </div>
 
         <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">CLEARED ESCROW BALANCE</span>
+          <span className="text-xs font-semibold text-slate-500 block">Cleared Escrow</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1 tracking-tight">
             ₹{completedEarnings.toLocaleString()}
           </div>
-          <span className="text-[11px] text-slate-500 mt-1 block font-mono">
+          <span className="text-xs text-slate-500 mt-1.5 block">
             ₹{inEscrow.toLocaleString()} in escrow pending review
           </span>
         </div>
@@ -240,6 +240,9 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
                         target.src = `/api/thumbnail?shortcode=${shortcode}`;
                       } else if (shortcode && !target.src.includes('onrender.com')) {
                         target.src = `https://the-i-company-scraper.onrender.com/thumbnail?shortcode=${shortcode}`;
+                      } else {
+                        // Fallback: hide broken img element so styled fallback gradient card displays cleanly
+                        target.style.display = 'none';
                       }
                     }}
                   />

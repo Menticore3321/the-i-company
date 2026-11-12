@@ -385,19 +385,19 @@ export const App: React.FC = () => {
         userRole={currentUser.role}
       />
 
-      {/* Minimal Vintage Footer */}
-      <footer className="mt-auto border-t border-[#E7E2DA] bg-[#F7F4EE] px-6 sm:px-8 py-5 text-xs text-[#78716C] flex flex-col sm:flex-row items-center justify-between gap-3">
+      {/* Weather Card Style Frosted Glass Footer */}
+      <footer className="mt-auto border-t border-white/60 bg-white/40 backdrop-blur-xl px-6 sm:px-8 py-4 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <span className="font-serif font-bold text-[#1C1917] text-sm">The I Company</span>
-          <span className="text-[#D6CFBF]">·</span>
-          <span>Atelier MMXXVI · Authenticated Role: {currentUser.role.toUpperCase()}</span>
+          <span className="font-bold text-slate-900 text-sm font-sans">The I Company</span>
+          <span className="text-slate-300">·</span>
+          <span>Talent & Brand Intelligence · Role: {currentUser.role.toUpperCase()}</span>
         </div>
-        <div className="flex items-center gap-4 text-[#78716C]">
-          <span>Role Isolation Active</span>
+        <div className="flex items-center gap-4 text-slate-500">
+          <span>Three-Tier Role Isolation</span>
           <span>•</span>
           <span>Escrow Protected Rail</span>
           <span>•</span>
-          <span className="text-[#2E523E] font-medium">Session: {currentUser.email}</span>
+          <span className="text-emerald-700 font-semibold font-mono">Session: {currentUser.email}</span>
         </div>
       </footer>
     </div>

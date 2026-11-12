@@ -102,85 +102,85 @@ Please sign in and access your designated workspace.`);
         {/* Metric 1 */}
         <div className="weather-glass-card weather-glass-card-hover rounded-3xl p-5 relative overflow-hidden group">
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white to-transparent absolute top-0 left-0 opacity-90" />
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span className="font-mono uppercase tracking-wider text-[10px] font-bold">MANAGED ROSTER</span>
+          <div className="flex items-center justify-between text-xs text-slate-500">
+            <span className="font-semibold text-slate-500 text-xs">Managed Talent</span>
             <span className="p-2 rounded-2xl bg-blue-50/80 border border-blue-200/80 text-blue-600 shadow-xs">
               <Users className="w-4 h-4" />
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 tracking-tight font-sans">
-            {influencers.length} Creators
+            {influencers.length} <span className="text-base font-semibold text-slate-500">Creators</span>
           </div>
-          <div className="flex items-center justify-between text-xs text-slate-600 mt-2.5 pt-2.5 border-t border-white/60 font-medium">
+          <div className="flex items-center justify-between text-xs text-slate-500 mt-2.5 pt-2.5 border-t border-white/60">
             <span>Total Reach:</span>
-            <strong className="text-slate-900 font-mono font-extrabold">{(totalFollowers / 1000000).toFixed(1)}M</strong>
+            <span className="text-slate-900 font-semibold tabular-nums">{(totalFollowers / 1000000).toFixed(1)}M Audience</span>
           </div>
         </div>
 
         {/* Metric 2 */}
         <div className="weather-glass-card weather-glass-card-hover rounded-3xl p-5 relative overflow-hidden group">
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white to-transparent absolute top-0 left-0 opacity-90" />
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span className="font-mono uppercase tracking-wider text-[10px] font-bold">COMMERCIAL VOLUME (GMV)</span>
+          <div className="flex items-center justify-between text-xs text-slate-500">
+            <span className="font-semibold text-slate-500 text-xs">Commercial Volume</span>
             <span className="p-2 rounded-2xl bg-emerald-50/80 border border-emerald-200/80 text-emerald-600 shadow-xs">
               <DollarSign className="w-4 h-4" />
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-2 tracking-tight font-sans">
-            ₹{(financials.totalGMV / 100000).toFixed(1)} Lakhs
+            ₹{(financials.totalGMV / 100000).toFixed(1)} <span className="text-base font-semibold text-emerald-600/80">Lakhs</span>
           </div>
-          <div className="flex items-center justify-between text-xs text-slate-600 mt-2.5 pt-2.5 border-t border-white/60 font-medium">
+          <div className="flex items-center justify-between text-xs text-slate-500 mt-2.5 pt-2.5 border-t border-white/60">
             <span>Escrow Secured:</span>
-            <strong className="text-emerald-700 font-mono font-extrabold">₹{(financials.escrowHeld / 100000).toFixed(1)}L</strong>
+            <span className="text-emerald-700 font-semibold tabular-nums">₹{(financials.escrowHeld / 100000).toFixed(1)}L Active</span>
           </div>
         </div>
 
         {/* Metric 3 */}
         <div className="weather-glass-card weather-glass-card-hover rounded-3xl p-5 relative overflow-hidden group">
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white to-transparent absolute top-0 left-0 opacity-90" />
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span className="font-mono uppercase tracking-wider text-[10px] font-bold">AGENCY REVENUE (20%)</span>
+          <div className="flex items-center justify-between text-xs text-slate-500">
+            <span className="font-semibold text-slate-500 text-xs">Agency Margin</span>
             <span className="p-2 rounded-2xl bg-purple-50/80 border border-purple-200/80 text-purple-600 shadow-xs">
               <TrendingUp className="w-4 h-4" />
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 tracking-tight font-sans">
-            ₹{(financials.agencyRevenue / 100000).toFixed(2)} Lakhs
+            ₹{(financials.agencyRevenue / 100000).toFixed(2)} <span className="text-base font-semibold text-slate-500">Lakhs</span>
           </div>
-          <div className="flex items-center justify-between text-xs text-slate-600 mt-2.5 pt-2.5 border-t border-white/60 font-medium">
-            <span>Disbursed to Talent:</span>
-            <strong className="text-slate-900 font-mono font-extrabold">₹{(financials.creatorsPaid / 100000).toFixed(1)}L</strong>
+          <div className="flex items-center justify-between text-xs text-slate-500 mt-2.5 pt-2.5 border-t border-white/60">
+            <span>Disbursed:</span>
+            <span className="text-slate-900 font-semibold tabular-nums">₹{(financials.creatorsPaid / 100000).toFixed(1)}L to Talent</span>
           </div>
         </div>
 
         {/* Metric 4 */}
         <div className="weather-glass-card weather-glass-card-hover rounded-3xl p-5 relative overflow-hidden group">
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white to-transparent absolute top-0 left-0 opacity-90" />
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span className="font-mono uppercase tracking-wider text-[10px] font-bold">AUTHENTICITY RATING</span>
+          <div className="flex items-center justify-between text-xs text-slate-500">
+            <span className="font-semibold text-slate-500 text-xs">Authenticity Score</span>
             <span className="p-2 rounded-2xl bg-blue-50/80 border border-blue-200/80 text-blue-600 shadow-xs">
               <ShieldCheck className="w-4 h-4" />
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 tracking-tight font-sans">
-            {avgAuthenticity}% Authentic
+            {avgAuthenticity}% <span className="text-base font-semibold text-slate-500">Verified</span>
           </div>
-          <div className="flex items-center justify-between text-xs text-slate-600 mt-2.5 pt-2.5 border-t border-white/60 font-medium">
-            <span>Bot Shield Verification:</span>
-            <span className="text-emerald-700 font-extrabold text-[11px] font-mono">ACTIVE</span>
+          <div className="flex items-center justify-between text-xs text-slate-500 mt-2.5 pt-2.5 border-t border-white/60">
+            <span>Bot Shield:</span>
+            <span className="text-emerald-700 font-semibold text-xs">Active & Monitored</span>
           </div>
         </div>
       </div>
 
       {/* SECTION 2: ADMIN NAVIGATION TABS (Weather Card Frosted Pill Bar) */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-2 border-b border-white/60">
-        <div className="flex items-center gap-1.5 p-1.5 rounded-3xl weather-glass-pod overflow-x-auto max-w-full">
+      <div className="flex items-center justify-start gap-2 overflow-x-auto pb-1 max-w-full">
+        <div className="flex items-center gap-1.5 p-1.5 rounded-2xl weather-glass-pod">
           <button
             onClick={() => setActiveTab('roster')}
             className={`whitespace-nowrap px-4 py-1.5 rounded-xl text-xs transition-all select-none cursor-pointer ${
               activeTab === 'roster'
-                ? 'bg-white text-blue-600 font-bold shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-white/80'
-                : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-white/40'
+                ? 'bg-white text-blue-600 font-semibold shadow-xs border border-white/80'
+                : 'text-slate-600 hover:text-slate-900 font-medium hover:bg-white/40'
             }`}
           >
             Influencer Roster ({influencers.length})
@@ -190,8 +190,8 @@ Please sign in and access your designated workspace.`);
             onClick={() => setActiveTab('brands')}
             className={`whitespace-nowrap px-4 py-1.5 rounded-xl text-xs transition-all select-none cursor-pointer ${
               activeTab === 'brands'
-                ? 'bg-white text-blue-600 font-bold shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-white/80'
-                : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-white/40'
+                ? 'bg-white text-blue-600 font-semibold shadow-xs border border-white/80'
+                : 'text-slate-600 hover:text-slate-900 font-medium hover:bg-white/40'
             }`}
           >
             Brand Portfolios ({brands.length})
@@ -201,8 +201,8 @@ Please sign in and access your designated workspace.`);
             onClick={() => setActiveTab('campaigns')}
             className={`whitespace-nowrap px-4 py-1.5 rounded-xl text-xs transition-all select-none cursor-pointer ${
               activeTab === 'campaigns'
-                ? 'bg-white text-blue-600 font-bold shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-white/80'
-                : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-white/40'
+                ? 'bg-white text-blue-600 font-semibold shadow-xs border border-white/80'
+                : 'text-slate-600 hover:text-slate-900 font-medium hover:bg-white/40'
             }`}
           >
             Campaigns & Escrow ({campaigns.length})
@@ -212,8 +212,8 @@ Please sign in and access your designated workspace.`);
             onClick={() => setActiveTab('accounts')}
             className={`whitespace-nowrap px-4 py-1.5 rounded-xl text-xs transition-all select-none flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'accounts'
-                ? 'bg-white text-blue-600 font-bold shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-white/80'
-                : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-white/40'
+                ? 'bg-white text-blue-600 font-semibold shadow-xs border border-white/80'
+                : 'text-slate-600 hover:text-slate-900 font-medium hover:bg-white/40'
             }`}
           >
             <Key className="w-3.5 h-3.5 text-blue-600" />
@@ -224,8 +224,8 @@ Please sign in and access your designated workspace.`);
             onClick={() => setActiveTab('geo')}
             className={`whitespace-nowrap px-4 py-1.5 rounded-xl text-xs transition-all select-none cursor-pointer ${
               activeTab === 'geo'
-                ? 'bg-white text-blue-600 font-bold shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-white/80'
-                : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-white/40'
+                ? 'bg-white text-blue-600 font-semibold shadow-xs border border-white/80'
+                : 'text-slate-600 hover:text-slate-900 font-medium hover:bg-white/40'
             }`}
           >
             Regional Reach (6 Hubs)
@@ -235,29 +235,11 @@ Please sign in and access your designated workspace.`);
             onClick={() => setActiveTab('ledger')}
             className={`whitespace-nowrap px-4 py-1.5 rounded-xl text-xs transition-all select-none cursor-pointer ${
               activeTab === 'ledger'
-                ? 'bg-white text-blue-600 font-bold shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-white/80'
-                : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-white/40'
+                ? 'bg-white text-blue-600 font-semibold shadow-xs border border-white/80'
+                : 'text-slate-600 hover:text-slate-900 font-medium hover:bg-white/40'
             }`}
           >
             Audit Ledger
-          </button>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button
-            onClick={onOpenAddModal}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white hover:bg-blue-50 border border-slate-200 text-xs font-semibold text-slate-700 hover:text-blue-600 shadow-xs transition-all cursor-pointer"
-          >
-            <Plus className="w-3.5 h-3.5 text-blue-600" />
-            <span>Link Creator</span>
-          </button>
-
-          <button
-            onClick={onOpenAddBrandModal}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white hover:bg-emerald-50 border border-slate-200 text-xs font-semibold text-slate-700 hover:text-emerald-700 shadow-xs transition-all cursor-pointer"
-          >
-            <Building2 className="w-3.5 h-3.5 text-emerald-600" />
-            <span>+ Add Brand</span>
           </button>
         </div>
       </div>
@@ -322,14 +304,14 @@ Please sign in and access your designated workspace.`);
           <div className="overflow-x-auto rounded-3xl weather-glass-pod shadow-xs">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-white/40 text-slate-600 border-b border-white/60 text-[11px] font-mono uppercase tracking-wider">
-                  <th className="py-3.5 px-4 font-bold">Creator</th>
-                  <th className="py-3.5 px-4 font-bold">Niche / Tier</th>
-                  <th className="py-3.5 px-4 font-bold">Followers</th>
-                  <th className="py-3.5 px-4 font-bold">ER% / Auth</th>
-                  <th className="py-3.5 px-4 font-bold">Rate Card</th>
-                  <th className="py-3.5 px-4 font-bold">Trajectory</th>
-                  <th className="py-3.5 px-4 font-bold text-right">Audit</th>
+                <tr className="bg-white/50 text-slate-500 border-b border-white/70 text-xs font-semibold">
+                  <th className="py-3 px-4">Creator</th>
+                  <th className="py-3 px-4">Niche & Tier</th>
+                  <th className="py-3 px-4">Audience Reach</th>
+                  <th className="py-3 px-4">Engagement & Auth</th>
+                  <th className="py-3 px-4">Rate Card</th>
+                  <th className="py-3 px-4">Status</th>
+                  <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/50 text-xs">
@@ -339,45 +321,45 @@ Please sign in and access your designated workspace.`);
                     onClick={() => onSelectInfluencer(inf)}
                     className="hover:bg-white/60 cursor-pointer transition-colors group"
                   >
-                    <td className="py-3.5 px-4">
+                    <td className="py-3 px-4">
                       <div className="flex items-center gap-3">
                         <img
                           src={inf.avatar}
                           alt={inf.name}
-                          className="w-10 h-10 rounded-full object-cover border-2 border-slate-200 group-hover:border-blue-500 transition-colors shadow-xs"
+                          className="w-9 h-9 rounded-full object-cover border border-slate-200 group-hover:border-blue-500 transition-colors shadow-xs"
                         />
                         <div>
-                          <div className="font-bold text-slate-900 flex items-center gap-1 group-hover:text-blue-600 transition-colors font-sans text-sm">
+                          <div className="font-semibold text-slate-900 flex items-center gap-1 group-hover:text-blue-600 transition-colors font-sans text-sm">
                             <span>{inf.name}</span>
                             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                           </div>
-                          <span className="text-[11px] text-blue-600 font-mono font-medium">@{inf.handle}</span>
+                          <span className="text-xs text-blue-600 font-mono">@{inf.handle}</span>
                         </div>
                       </div>
                     </td>
 
-                    <td className="py-3.5 px-4">
-                      <div className="text-slate-800 font-semibold font-sans">{inf.category}</div>
-                      <span className="text-[10px] text-slate-500 font-mono">{inf.tier}</span>
+                    <td className="py-3 px-4">
+                      <div className="text-slate-800 font-medium font-sans text-xs">{inf.category}</div>
+                      <span className="text-[11px] text-slate-500 font-sans">{inf.tier}</span>
                     </td>
 
-                    <td className="py-3.5 px-4">
-                      <div className="font-bold text-sm text-slate-900 font-sans">{(inf.followers / 1000).toFixed(0)}k</div>
-                      <span className="text-[10px] text-slate-500 font-mono">~{(inf.avgReelViews / 1000).toFixed(0)}k views/reel</span>
+                    <td className="py-3 px-4">
+                      <div className="font-semibold text-sm text-slate-900 font-sans tabular-nums">{(inf.followers / 1000).toFixed(0)}k</div>
+                      <span className="text-[11px] text-slate-500 font-sans tabular-nums">~{(inf.avgReelViews / 1000).toFixed(0)}k views/reel</span>
                     </td>
 
-                    <td className="py-3.5 px-4">
-                      <div className="font-mono font-bold text-emerald-600">{inf.engagementRate}%</div>
-                      <span className="text-[10px] text-slate-500 font-mono">{inf.authenticityScore}% verified</span>
+                    <td className="py-3 px-4">
+                      <div className="font-mono font-bold text-emerald-600 tabular-nums">{inf.engagementRate}%</div>
+                      <span className="text-[11px] text-slate-500 font-sans">{inf.authenticityScore}% verified</span>
                     </td>
 
-                    <td className="py-3.5 px-4">
-                      <div className="font-mono font-bold text-slate-900">₹{inf.ratePerReel.toLocaleString()}</div>
-                      <span className="text-[10px] text-slate-500 font-mono">Story: ₹{(inf.ratePerStory / 1000).toFixed(0)}k</span>
+                    <td className="py-3 px-4">
+                      <div className="font-semibold text-slate-900 tabular-nums">₹{inf.ratePerReel.toLocaleString()}</div>
+                      <span className="text-[11px] text-slate-500 font-sans">Story: ₹{(inf.ratePerStory / 1000).toFixed(0)}k</span>
                     </td>
 
-                    <td className="py-3.5 px-4">
-                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase border inline-block ${
+                    <td className="py-3 px-4">
+                      <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold border inline-block ${
                         inf.performanceStatus === 'stellar'
                           ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                           : inf.performanceStatus === 'high_growth'
@@ -390,7 +372,7 @@ Please sign in and access your designated workspace.`);
                       </span>
                     </td>
 
-                    <td className="py-3.5 px-4 text-right">
+                    <td className="py-3 px-4 text-right">
                       <div className="flex items-center justify-end gap-1.5">
                         <button
                           onClick={(e) => {
@@ -410,8 +392,7 @@ Please sign in and access your designated workspace.`);
                             className="px-3 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-700 hover:bg-emerald-600 hover:text-white transition-all font-semibold flex items-center gap-1 shadow-xs cursor-pointer"
                             title="Open creator's live studio dashboard"
                           >
-                            <span>Studio</span>
-                            <span>➔</span>
+                            <span>Studio ➔</span>
                           </button>
                         )}
                       </div>

@@ -257,6 +257,8 @@ export const InstagramInsightsModal: React.FC<InstagramInsightsModalProps> = ({
                           target.src = `/api/thumbnail?shortcode=${shortcode}`;
                         } else if (shortcode && !target.src.includes('onrender.com')) {
                           target.src = `https://the-i-company-scraper.onrender.com/thumbnail?shortcode=${shortcode}`;
+                        } else {
+                          target.style.display = 'none';
                         }
                       }}
                     />
