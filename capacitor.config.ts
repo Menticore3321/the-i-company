@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   server: {
     androidScheme: 'https',
-    url: 'https://theicompany.netlify.app',
+    url: 'https://the-i-company.vercel.app',
     cleartext: true
   }
 };
