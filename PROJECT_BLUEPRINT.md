@@ -1,7 +1,7 @@
 <!-- AUTO-SYNC-START -->
 ## 🔄 Automated Verification & State Manifest (Auto-Updated)
-> **Last Synchronized**: `2026-11-11T19:36:40.088Z`  
-> **Active Git Commit**: `7f4e606` (`main`) — *feat: add interactive recent media manager, custom reel linking, and accurate creator portfolios*  
+> **Last Synchronized**: `2026-11-12T04:01:14.415Z`  
+> **Active Git Commit**: `e84f3de` (`main`) — *refactor: delete hardcoded creators registry, remove fake presets, and rely strictly on real live extraction*  
 > **Database Status**: `CONNECTED (Supabase PostgreSQL)`  
 > **Android Native**: `SYNCHRONIZED (Capacitor Android)`  
 > **Discovered Portals (3)**: `AdminMasterView.tsx`, `BrandPortalView.tsx`, `CreatorPortalView.tsx`  

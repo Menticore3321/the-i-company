@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: the-i-company-scraper
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    region: singapore
+    envVars:
+      - key: PORT
+        value: 4000
+      - key: IG_SESSION_ID
+        sync: false
+

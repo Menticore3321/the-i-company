@@ -1,0 +1,23 @@
+{
+  "name": "the-i-company-scraper-service",
+  "version": "1.0.0",
+  "description": "Headless Stealth Chromium Scraper Microservice for Instagram Reels & Telemetry",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "puppeteer": "^24.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
+

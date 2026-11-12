@@ -3,7 +3,10 @@ import { Influencer, InfluencerCategory, UserAccount } from '../../types';
 import { 
   analyzeInstagramHandle, 
   getSavedInstagramSession, 
-  setSavedInstagramSession 
+  setSavedInstagramSession,
+  getScraperServiceUrl,
+  setScraperServiceUrl,
+  fetchLiveReelsFromMicroservice
 } from '../../lib/instagramService';
 import { 
   X, 
@@ -27,7 +30,9 @@ import {
   ExternalLink,
   Play,
   Trash2,
-  Plus
+  Plus,
+  Zap,
+  Server
 } from 'lucide-react';
 
 interface AddInfluencerModalProps {
@@ -93,6 +98,11 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
   const [newMediaUrl, setNewMediaUrl] = useState('');
   const [newMediaViews, setNewMediaViews] = useState('');
   const [newMediaType, setNewMediaType] = useState<'Reel' | 'Carousel' | 'Post'>('Reel');
+
+  // Headless Scraper Microservice (Option A)
+  const [scraperServiceUrl, setScraperServiceUrlState] = useState<string>(getScraperServiceUrl());
+  const [isFetchingReels, setIsFetchingReels] = useState(false);
+  const [fetchReelsMessage, setFetchReelsMessage] = useState('');
 
   if (!isOpen) return null;
 
@@ -179,6 +189,30 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
     setNewMediaUrl('');
     setNewMediaViews('');
     setShowAddMedia(false);
+  };
+
+  const handleFetchMicroserviceReels = async () => {
+    if (!handle.trim()) return;
+    setIsFetchingReels(true);
+    setFetchReelsMessage('');
+
+    try {
+      const reels = await fetchLiveReelsFromMicroservice(handle, 10, scraperServiceUrl);
+      if (reels && reels.length > 0) {
+        setEditableMedia(reels);
+        setFetchReelsMessage(`✅ Extracted ${reels.length} live reels via Headless Chromium!`);
+      } else {
+        setFetchReelsMessage(
+          scraperServiceUrl
+            ? '⚠️ Microservice connected but returned 0 reels. Verify account is public.'
+            : '⚠️ Microservice URL not configured. Start scraper-service locally or configure URL in settings below.'
+        );
+      }
+    } catch (err: any) {
+      setFetchReelsMessage(`❌ Microservice error: ${err.message || 'Server unreachable'}`);
+    } finally {
+      setIsFetchingReels(false);
+    }
   };
 
   const handleSave = () => {
@@ -383,6 +417,46 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                           </button>
                         )}
                       </div>
+
+                      {/* Option A Headless Scraper Microservice Endpoint */}
+                      <div className="pt-2 border-t border-[#E7E2DA] space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono text-[10px] uppercase font-bold text-[#1C1917] flex items-center gap-1.5">
+                            <Server className="w-3 h-3 text-[#2E523E]" />
+                            Option A: Headless Chromium Microservice
+                          </span>
+                          <span className="text-[10px] font-mono font-semibold text-[#2E523E]">
+                            {scraperServiceUrl ? '🟢 CONFIGURED' : '⚪ NOT CONFIGURED'}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-[#78716C] leading-relaxed">
+                          Enter your dedicated Headless Chromium Scraper URL (e.g. <code className="bg-white px-1 py-0.5 rounded border border-[#E2DDD5] text-[#1C1917] font-mono">http://localhost:4000</code> or Render URL) to extract live 10 reels.
+                        </p>
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={scraperServiceUrl}
+                            onChange={(e) => {
+                              setScraperServiceUrlState(e.target.value);
+                              setScraperServiceUrl(e.target.value);
+                            }}
+                            placeholder="e.g. http://localhost:4000 or https://the-i-company-scraper.onrender.com"
+                            className="flex-1 px-3 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                          />
+                          {scraperServiceUrl && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setScraperServiceUrlState('');
+                                setScraperServiceUrl('');
+                              }}
+                              className="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#C25E3E] hover:bg-[#FDF3EE] cursor-pointer"
+                            >
+                              Reset
+                            </button>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -464,24 +538,46 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
 
                   {/* Extracted Recent Content Manager */}
                   <div className="space-y-3 p-4 rounded-xl bg-white border border-[#E7E2DA]">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div>
                         <span className="text-[10px] font-mono uppercase tracking-wider text-[#78716C] font-semibold block">
                           Recent Media & Viral Reels ({editableMedia.length})
                         </span>
                         <span className="text-[11px] text-[#A8A29E]">
-                          Tailored to creator category · Edit, remove or paste live Instagram Reel links
+                          Verified reel deliverables · Edit, remove or scrape live from Instagram
                         </span>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => setShowAddMedia(!showAddMedia)}
-                        className="px-2.5 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] hover:bg-[#F2EDE4] text-xs text-[#1C1917] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
-                      >
-                        <Plus className="w-3.5 h-3.5 text-[#1C1917]" />
-                        <span>{showAddMedia ? 'Cancel' : '+ Add Live Reel'}</span>
-                      </button>
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <button
+                          type="button"
+                          onClick={handleFetchMicroserviceReels}
+                          disabled={isFetchingReels || !handle.trim()}
+                          className="px-2.5 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#2E523E]/30 hover:bg-[#EEF5F1] text-xs text-[#2E523E] font-medium flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50 shadow-vintage-xs"
+                          title="Scrape top 10 reels via Headless Chromium"
+                        >
+                          {isFetchingReels ? (
+                            <Loader2 className="w-3.5 h-3.5 animate-spin text-[#2E523E]" />
+                          ) : (
+                            <Zap className="w-3.5 h-3.5 text-[#2E523E]" />
+                          )}
+                          <span>{isFetchingReels ? 'Scraping 10 Reels...' : 'Live Scrape 10 Reels'}</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setShowAddMedia(!showAddMedia)}
+                          className="px-2.5 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] hover:bg-[#F2EDE4] text-xs text-[#1C1917] font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-vintage-xs"
+                        >
+                          <Plus className="w-3.5 h-3.5 text-[#1C1917]" />
+                          <span>{showAddMedia ? 'Cancel' : '+ Add Live Reel'}</span>
+                        </button>
+                      </div>
                     </div>
+
+                    {fetchReelsMessage && (
+                      <div className="p-2 rounded-lg bg-[#F7F4EE] border border-[#E7E2DA] text-[11px] text-[#1C1917] font-mono">
+                        {fetchReelsMessage}
+                      </div>
+                    )}
 
                     {/* Inline Add Live Reel / Post Form */}
                     {showAddMedia && (

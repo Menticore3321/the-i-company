@@ -53,6 +53,63 @@ export function setSavedInstagramSession(sessionId: string): void {
   }
 }
 
+export function getScraperServiceUrl(): string {
+  try {
+    return localStorage.getItem('the_i_company_scraper_service_url') || 
+           (import.meta.env?.VITE_SCRAPER_SERVICE_URL || '');
+  } catch {
+    return '';
+  }
+}
+
+export function setScraperServiceUrl(url: string): void {
+  try {
+    if (!url.trim()) {
+      localStorage.removeItem('the_i_company_scraper_service_url');
+    } else {
+      localStorage.setItem('the_i_company_scraper_service_url', url.trim().replace(/\/+$/, ''));
+    }
+  } catch {
+    // Ignore storage failure
+  }
+}
+
+/**
+ * Fetch real 10 reels from Headless Scraper Microservice (Option A)
+ */
+export async function fetchLiveReelsFromMicroservice(
+  handle: string,
+  limit: number = 10,
+  customServiceUrl?: string
+): Promise<Influencer['recentContent']> {
+  const serviceUrl = customServiceUrl || getScraperServiceUrl();
+  if (!serviceUrl) return [];
+
+  const cleanHandle = extractCleanHandle(handle);
+  if (!cleanHandle) return [];
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 14000);
+    const res = await fetch(`${serviceUrl}/reels?handle=${encodeURIComponent(cleanHandle)}&limit=${limit}`, {
+      signal: controller.signal,
+      headers: { 'Accept': 'application/json' }
+    });
+    clearTimeout(timeoutId);
+
+    if (res.ok) {
+      const json = await res.json();
+      if (json.success && Array.isArray(json.reels)) {
+        return json.reels;
+      }
+    }
+  } catch (err) {
+    console.warn('Scraper microservice call failed:', err);
+  }
+
+  return [];
+}
+
 /**
  * Live extraction of Instagram metadata using serverless scraper engine
  */
@@ -217,10 +274,21 @@ export async function analyzeInstagramHandle(
     'Rapidly accelerating follower momentum. Lock multi-deliverable rate before quote increases.'
   ];
 
-  // Strictly real extracted media - no fake generated presets
-  const finalRecentContent = (liveData.recentMedia && liveData.recentMedia.length > 0)
+  // Strictly real extracted media - check liveData or headless microservice
+  let finalRecentContent = (liveData.recentMedia && liveData.recentMedia.length > 0)
     ? liveData.recentMedia
     : [];
+
+  if (finalRecentContent.length === 0) {
+    try {
+      const microserviceReels = await fetchLiveReelsFromMicroservice(cleanHandle, 10);
+      if (microserviceReels && microserviceReels.length > 0) {
+        finalRecentContent = microserviceReels;
+      }
+    } catch {
+      // Ignore fallback
+    }
+  }
 
   return {
     id: `inf-custom-${Date.now()}`,
