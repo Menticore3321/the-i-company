@@ -162,15 +162,21 @@ app.get('/reels', async (req, res) => {
             for (const edge of edges) {
               const node = edge.node?.media || edge.media || edge;
               if (node && node.code) {
+                const isCarousel = node.media_type === 8 || Boolean(node.carousel_media_count) || Boolean(node.carousel_media);
+                const mediaType = isCarousel ? 'Carousel' : (node.is_video ? 'Reel' : 'Post');
+                const pathPrefix = node.is_video ? 'reel' : 'p';
+                const thumb = node.image_versions2?.candidates?.[0]?.url || 
+                              node.carousel_media?.[0]?.image_versions2?.candidates?.[0]?.url || 
+                              '';
                 interceptedReels.push({
-                  id: `reel-${node.code}`,
-                  type: 'Reel',
-                  title: node.caption?.text?.slice(0, 80) || `Viral Reel by @${cleanHandle}`,
-                  views: node.play_count || node.view_count || 0,
+                  id: `media-${node.code}`,
+                  type: mediaType,
+                  title: node.caption?.text?.slice(0, 80) || `${mediaType} by @${cleanHandle}`,
+                  views: node.play_count || node.view_count || (node.like_count ? node.like_count * 10 : 0),
                   likes: node.like_count || 0,
                   comments: node.comment_count || 0,
-                  thumbnail: node.image_versions2?.candidates?.[0]?.url || '',
-                  url: `https://www.instagram.com/reel/${node.code}/`,
+                  thumbnail: thumb,
+                  url: `https://www.instagram.com/${pathPrefix}/${node.code}/`,
                   postedDaysAgo: node.taken_at ? Math.max(1, Math.round((Date.now() / 1000 - node.taken_at) / 86400)) : 1
                 });
               }

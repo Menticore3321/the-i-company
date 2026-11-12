@@ -234,7 +234,7 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
                     className="relative z-10 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     onError={(e) => {
                       const target = e.currentTarget;
-                      const shortcodeMatch = item.url?.match(/\/reel\/([a-zA-Z0-9_-]+)/);
+                      const shortcodeMatch = item.url?.match(/\/(?:reel|p)\/([a-zA-Z0-9_-]+)/);
                       const shortcode = shortcodeMatch ? shortcodeMatch[1] : '';
                       if (shortcode && !target.src.includes('thumbnail')) {
                         target.src = `/api/thumbnail?shortcode=${shortcode}`;

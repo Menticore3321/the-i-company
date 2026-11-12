@@ -28,6 +28,31 @@ function toCamelCase<T>(obj: any): T {
   }, {} as any);
 }
 
+// Strict Whitelist of valid Supabase PostgreSQL table columns to avoid PostgREST PGRST204 schema errors
+const VALID_INFLUENCER_COLUMNS = new Set([
+  'id', 'name', 'handle', 'avatar', 'bio', 'category', 'tier', 'location',
+  'followers', 'following', 'posts_count', 'engagement_rate', 'avg_reel_views',
+  'avg_likes', 'avg_comments', 'authenticity_score', 'rate_per_reel',
+  'rate_per_story', 'rate_per_post', 'rating', 'performance_status',
+  'progress_trajectory', 'audience', 'recent_content', 'connected_instagram',
+  'last_synced_at', 'login_email', 'login_password'
+]);
+
+const VALID_ACCOUNT_COLUMNS = new Set([
+  'id', 'email', 'password', 'role', 'name', 'associated_id', 'avatar', 'status', 'last_login'
+]);
+
+function sanitizeRecord(obj: Record<string, any>, allowedSnakeColumns: Set<string>): Record<string, any> {
+  const result: Record<string, any> = {};
+  for (const key of Object.keys(obj)) {
+    const snakeKey = key.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+    if (allowedSnakeColumns.has(snakeKey)) {
+      result[snakeKey] = obj[key];
+    }
+  }
+  return result;
+}
+
 // Storage keys for local fallback
 const STORAGE_KEYS = {
   ACCOUNTS: 'the_i_company_accounts',
@@ -60,15 +85,27 @@ export const databaseService = {
   // Accounts & Credentials
   // -------------------------------------------------------------
   async getAccounts(): Promise<UserAccount[]> {
+    const local = loadLocal<UserAccount[]>(STORAGE_KEYS.ACCOUNTS, INITIAL_ACCOUNTS);
     if (isSupabaseConfigured && supabase) {
       try {
         const { data, error } = await supabase.from('accounts').select('*');
         if (!error && data && data.length > 0) {
-          return data.map(row => toCamelCase<UserAccount>(row));
+          const cloudAccounts = data.map(row => toCamelCase<UserAccount>(row));
+          // Merge cloud with local accounts by email so no account ever gets lost
+          const accountMap = new Map<string, UserAccount>();
+          cloudAccounts.forEach(acc => accountMap.set(acc.email.toLowerCase(), acc));
+          local.forEach(acc => {
+            if (!accountMap.has(acc.email.toLowerCase())) {
+              accountMap.set(acc.email.toLowerCase(), acc);
+            }
+          });
+          const merged = Array.from(accountMap.values());
+          saveLocal(STORAGE_KEYS.ACCOUNTS, merged);
+          return merged;
         }
         if (!error && data && data.length === 0) {
           // Auto-seed initial accounts to Supabase
-          const rows = INITIAL_ACCOUNTS.map(toSnakeCase);
+          const rows = INITIAL_ACCOUNTS.map(a => sanitizeRecord(a, VALID_ACCOUNT_COLUMNS));
           await supabase.from('accounts').upsert(rows);
           return INITIAL_ACCOUNTS;
         }
@@ -76,34 +113,51 @@ export const databaseService = {
         console.warn('Supabase getAccounts error:', err);
       }
     }
-    return loadLocal(STORAGE_KEYS.ACCOUNTS, INITIAL_ACCOUNTS);
+    return local;
   },
 
   async saveAccount(account: UserAccount): Promise<void> {
+    const current = loadLocal<UserAccount[]>(STORAGE_KEYS.ACCOUNTS, INITIAL_ACCOUNTS);
+    const updated = [account, ...current.filter(a => a.id !== account.id && a.email.toLowerCase() !== account.email.toLowerCase())];
+    saveLocal(STORAGE_KEYS.ACCOUNTS, updated);
+
     if (isSupabaseConfigured && supabase) {
       try {
-        await supabase.from('accounts').upsert(toSnakeCase(account));
+        const sanitized = sanitizeRecord(account, VALID_ACCOUNT_COLUMNS);
+        const { error } = await supabase.from('accounts').upsert(sanitized, { onConflict: 'email' });
+        if (error) console.warn('Supabase saveAccount error:', error);
       } catch (err) {
-        console.warn('Supabase saveAccount error:', err);
+        console.warn('Supabase saveAccount network exception:', err);
       }
     }
-    const current = loadLocal(STORAGE_KEYS.ACCOUNTS, INITIAL_ACCOUNTS);
-    saveLocal(STORAGE_KEYS.ACCOUNTS, [account, ...current.filter(a => a.id !== account.id)]);
   },
 
   // -------------------------------------------------------------
   // Influencers / Creators
   // -------------------------------------------------------------
   async getInfluencers(): Promise<Influencer[]> {
+    const local = loadLocal<Influencer[]>(STORAGE_KEYS.INFLUENCERS, INITIAL_INFLUENCERS);
     if (isSupabaseConfigured && supabase) {
       try {
         const { data, error } = await supabase.from('influencers').select('*');
         if (!error && data && data.length > 0) {
-          return data.map(row => toCamelCase<Influencer>(row));
+          const cloudInfluencers = data.map(row => toCamelCase<Influencer>(row));
+          // Merge cloud with local storage by handle so onboarded creators NEVER disappear
+          const infMap = new Map<string, Influencer>();
+          cloudInfluencers.forEach(inf => infMap.set(inf.handle.toLowerCase().replace('@', ''), inf));
+          local.forEach(inf => {
+            const clean = inf.handle.toLowerCase().replace('@', '');
+            if (!infMap.has(clean)) {
+              infMap.set(clean, inf);
+            }
+          });
+          const merged = Array.from(infMap.values());
+          saveLocal(STORAGE_KEYS.INFLUENCERS, merged);
+          return merged;
         }
         if (!error && data && data.length === 0) {
           // Auto-seed initial creators to Supabase
-          const rows = INITIAL_INFLUENCERS.map(toSnakeCase);
+          const rows = INITIAL_INFLUENCERS.map(i => sanitizeRecord(i, VALID_INFLUENCER_COLUMNS));
           await supabase.from('influencers').upsert(rows);
           return INITIAL_INFLUENCERS;
         }
@@ -111,19 +165,24 @@ export const databaseService = {
         console.warn('Supabase getInfluencers error:', err);
       }
     }
-    return loadLocal(STORAGE_KEYS.INFLUENCERS, INITIAL_INFLUENCERS);
+    return local;
   },
 
   async saveInfluencer(influencer: Influencer): Promise<void> {
+    const current = loadLocal<Influencer[]>(STORAGE_KEYS.INFLUENCERS, INITIAL_INFLUENCERS);
+    const cleanHandle = influencer.handle.toLowerCase().replace('@', '');
+    const updated = [influencer, ...current.filter(i => i.id !== influencer.id && i.handle.toLowerCase().replace('@', '') !== cleanHandle)];
+    saveLocal(STORAGE_KEYS.INFLUENCERS, updated);
+
     if (isSupabaseConfigured && supabase) {
       try {
-        await supabase.from('influencers').upsert(toSnakeCase(influencer));
+        const sanitized = sanitizeRecord(influencer, VALID_INFLUENCER_COLUMNS);
+        const { error } = await supabase.from('influencers').upsert(sanitized, { onConflict: 'handle' });
+        if (error) console.warn('Supabase saveInfluencer error:', error);
       } catch (err) {
-        console.warn('Supabase saveInfluencer error:', err);
+        console.warn('Supabase saveInfluencer network exception:', err);
       }
     }
-    const current = loadLocal(STORAGE_KEYS.INFLUENCERS, INITIAL_INFLUENCERS);
-    saveLocal(STORAGE_KEYS.INFLUENCERS, [influencer, ...current.filter(i => i.id !== influencer.id)]);
   },
 
   // -------------------------------------------------------------

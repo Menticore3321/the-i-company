@@ -171,6 +171,10 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
       finalUrl = `https://instagram.com/${handle.replace('@', '')}`;
     }
 
+    // Extract shortcode if it's an Instagram post, reel, or carousel
+    const shortcodeMatch = finalUrl.match(/\/(?:reel|p)\/([a-zA-Z0-9_-]+)/);
+    const shortcode = shortcodeMatch ? shortcodeMatch[1] : '';
+
     const newCard = {
       id: `custom-media-${Date.now()}`,
       type: newMediaType,
@@ -180,7 +184,9 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
       comments: commentsNum,
       postedDaysAgo: 1,
       engagement: Number((3.5 + (Math.random() * 4)).toFixed(1)),
-      thumbnail: customAvatar || scannedResult?.avatar || 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&auto=format&fit=crop&q=80',
+      thumbnail: shortcode
+        ? `https://the-i-company-scraper.onrender.com/thumbnail?shortcode=${shortcode}`
+        : (customAvatar || scannedResult?.avatar || 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&auto=format&fit=crop&q=80'),
       url: finalUrl
     };
 
@@ -225,27 +231,56 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
       else if (followersNum < 1000000) calculatedTier = 'Macro (500k-1M)';
       else calculatedTier = 'Mega (1M+)';
 
+      const finalRate = Number(customRate) || scannedResult.ratePerReel;
+      const cleanHandle = scannedResult.handle.replace('@', '').trim();
+
       const finalInfluencer: Influencer = {
-        ...scannedResult,
+        id: scannedResult.id || `inf-custom-${Date.now()}`,
         name: customName.trim() || scannedResult.name,
-        followers: followersNum,
-        ratePerReel: Number(customRate) || scannedResult.ratePerReel,
+        handle: cleanHandle,
         avatar: customAvatar.trim() || scannedResult.avatar,
         bio: customBio.trim() || scannedResult.bio,
-        tier: calculatedTier,
         category,
+        tier: calculatedTier,
+        location: scannedResult.location || 'Mumbai, India',
+        followers: followersNum,
+        following: scannedResult.following || 0,
+        postsCount: scannedResult.postsCount || 0,
+        engagementRate: scannedResult.engagementRate || 4.2,
+        avgReelViews: scannedResult.avgReelViews || Math.round(followersNum * 0.3),
+        avgLikes: scannedResult.avgLikes || Math.round(followersNum * 0.03),
+        avgComments: scannedResult.avgComments || 50,
+        authenticityScore: scannedResult.authenticityScore || 92,
+        ratePerReel: finalRate,
+        ratePerStory: Math.round(finalRate * 0.3),
+        ratePerPost: Math.round(finalRate * 0.7),
+        rating: scannedResult.rating || 5.0,
+        performanceStatus: scannedResult.performanceStatus || 'stellar',
+        progressTrajectory: scannedResult.progressTrajectory || {
+          weekGrowth: 2.8,
+          monthGrowth: 9.4,
+          consistencyScore: 92,
+          aiRecommendation: 'Consistent delivery with high audience retention.'
+        },
+        audience: scannedResult.audience || {
+          gender: { male: 45, female: 55 },
+          ageDistribution: [{ range: '18-24', percentage: 48 }, { range: '25-34', percentage: 38 }],
+          topCities: [{ city: 'Mumbai', percentage: 32 }, { city: 'Delhi NCR', percentage: 28 }]
+        },
         recentContent: editableMedia.length > 0 ? editableMedia : (scannedResult.recentContent || []),
+        connectedInstagram: true,
+        lastSyncedAt: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }),
         loginEmail: creatorEmail.trim(),
         loginPassword: creatorPassword.trim()
       };
 
       const newAccount: UserAccount = {
-        id: `acc-${scannedResult.id}`,
+        id: `acc-${finalInfluencer.id}`,
         email: creatorEmail.trim().toLowerCase(),
         password: creatorPassword.trim(),
         role: 'influencer',
         name: `${finalInfluencer.name} (@${finalInfluencer.handle})`,
-        associatedId: scannedResult.id,
+        associatedId: finalInfluencer.id,
         status: 'active',
         lastLogin: 'Never (Newly Onboarded)'
       };
@@ -699,7 +734,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                                 className="relative z-10 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                 onError={(e) => {
                                   const target = e.currentTarget;
-                                  const shortcodeMatch = item.url?.match(/\/reel\/([a-zA-Z0-9_-]+)/);
+                                  const shortcodeMatch = item.url?.match(/\/(?:reel|p)\/([a-zA-Z0-9_-]+)/);
                                   const shortcode = shortcodeMatch ? shortcodeMatch[1] : '';
                                   
                                   if (shortcode && !target.src.includes('thumbnail')) {

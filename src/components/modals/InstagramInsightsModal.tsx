@@ -251,7 +251,7 @@ export const InstagramInsightsModal: React.FC<InstagramInsightsModalProps> = ({
                       className="relative z-10 w-full h-full object-cover"
                       onError={(e) => {
                         const target = e.currentTarget;
-                        const shortcodeMatch = post.url?.match(/\/reel\/([a-zA-Z0-9_-]+)/);
+                        const shortcodeMatch = post.url?.match(/\/(?:reel|p)\/([a-zA-Z0-9_-]+)/);
                         const shortcode = shortcodeMatch ? shortcodeMatch[1] : '';
                         if (shortcode && !target.src.includes('thumbnail')) {
                           target.src = `/api/thumbnail?shortcode=${shortcode}`;
