@@ -139,16 +139,28 @@ app.get('/reels', async (req, res) => {
       }
     });
 
+    // Accelerate page loading by skipping heavy images and fonts
+    await page.setRequestInterception(true);
+    page.on('request', (req) => {
+      const rType = req.resourceType();
+      if (['image', 'media', 'font'].includes(rType)) {
+        req.abort();
+      } else {
+        req.continue();
+      }
+    });
+
     const targetUrl = `https://www.instagram.com/${cleanHandle}/reels/`;
     console.log(`[Scraper] Navigating to ${targetUrl}...`);
 
     await page.goto(targetUrl, {
-      waitUntil: 'networkidle2',
-      timeout: 15000
+      waitUntil: 'domcontentloaded',
+      timeout: 30000
     });
 
-    // Wait 1.5s for initial React render
-    await new Promise(r => setTimeout(r, 1500));
+    // Wait for reels selector or quick settle
+    await page.waitForSelector('a[href*="/reel/"]', { timeout: 8000 }).catch(() => {});
+    await new Promise(r => setTimeout(r, 2500));
 
     // Fallback: If network interception didn't catch enough, scrape directly from DOM
     let domReels = [];

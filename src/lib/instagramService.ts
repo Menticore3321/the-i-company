@@ -53,12 +53,14 @@ export function setSavedInstagramSession(sessionId: string): void {
   }
 }
 
+export const DEFAULT_SCRAPER_SERVICE_URL = 'https://the-i-company-scraper.onrender.com';
+
 export function getScraperServiceUrl(): string {
   try {
     return localStorage.getItem('the_i_company_scraper_service_url') || 
-           (import.meta.env?.VITE_SCRAPER_SERVICE_URL || '');
+           (import.meta.env?.VITE_SCRAPER_SERVICE_URL || DEFAULT_SCRAPER_SERVICE_URL);
   } catch {
-    return '';
+    return DEFAULT_SCRAPER_SERVICE_URL;
   }
 }
 
