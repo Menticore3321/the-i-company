@@ -1,7 +1,7 @@
 <!-- AUTO-SYNC-START -->
 ## 🔄 Automated Verification & State Manifest (Auto-Updated)
-> **Last Synchronized**: `2026-11-12T14:58:59.425Z`  
-> **Active Git Commit**: `0a63b4e` (`main`) — *chore: add .vercelignore to ignore scraper-service and android on vercel*  
+> **Last Synchronized**: `2026-11-12T15:17:11.535Z`  
+> **Active Git Commit**: `7d3763a` (`main`) — *chore: add robust default constants to supabase config*  
 > **Database Status**: `CONNECTED (Supabase PostgreSQL)`  
 > **Android Native**: `SYNCHRONIZED (Capacitor Android)`  
 > **Discovered Portals (3)**: `AdminMasterView.tsx`, `BrandPortalView.tsx`, `CreatorPortalView.tsx`  
