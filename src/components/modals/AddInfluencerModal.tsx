@@ -204,7 +204,7 @@ export const AddInfluencerModal: React.FC<AddInfluencerModalProps> = ({
       } else {
         setFetchReelsMessage(
           scraperServiceUrl
-            ? '⚠️ Microservice connected but returned 0 reels. Verify account is public.'
+            ? '⚠️ Microservice connected but returned 0 reels. Verify account has public reels.'
             : '⚠️ Microservice URL not configured. Start scraper-service locally or configure URL in settings below.'
         );
       }
@@ -573,7 +573,17 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                       </div>
                     </div>
 
-                    {fetchReelsMessage && (
+                    {isFetchingReels && (
+                      <div className="p-3 rounded-lg bg-[#FAF8F5] border border-[#2E523E]/20 text-xs text-[#2E523E] flex items-center gap-2.5 animate-pulse">
+                        <Loader2 className="w-4 h-4 animate-spin flex-shrink-0 text-[#2E523E]" />
+                        <div>
+                          <div className="font-semibold">Launching Headless Chromium on Render (~15–20s)...</div>
+                          <div className="text-[11px] text-[#78716C]">Navigating to Instagram @{handle.replace('@', '')} and scraping real reels with views</div>
+                        </div>
+                      </div>
+                    )}
+
+                    {fetchReelsMessage && !isFetchingReels && (
                       <div className="p-2 rounded-lg bg-[#F7F4EE] border border-[#E7E2DA] text-[11px] text-[#1C1917] font-mono">
                         {fetchReelsMessage}
                       </div>

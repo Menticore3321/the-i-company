@@ -90,9 +90,11 @@ export async function fetchLiveReelsFromMicroservice(
   const cleanHandle = extractCleanHandle(handle);
   if (!cleanHandle) return [];
 
+  const controller = new AbortController();
+  // Allow 45s for cold start & headless Chromium navigation on Render cloud
+  const timeoutId = setTimeout(() => controller.abort(), 45000);
+
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 14000);
     const res = await fetch(`${serviceUrl}/reels?handle=${encodeURIComponent(cleanHandle)}&limit=${limit}`, {
       signal: controller.signal,
       headers: { 'Accept': 'application/json' }
@@ -101,12 +103,24 @@ export async function fetchLiveReelsFromMicroservice(
 
     if (res.ok) {
       const json = await res.json();
-      if (json.success && Array.isArray(json.reels)) {
-        return json.reels;
+      if (json.success && Array.isArray(json.reels) && json.reels.length > 0) {
+        return json.reels.map((r: any) => {
+          const shortcodeMatch = r.url?.match(/\/reel\/([a-zA-Z0-9_-]+)/);
+          const shortcode = shortcodeMatch ? shortcodeMatch[1] : '';
+          return {
+            ...r,
+            thumbnail: r.thumbnail || (shortcode ? `https://www.instagram.com/p/${shortcode}/media/?size=l` : '')
+          };
+        });
       }
     }
-  } catch (err) {
+  } catch (err: any) {
+    clearTimeout(timeoutId);
     console.warn('Scraper microservice call failed:', err);
+    if (err?.name === 'AbortError') {
+      throw new Error('Scraper timed out (>45s). Cloud instance is waking up, please retry now.');
+    }
+    throw err;
   }
 
   return [];

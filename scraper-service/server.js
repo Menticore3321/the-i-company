@@ -193,14 +193,14 @@ app.get('/reels', async (req, res) => {
 
           // Extract thumbnail
           const img = a.querySelector('img');
-          const thumb = img ? img.src : '';
+          const thumb = img ? (img.getAttribute('src') || img.currentSrc || img.src || '') : '';
 
           results.push({
             id: `reel-${shortcode}`,
             type: 'Reel',
             title: `Reel · @${handle} (${rawViews || 'Viral'})`,
             rawViews: rawViews,
-            thumbnail: thumb,
+            thumbnail: thumb || `https://www.instagram.com/p/${shortcode}/media/?size=l`,
             url: `https://www.instagram.com/reel/${shortcode}/`,
             postedDaysAgo: 2
           });
@@ -214,8 +214,10 @@ app.get('/reels', async (req, res) => {
     const combined = [...interceptedReels];
     for (const r of domReels) {
       if (!combined.some(c => c.url === r.url)) {
+        const shortcode = r.url.match(/\/reel\/([a-zA-Z0-9_-]+)/)?.[1] || '';
         combined.push({
           ...r,
+          thumbnail: r.thumbnail || (shortcode ? `https://www.instagram.com/p/${shortcode}/media/?size=l` : ''),
           views: parseViewsString(r.rawViews),
           likes: Math.round(parseViewsString(r.rawViews) * 0.065),
           comments: Math.max(15, Math.round(parseViewsString(r.rawViews) * 0.002))
