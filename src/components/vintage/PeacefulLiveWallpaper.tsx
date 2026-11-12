@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Sun, Cloud, Wind, Flower2 } from 'lucide-react';
+import { Sparkles, Sun, Cloud, Wind, Flower2, Sliders } from 'lucide-react';
 
 export type WallpaperTheme = 'dawn' | 'sky' | 'zen' | 'sakura';
 
@@ -24,22 +24,23 @@ export const WALLPAPER_PRESETS: Record<WallpaperTheme, {
     name: 'Serene Dawn',
     icon: '🌅',
     gradient: 'from-[#FFF7ED] via-[#FEF2F2] to-[#EFF6FF]',
-    // High-resolution peaceful daylight sunburst cloudscape
-    bgUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80',
-    orb1: 'rgba(254, 215, 170, 0.45)', // Warm peach / gold
-    orb2: 'rgba(186, 230, 253, 0.45)', // Soft sky cyan
-    orb3: 'rgba(254, 205, 211, 0.35)', // Rose dawn
-    description: 'Golden hour warmth, gentle horizon & soft daylight mist',
+    // High-resolution peaceful golden sunrise morning sky
+    bgUrl: 'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?auto=format&fit=crop&w=2400&q=85',
+    orb1: 'rgba(254, 215, 170, 0.40)', // Warm peach / gold
+    orb2: 'rgba(186, 230, 253, 0.35)', // Soft sky cyan
+    orb3: 'rgba(254, 205, 211, 0.30)', // Rose dawn
+    description: 'Golden sunrise, gentle horizon glow & soft morning sunlight',
     weatherTag: '☀️ 24°C Serene Dawn · Gentle Light · Pure Vibe'
   },
   sky: {
     name: 'Ethereal Clouds',
     icon: '☁️',
     gradient: 'from-[#F0F9FF] via-[#E0F2FE] to-[#F8FAFC]',
-    bgUrl: 'https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=2400&q=80',
-    orb1: 'rgba(191, 219, 254, 0.50)', // Sky azure
-    orb2: 'rgba(165, 243, 252, 0.45)', // Clean cyan
-    orb3: 'rgba(224, 231, 255, 0.40)', // Indigo mist
+    // High-resolution dreamy daytime cumulus clouds with vivid blue sky
+    bgUrl: 'https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=2400&q=85',
+    orb1: 'rgba(191, 219, 254, 0.45)', // Sky azure
+    orb2: 'rgba(165, 243, 252, 0.40)', // Clean cyan
+    orb3: 'rgba(224, 231, 255, 0.35)', // Indigo mist
     description: 'Crisp open sky, peaceful drifting clouds & pure daylight breeze',
     weatherTag: '🌤️ 22°C Gentle Breeze · 1014 hPa · Crystal Clear'
   },
@@ -47,21 +48,23 @@ export const WALLPAPER_PRESETS: Record<WallpaperTheme, {
     name: 'Zen Meadow',
     icon: '🍃',
     gradient: 'from-[#F0FDF4] via-[#ECFDF5] to-[#F8FAFC]',
-    bgUrl: 'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=2400&q=80',
-    orb1: 'rgba(167, 243, 208, 0.45)', // Mint / jade
-    orb2: 'rgba(254, 240, 138, 0.35)', // Morning sunlight
-    orb3: 'rgba(204, 251, 241, 0.40)', // Morning dew
-    description: 'Tranquil emerald morning dew, calm breeze & refreshing stillness',
+    // High-resolution tranquil green rolling meadow under warm morning light
+    bgUrl: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=2400&q=85',
+    orb1: 'rgba(167, 243, 208, 0.40)', // Mint / jade
+    orb2: 'rgba(254, 240, 138, 0.30)', // Morning sunlight
+    orb3: 'rgba(204, 251, 241, 0.35)', // Morning dew
+    description: 'Tranquil emerald meadow, calm breeze & refreshing stillness',
     weatherTag: '🌿 21°C Tranquil Meadow · Humidity 48% · Zen Air'
   },
   sakura: {
     name: 'Sakura Breeze',
     icon: '🌸',
     gradient: 'from-[#FDF2F8] via-[#FAF5FF] to-[#F8FAFC]',
-    bgUrl: 'https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=2400&q=80',
-    orb1: 'rgba(251, 207, 232, 0.45)', // Soft blossom pink
-    orb2: 'rgba(233, 213, 255, 0.40)', // Calming lavender
-    orb3: 'rgba(254, 226, 226, 0.35)', // Warm cream
+    // High-resolution cherry blossom petals under bright spring daylight
+    bgUrl: 'https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=2400&q=85',
+    orb1: 'rgba(251, 207, 232, 0.40)', // Soft blossom pink
+    orb2: 'rgba(233, 213, 255, 0.35)', // Calming lavender
+    orb3: 'rgba(254, 226, 226, 0.30)', // Warm cream
     description: 'Peaceful pastel blush skies, calming breeze & soothing harmony',
     weatherTag: '🌸 23°C Spring Blossom · Calm 4km/h · Serenity'
   }
@@ -81,6 +84,27 @@ export const PeacefulLiveWallpaper: React.FC<PeacefulLiveWallpaperProps> = ({
     }
   });
 
+  // Wallpaper Opacity: default 85% (0.85) so the scenic wallpaper is clearly visible!
+  const [opacity, setOpacity] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem('the_i_company_wallpaper_opacity');
+      return saved ? Number(saved) : 85;
+    } catch {
+      return 85;
+    }
+  });
+
+  useEffect(() => {
+    const handleOpacityEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ opacity: number }>;
+      if (customEvent.detail?.opacity !== undefined) {
+        setOpacity(customEvent.detail.opacity);
+      }
+    };
+    window.addEventListener('wallpaper-opacity-change', handleOpacityEvent);
+    return () => window.removeEventListener('wallpaper-opacity-change', handleOpacityEvent);
+  }, []);
+
   const [isSwitcherOpen, setIsSwitcherOpen] = useState(false);
 
   const theme = controlledTheme || internalTheme;
@@ -91,12 +115,21 @@ export const PeacefulLiveWallpaper: React.FC<PeacefulLiveWallpaperProps> = ({
     try {
       localStorage.setItem('the_i_company_wallpaper', newTheme);
     } catch {
-      // ignore local storage error
+      // ignore
     }
     if (onThemeChange) {
       onThemeChange(newTheme);
     }
-    setIsSwitcherOpen(false);
+  };
+
+  const handleOpacityChange = (val: number) => {
+    setOpacity(val);
+    try {
+      localStorage.setItem('the_i_company_wallpaper_opacity', String(val));
+    } catch {
+      // ignore
+    }
+    window.dispatchEvent(new CustomEvent('wallpaper-opacity-change', { detail: { opacity: val } }));
   };
 
   // Mote particles for peaceful live presence
@@ -118,31 +151,32 @@ export const PeacefulLiveWallpaper: React.FC<PeacefulLiveWallpaperProps> = ({
         {/* Layer 1: Base Peaceful Daylight Gradient */}
         <div className={`absolute inset-0 bg-gradient-to-br ${currentPreset.gradient} transition-colors duration-1000`} />
 
-        {/* Layer 2: Scenic Daylight Landscape Wallpaper with subtle live drift */}
+        {/* Layer 2: Scenic Daylight Landscape Wallpaper - Rich, Crisp & Clearly Visible */}
         <div 
-          className="absolute inset-0 animate-peaceful-sky transition-opacity duration-1000 opacity-25 mix-blend-multiply"
+          className="absolute inset-0 animate-peaceful-sky transition-all duration-700"
           style={{
             backgroundImage: `url('${currentPreset.bgUrl}')`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center 40%',
-            filter: 'saturate(130%) brightness(105%)'
+            backgroundPosition: 'center center',
+            opacity: opacity / 100,
+            filter: 'saturate(115%) brightness(102%)'
           }}
         />
 
-        {/* Layer 3: Soft Daylight Sunlight Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-white/70 via-white/30 to-transparent" />
+        {/* Layer 3: Ultra-subtle gentle daylight tint (keeps text crisp without washing out scenery) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-white/15 pointer-events-none" />
 
         {/* Layer 4: Live Floating Ambient Daylight Orbs (Refracts through Weather Glass) */}
         <div 
-          className="absolute -top-32 -left-20 w-[600px] h-[600px] rounded-full blur-[110px] animate-peaceful-orb-1 opacity-90 transition-all duration-1000"
+          className="absolute -top-32 -left-20 w-[600px] h-[600px] rounded-full blur-[110px] animate-peaceful-orb-1 opacity-80 transition-all duration-1000"
           style={{ backgroundColor: currentPreset.orb1 }}
         />
         <div 
-          className="absolute top-1/4 right-0 w-[680px] h-[680px] rounded-full blur-[125px] animate-peaceful-orb-2 opacity-85 transition-all duration-1000"
+          className="absolute top-1/4 right-0 w-[680px] h-[680px] rounded-full blur-[125px] animate-peaceful-orb-2 opacity-75 transition-all duration-1000"
           style={{ backgroundColor: currentPreset.orb2 }}
         />
         <div 
-          className="absolute -bottom-24 left-1/3 w-[640px] h-[640px] rounded-full blur-[115px] animate-peaceful-orb-3 opacity-80 transition-all duration-1000"
+          className="absolute -bottom-24 left-1/3 w-[640px] h-[640px] rounded-full blur-[115px] animate-peaceful-orb-3 opacity-70 transition-all duration-1000"
           style={{ backgroundColor: currentPreset.orb3 }}
         />
 
@@ -151,7 +185,7 @@ export const PeacefulLiveWallpaper: React.FC<PeacefulLiveWallpaperProps> = ({
           {motes.map((mote, i) => (
             <div
               key={i}
-              className="absolute rounded-full bg-white/70 shadow-[0_0_8px_rgba(255,255,255,0.9)]"
+              className="absolute rounded-full bg-white/80 shadow-[0_0_8px_rgba(255,255,255,0.9)]"
               style={{
                 left: mote.left,
                 bottom: '-20px',
@@ -165,31 +199,60 @@ export const PeacefulLiveWallpaper: React.FC<PeacefulLiveWallpaperProps> = ({
         </div>
       </div>
 
-      {/* Floating or Inline Live Wallpaper Selector (Weather Card Inspired) */}
+      {/* Floating Live Wallpaper Switcher (Weather Card Inspired) */}
       {showSwitcher && (
         <div className="relative">
           <button
             onClick={() => setIsSwitcherOpen(!isSwitcherOpen)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-white/60 hover:bg-white/80 border border-white/80 backdrop-blur-xl text-xs font-semibold text-slate-800 shadow-[0_4px_16px_rgba(15,23,42,0.04),inset_0_1px_1px_rgba(255,255,255,0.9)] transition-all cursor-pointer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-white/70 hover:bg-white/90 border border-white/90 backdrop-blur-xl text-xs font-bold text-slate-800 shadow-[0_4px_16px_rgba(15,23,42,0.06),inset_0_1px_1px_rgba(255,255,255,0.9)] transition-all cursor-pointer"
             title="Customize Peaceful Live Wallpaper"
           >
             <span className="text-sm">{currentPreset.icon}</span>
             <span className="hidden sm:inline font-sans">{currentPreset.name}</span>
+            <span className="text-[10px] font-mono text-slate-500 font-bold">({opacity}%)</span>
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse ml-0.5" />
           </button>
 
           {isSwitcherOpen && (
-            <div className="absolute right-0 top-full mt-2 w-72 p-3 rounded-3xl bg-white/85 backdrop-blur-3xl border border-white/90 shadow-[0_20px_50px_rgba(15,23,42,0.12),inset_0_1.5px_1px_rgba(255,255,255,0.95)] z-50 animate-fade-in space-y-2">
+            <div className="absolute right-0 top-full mt-2 w-80 p-3.5 rounded-3xl bg-white/95 backdrop-blur-3xl border border-white/90 shadow-[0_25px_60px_rgba(15,23,42,0.18),inset_0_1.5px_1px_rgba(255,255,255,0.95)] z-50 animate-fade-in space-y-3">
               <div className="flex items-center justify-between pb-2 border-b border-slate-100 px-1">
-                <span className="text-[11px] font-mono uppercase font-bold text-slate-600 flex items-center gap-1.5">
+                <span className="text-[11px] font-mono uppercase font-extrabold text-slate-700 flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-blue-600" />
                   <span>Peaceful Live Wallpaper</span>
                 </span>
-                <span className="text-[10px] text-emerald-600 font-mono font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                <span className="text-[10px] text-emerald-700 font-mono font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                   LIVE 60FPS
                 </span>
               </div>
 
+              {/* Opacity Control Slider */}
+              <div className="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-1.5">
+                <div className="flex justify-between items-center text-xs">
+                  <span className="font-bold text-slate-700 flex items-center gap-1.5">
+                    <Sliders className="w-3 h-3 text-blue-600" />
+                    <span>Wallpaper Opacity</span>
+                  </span>
+                  <span className="font-mono font-extrabold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200 text-[11px]">
+                    {opacity}%
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min="30"
+                  max="100"
+                  step="5"
+                  value={opacity}
+                  onChange={(e) => handleOpacityChange(Number(e.target.value))}
+                  className="w-full accent-blue-600 cursor-pointer h-1.5 bg-slate-200 rounded-lg appearance-none"
+                />
+                <div className="flex justify-between text-[10px] text-slate-400 font-mono">
+                  <span>30% Subdued</span>
+                  <span>85% Vivid</span>
+                  <span>100% Full</span>
+                </div>
+              </div>
+
+              {/* Preset Cards */}
               <div className="space-y-1.5">
                 {(Object.keys(WALLPAPER_PRESETS) as WallpaperTheme[]).map((key) => {
                   const p = WALLPAPER_PRESETS[key];
@@ -201,20 +264,20 @@ export const PeacefulLiveWallpaper: React.FC<PeacefulLiveWallpaperProps> = ({
                       className={`w-full p-2.5 rounded-2xl flex items-center justify-between text-left transition-all cursor-pointer ${
                         isActive
                           ? 'bg-blue-50/90 border border-blue-200 shadow-sm text-blue-900 font-bold'
-                          : 'bg-white/50 hover:bg-white/80 border border-white/60 text-slate-700 font-medium'
+                          : 'bg-white/70 hover:bg-white border border-slate-200/80 text-slate-700 font-medium'
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
-                        <span className="text-xl p-1.5 rounded-xl bg-white/80 border border-white shadow-xs">
+                        <span className="text-xl p-1.5 rounded-xl bg-white border border-slate-200/60 shadow-xs">
                           {p.icon}
                         </span>
                         <div>
-                          <div className="text-xs font-sans">{p.name}</div>
+                          <div className="text-xs font-sans font-bold text-slate-900">{p.name}</div>
                           <div className="text-[10px] text-slate-500 line-clamp-1">{p.description}</div>
                         </div>
                       </div>
                       {isActive && (
-                        <span className="w-2 h-2 rounded-full bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.6)]" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.6)]" />
                       )}
                     </button>
                   );

@@ -10,7 +10,8 @@ import {
   LogOut, 
   Plus,
   Key,
-  Sun
+  Sun,
+  Sliders
 } from 'lucide-react';
 import { WallpaperTheme, WALLPAPER_PRESETS } from './PeacefulLiveWallpaper';
 
@@ -39,6 +40,24 @@ export const VintageHeader: React.FC<VintageHeaderProps> = ({
 }) => {
   const [time, setTime] = useState<string>('');
   const [isWallpaperMenuOpen, setIsWallpaperMenuOpen] = useState(false);
+  const [opacity, setOpacity] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem('the_i_company_wallpaper_opacity');
+      return saved ? Number(saved) : 85;
+    } catch {
+      return 85;
+    }
+  });
+
+  const handleOpacityChange = (val: number) => {
+    setOpacity(val);
+    try {
+      localStorage.setItem('the_i_company_wallpaper_opacity', String(val));
+    } catch {
+      // ignore
+    }
+    window.dispatchEvent(new CustomEvent('wallpaper-opacity-change', { detail: { opacity: val } }));
+  };
 
   useEffect(() => {
     const updateTime = () => {
@@ -138,38 +157,68 @@ export const VintageHeader: React.FC<VintageHeaderProps> = ({
             </button>
 
             {isWallpaperMenuOpen && (
-              <div className="absolute right-0 top-full mt-2 w-64 p-2.5 rounded-3xl bg-white/90 backdrop-blur-3xl border border-white/90 shadow-[0_20px_50px_rgba(15,23,42,0.15),inset_0_1.5px_1px_rgba(255,255,255,0.95)] z-50 animate-fade-in space-y-1.5">
-                <div className="px-2 py-1 text-[10px] font-mono uppercase font-bold text-slate-500 border-b border-slate-100 flex justify-between items-center">
+              <div className="absolute right-0 top-full mt-2 w-72 p-3 rounded-3xl bg-white/95 backdrop-blur-3xl border border-white/90 shadow-[0_25px_60px_rgba(15,23,42,0.18),inset_0_1.5px_1px_rgba(255,255,255,0.95)] z-50 animate-fade-in space-y-2.5">
+                <div className="px-2 py-1 text-[10px] font-mono uppercase font-extrabold text-slate-700 border-b border-slate-100 flex justify-between items-center">
                   <span>Peaceful Wallpaper</span>
-                  <span className="text-emerald-600 font-bold">LIVE 60FPS</span>
+                  <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">LIVE 60FPS</span>
                 </div>
-                {(Object.keys(WALLPAPER_PRESETS) as WallpaperTheme[]).map((key) => {
-                  const p = WALLPAPER_PRESETS[key];
-                  const isActive = currentWallpaper === key;
-                  return (
-                    <button
-                      key={key}
-                      onClick={() => {
-                        if (onWallpaperChange) onWallpaperChange(key);
-                        setIsWallpaperMenuOpen(false);
-                      }}
-                      className={`w-full p-2 rounded-2xl flex items-center justify-between text-left text-xs transition-all cursor-pointer ${
-                        isActive
-                          ? 'bg-blue-50 text-blue-900 font-bold border border-blue-200'
-                          : 'hover:bg-slate-50 text-slate-700 font-medium'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-base">{p.icon}</span>
-                        <div>
-                          <div>{p.name}</div>
-                          <div className="text-[10px] text-slate-400 font-normal line-clamp-1">{p.description}</div>
+
+                {/* Opacity Slider */}
+                <div className="p-2.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="font-bold text-slate-700 flex items-center gap-1.5 text-[11px]">
+                      <Sliders className="w-3 h-3 text-blue-600" />
+                      <span>Opacity</span>
+                    </span>
+                    <span className="font-mono font-extrabold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200 text-[10px]">
+                      {opacity}%
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min="30"
+                    max="100"
+                    step="5"
+                    value={opacity}
+                    onChange={(e) => handleOpacityChange(Number(e.target.value))}
+                    className="w-full accent-blue-600 cursor-pointer h-1.5 bg-slate-200 rounded-lg appearance-none"
+                  />
+                  <div className="flex justify-between text-[9px] text-slate-400 font-mono">
+                    <span>30% Subdued</span>
+                    <span>85% Vivid</span>
+                    <span>100% Full</span>
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  {(Object.keys(WALLPAPER_PRESETS) as WallpaperTheme[]).map((key) => {
+                    const p = WALLPAPER_PRESETS[key];
+                    const isActive = currentWallpaper === key;
+                    return (
+                      <button
+                        key={key}
+                        onClick={() => {
+                          if (onWallpaperChange) onWallpaperChange(key);
+                          setIsWallpaperMenuOpen(false);
+                        }}
+                        className={`w-full p-2 rounded-2xl flex items-center justify-between text-left text-xs transition-all cursor-pointer ${
+                          isActive
+                            ? 'bg-blue-50 text-blue-900 font-bold border border-blue-200 shadow-xs'
+                            : 'hover:bg-slate-50 text-slate-700 font-medium'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="text-base">{p.icon}</span>
+                          <div>
+                            <div className="font-bold text-slate-900 text-xs">{p.name}</div>
+                            <div className="text-[10px] text-slate-400 font-normal line-clamp-1">{p.description}</div>
+                          </div>
                         </div>
-                      </div>
-                      {isActive && <span className="w-2 h-2 rounded-full bg-blue-600" />}
-                    </button>
-                  );
-                })}
+                        {isActive && <span className="w-2.5 h-2.5 rounded-full bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.6)]" />}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
