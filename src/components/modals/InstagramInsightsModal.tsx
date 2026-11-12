@@ -14,19 +14,22 @@ import {
   MapPin, 
   Sparkles,
   Award,
-  DollarSign
+  DollarSign,
+  Trash2
 } from 'lucide-react';
 
 interface InstagramInsightsModalProps {
   influencer: Influencer | null;
   onClose: () => void;
   onAssignToCampaign?: (influencer: Influencer) => void;
+  onDeleteInfluencer?: (influencerId: string) => void;
 }
 
 export const InstagramInsightsModal: React.FC<InstagramInsightsModalProps> = ({
   influencer,
   onClose,
-  onAssignToCampaign
+  onAssignToCampaign,
+  onDeleteInfluencer
 }) => {
   if (!influencer) return null;
 
@@ -291,6 +294,41 @@ export const InstagramInsightsModal: React.FC<InstagramInsightsModalProps> = ({
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+
+        {/* Modal Action Footer */}
+        <div className="sticky bottom-0 z-20 px-6 py-4 bg-white/95 backdrop-blur-xl border-t border-slate-100 flex items-center justify-between gap-3">
+          {onDeleteInfluencer ? (
+            <button
+              onClick={() => {
+                if (window.confirm(`Are you sure you want to remove @${influencer.handle} from the platform roster?`)) {
+                  onDeleteInfluencer(influencer.id);
+                }
+              }}
+              className="px-4 py-2 rounded-xl bg-white hover:bg-rose-50 border border-slate-200 hover:border-rose-300 text-xs text-rose-600 font-semibold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              <span>Delete Creator</span>
+            </button>
+          ) : <div />}
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onClose}
+              className="px-4 py-2 rounded-xl weather-glass-pod text-xs font-semibold text-slate-700 hover:bg-white cursor-pointer"
+            >
+              Close
+            </button>
+            {onAssignToCampaign && (
+              <button
+                onClick={() => onAssignToCampaign(influencer)}
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-semibold shadow-[0_4px_14px_rgba(37,99,235,0.25)] flex items-center gap-1.5 cursor-pointer"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>+ Assign to Campaign</span>
+              </button>
+            )}
           </div>
         </div>
       </div>

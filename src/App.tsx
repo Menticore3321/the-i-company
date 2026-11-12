@@ -120,6 +120,41 @@ export const App: React.FC = () => {
     showToast(`Brand Client Added: ${newBrand.name} onboarded. Portal credentials generated & activated!`);
   };
 
+  // Delete Operations for Super Admin
+  const handleDeleteInfluencer = (influencerId: string) => {
+    const inf = influencers.find(i => i.id === influencerId);
+    setInfluencers(prev => prev.filter(i => i.id !== influencerId));
+    setAccounts(prev => prev.filter(a => a.associatedId !== influencerId));
+    databaseService.deleteInfluencer(influencerId);
+    showToast(`Creator @${inf?.handle || influencerId} removed from roster.`);
+  };
+
+  const handleDeleteBrand = (brandId: string) => {
+    const br = brands.find(b => b.id === brandId);
+    setBrands(prev => prev.filter(b => b.id !== brandId));
+    setAccounts(prev => prev.filter(a => a.associatedId !== brandId));
+    databaseService.deleteBrand(brandId);
+    showToast(`Brand client "${br?.name || brandId}" removed from portfolio.`);
+  };
+
+  const handleDeleteCampaign = (campaignId: string) => {
+    const camp = campaigns.find(c => c.id === campaignId);
+    setCampaigns(prev => prev.filter(c => c.id !== campaignId));
+    databaseService.deleteCampaign(campaignId);
+    showToast(`Campaign "${camp?.name || campaignId}" deleted.`);
+  };
+
+  const handleDeleteAccount = (accountId: string) => {
+    const acc = accounts.find(a => a.id === accountId);
+    if (acc?.role === 'agency') {
+      showToast('Action Prohibited: Cannot delete the Super Admin master account.');
+      return;
+    }
+    setAccounts(prev => prev.filter(a => a.id !== accountId));
+    databaseService.deleteAccount(accountId);
+    showToast(`User account "${acc?.name || accountId}" revoked & deleted.`);
+  };
+
   // Create new campaign
   const handleCreateCampaign = (newCamp: Campaign) => {
     const updatedCampaigns = [newCamp, ...campaigns];
@@ -305,6 +340,10 @@ export const App: React.FC = () => {
             onOpenContract={(camp) => setSelectedContractCampaign(camp)}
             onSwitchToCreator={handleSwitchToCreator}
             onSwitchToAccount={handleSwitchToAccount}
+            onDeleteInfluencer={handleDeleteInfluencer}
+            onDeleteBrand={handleDeleteBrand}
+            onDeleteCampaign={handleDeleteCampaign}
+            onDeleteAccount={handleDeleteAccount}
           />
         )}
 
@@ -351,6 +390,10 @@ export const App: React.FC = () => {
           setSelectedInfluencer(null);
           setIsCampaignGeneratorOpen(true);
         }}
+        onDeleteInfluencer={currentUser?.role === 'agency' ? (id) => {
+          handleDeleteInfluencer(id);
+          setSelectedInfluencer(null);
+        } : undefined}
       />
 
       {/* Add Creator Modal */}

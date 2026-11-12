@@ -27,7 +27,8 @@ import {
   FileText, 
   Send, 
   Mail,
-  UserCheck
+  UserCheck,
+  Trash2
 } from 'lucide-react';
 
 interface AdminMasterViewProps {
@@ -44,6 +45,10 @@ interface AdminMasterViewProps {
   onOpenContract?: (campaign: Campaign) => void;
   onSwitchToCreator?: (influencer: Influencer) => void;
   onSwitchToAccount?: (account: UserAccount) => void;
+  onDeleteInfluencer?: (influencerId: string) => void;
+  onDeleteBrand?: (brandId: string) => void;
+  onDeleteCampaign?: (campaignId: string) => void;
+  onDeleteAccount?: (accountId: string) => void;
 }
 
 export const AdminMasterView: React.FC<AdminMasterViewProps> = ({
@@ -59,7 +64,11 @@ export const AdminMasterView: React.FC<AdminMasterViewProps> = ({
   onApproveDeliverable,
   onOpenContract,
   onSwitchToCreator,
-  onSwitchToAccount
+  onSwitchToAccount,
+  onDeleteInfluencer,
+  onDeleteBrand,
+  onDeleteCampaign,
+  onDeleteAccount
 }) => {
   const [activeTab, setActiveTab] = useState<'roster' | 'brands' | 'campaigns' | 'geo' | 'accounts' | 'ledger'>('roster');
   const [searchQuery, setSearchQuery] = useState('');
@@ -395,6 +404,20 @@ Please sign in and access your designated workspace.`);
                             <span>Studio ➔</span>
                           </button>
                         )}
+                        {onDeleteInfluencer && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (window.confirm(`Are you sure you want to permanently delete creator @${inf.handle} (${inf.name}) from the roster?`)) {
+                                onDeleteInfluencer(inf.id);
+                              }
+                            }}
+                            className="p-1.5 rounded-xl bg-white hover:bg-rose-50 border border-slate-200 hover:border-rose-300 text-slate-400 hover:text-rose-600 transition-all cursor-pointer shadow-xs"
+                            title={`Delete @${inf.handle} from roster`}
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -428,16 +451,33 @@ Please sign in and access your designated workspace.`);
                 className="p-5 rounded-2xl bg-white/80 border border-slate-200/90 hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between group shadow-xs"
               >
                 <div>
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={brand.logo}
-                      alt={brand.name}
-                      className="w-11 h-11 rounded-2xl object-cover border border-slate-200 group-hover:border-blue-400 transition-colors shadow-xs"
-                    />
-                    <div>
-                      <h4 className="text-base font-bold text-slate-900 font-sans">{brand.name}</h4>
-                      <span className="text-[11px] text-slate-500 font-medium">{brand.industry}</span>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={brand.logo}
+                        alt={brand.name}
+                        className="w-11 h-11 rounded-2xl object-cover border border-slate-200 group-hover:border-blue-400 transition-colors shadow-xs"
+                      />
+                      <div>
+                        <h4 className="text-base font-bold text-slate-900 font-sans">{brand.name}</h4>
+                        <span className="text-[11px] text-slate-500 font-medium">{brand.industry}</span>
+                      </div>
                     </div>
+
+                    {onDeleteBrand && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (window.confirm(`Are you sure you want to delete brand client "${brand.name}" and remove their portfolio?`)) {
+                            onDeleteBrand(brand.id);
+                          }
+                        }}
+                        className="p-1.5 rounded-xl hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-colors cursor-pointer"
+                        title={`Delete ${brand.name}`}
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    )}
                   </div>
 
                   <div className="mt-4 pt-3 border-t border-slate-100 space-y-2 text-xs">
@@ -521,6 +561,20 @@ Please sign in and access your designated workspace.`);
                       >
                         <FileText className="w-3.5 h-3.5 text-blue-600" />
                         <span>Contract & Invoice</span>
+                      </button>
+                    )}
+
+                    {onDeleteCampaign && (
+                      <button
+                        onClick={() => {
+                          if (window.confirm(`Are you sure you want to delete campaign "${camp.name}"?`)) {
+                            onDeleteCampaign(camp.id);
+                          }
+                        }}
+                        className="p-1.5 rounded-xl bg-white hover:bg-rose-50 border border-slate-200 hover:border-rose-300 text-slate-400 hover:text-rose-600 transition-all cursor-pointer shadow-xs"
+                        title={`Delete campaign "${camp.name}"`}
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
                       </button>
                     )}
                   </div>
@@ -696,6 +750,20 @@ Please sign in and access your designated workspace.`);
                           >
                             <UserCheck className="w-3.5 h-3.5 text-blue-600" />
                             <span className="text-[11px] hidden sm:inline">Open</span>
+                          </button>
+                        )}
+
+                        {onDeleteAccount && acc.role !== 'agency' && (
+                          <button
+                            onClick={() => {
+                              if (window.confirm(`Revoke and permanently delete access credentials for "${acc.name}" (${acc.email})?`)) {
+                                onDeleteAccount(acc.id);
+                              }
+                            }}
+                            title={`Revoke & delete ${acc.email}`}
+                            className="p-1.5 rounded-xl bg-white hover:bg-rose-50 border border-slate-200 hover:border-rose-300 text-slate-400 hover:text-rose-600 transition-colors inline-flex items-center cursor-pointer shadow-xs"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         )}
                       </div>

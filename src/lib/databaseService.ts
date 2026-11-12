@@ -285,5 +285,68 @@ export const databaseService = {
       }
     }
     saveLocal(STORAGE_KEYS.FINANCIALS, financials);
+  },
+
+  // -------------------------------------------------------------
+  // Deletion Operations (Admin Level Removal)
+  // -------------------------------------------------------------
+  async deleteInfluencer(id: string): Promise<void> {
+    const current = loadLocal<Influencer[]>(STORAGE_KEYS.INFLUENCERS, INITIAL_INFLUENCERS);
+    saveLocal(STORAGE_KEYS.INFLUENCERS, current.filter(i => i.id !== id));
+
+    const currentAccounts = loadLocal<UserAccount[]>(STORAGE_KEYS.ACCOUNTS, INITIAL_ACCOUNTS);
+    saveLocal(STORAGE_KEYS.ACCOUNTS, currentAccounts.filter(a => a.associatedId !== id));
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase.from('influencers').delete().eq('id', id);
+        await supabase.from('accounts').delete().eq('associated_id', id);
+      } catch (err) {
+        console.warn('Supabase deleteInfluencer error:', err);
+      }
+    }
+  },
+
+  async deleteBrand(id: string): Promise<void> {
+    const current = loadLocal<Brand[]>(STORAGE_KEYS.BRANDS, INITIAL_BRANDS);
+    saveLocal(STORAGE_KEYS.BRANDS, current.filter(b => b.id !== id));
+
+    const currentAccounts = loadLocal<UserAccount[]>(STORAGE_KEYS.ACCOUNTS, INITIAL_ACCOUNTS);
+    saveLocal(STORAGE_KEYS.ACCOUNTS, currentAccounts.filter(a => a.associatedId !== id));
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase.from('brands').delete().eq('id', id);
+        await supabase.from('accounts').delete().eq('associated_id', id);
+      } catch (err) {
+        console.warn('Supabase deleteBrand error:', err);
+      }
+    }
+  },
+
+  async deleteCampaign(id: string): Promise<void> {
+    const current = loadLocal<Campaign[]>(STORAGE_KEYS.CAMPAIGNS, INITIAL_CAMPAIGNS);
+    saveLocal(STORAGE_KEYS.CAMPAIGNS, current.filter(c => c.id !== id));
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase.from('campaigns').delete().eq('id', id);
+      } catch (err) {
+        console.warn('Supabase deleteCampaign error:', err);
+      }
+    }
+  },
+
+  async deleteAccount(id: string): Promise<void> {
+    const current = loadLocal<UserAccount[]>(STORAGE_KEYS.ACCOUNTS, INITIAL_ACCOUNTS);
+    saveLocal(STORAGE_KEYS.ACCOUNTS, current.filter(a => a.id !== id));
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase.from('accounts').delete().eq('id', id);
+      } catch (err) {
+        console.warn('Supabase deleteAccount error:', err);
+      }
+    }
   }
 };
