@@ -115,24 +115,24 @@ https://theicompany.netlify.app`;
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#020307]/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in overflow-y-auto">
-      <div className="bg-[#0B0E17]/95 border border-white/10 rounded-2xl w-full max-w-4xl shadow-[0_16px_64px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden my-auto flex flex-col max-h-[92vh] relative text-[#D7DCEA]">
-        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#5B8BF7] to-transparent" />
+    <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in overflow-y-auto">
+      <div className="bg-white/95 border border-white/90 rounded-3xl w-full max-w-4xl shadow-[0_25px_70px_rgba(15,23,42,0.18),0_0_0_1px_rgba(255,255,255,0.9)_inset] backdrop-blur-2xl overflow-hidden my-auto flex flex-col max-h-[92vh] relative text-slate-800">
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/60 to-transparent" />
         
         {/* Top Control Bar (Hidden during Print) */}
-        <div className="p-4 sm:p-5 border-b border-white/[0.08] bg-[#07090F]/90 flex flex-wrap items-center justify-between gap-3 print:hidden">
+        <div className="p-4 sm:p-5 border-b border-slate-200/80 bg-white/70 backdrop-blur-md flex flex-wrap items-center justify-between gap-3 print:hidden">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#5B8BF7] to-[#7189BA] text-white flex items-center justify-center shadow-[0_0_16px_rgba(91,139,247,0.3)]">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-[0_4px_16px_rgba(37,99,235,0.3)]">
               <Award className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA]">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-semibold">
                   LEGAL DEED & BILLING ENGINE ·
                 </span>
-                <span className="font-mono text-xs font-semibold text-[#5B8BF7]">{contractId}</span>
+                <span className="font-mono text-xs font-bold text-blue-600">{contractId}</span>
               </div>
-              <h3 className="font-sans text-lg font-bold text-white leading-tight">
+              <h3 className="font-sans text-lg font-extrabold text-slate-900 leading-tight">
                 {campaign.name}
               </h3>
             </div>
@@ -141,24 +141,24 @@ https://theicompany.netlify.app`;
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-medium text-white flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-slate-700 flex items-center gap-1.5 transition-colors cursor-pointer"
               title="Print official document"
             >
-              <Printer className="w-3.5 h-3.5 text-[#8FA5D9]" />
+              <Printer className="w-3.5 h-3.5 text-slate-600" />
               <span className="hidden sm:inline">Print / Save PDF</span>
             </button>
 
             <button
               onClick={handleCopySummary}
-              className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-medium text-white flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-slate-700 flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-[#10B981]" /> : <Copy className="w-3.5 h-3.5 text-[#8FA5D9]" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-600" />}
               <span className="hidden sm:inline">{copied ? 'Copied' : 'Copy'}</span>
             </button>
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-[#8FA5D9] hover:text-white transition-colors cursor-pointer"
+              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -166,13 +166,13 @@ https://theicompany.netlify.app`;
         </div>
 
         {/* Tab Navigator (Hidden during Print) */}
-        <div className="px-5 pt-3 border-b border-white/[0.08] bg-[#07090F]/70 flex items-center gap-2 overflow-x-auto print:hidden">
+        <div className="px-5 pt-3 border-b border-slate-200 bg-slate-50/70 flex items-center gap-2 overflow-x-auto print:hidden">
           <button
             onClick={() => setActiveTab('agreement')}
-            className={`pb-2.5 px-3 text-xs font-medium transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
+            className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
               activeTab === 'agreement'
-                ? 'border-[#5B8BF7] text-[#5B8BF7] font-semibold'
-                : 'border-transparent text-[#7189BA] hover:text-white'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
@@ -182,10 +182,10 @@ https://theicompany.netlify.app`;
           {userRole !== 'influencer' && (
             <button
               onClick={() => setActiveTab('invoice')}
-              className={`pb-2.5 px-3 text-xs font-medium transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
+              className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                 activeTab === 'invoice'
-                  ? 'border-[#5B8BF7] text-[#5B8BF7] font-semibold'
-                  : 'border-transparent text-[#7189BA] hover:text-white'
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
               <Receipt className="w-3.5 h-3.5" />
@@ -196,10 +196,10 @@ https://theicompany.netlify.app`;
           {userRole !== 'brand' && (
             <button
               onClick={() => setActiveTab('voucher')}
-              className={`pb-2.5 px-3 text-xs font-medium transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
+              className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                 activeTab === 'voucher'
-                  ? 'border-[#5B8BF7] text-[#5B8BF7] font-semibold'
-                  : 'border-transparent text-[#7189BA] hover:text-white'
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
               <DollarSign className="w-3.5 h-3.5" />
@@ -209,10 +209,10 @@ https://theicompany.netlify.app`;
 
           <button
             onClick={() => setActiveTab('whatsapp')}
-            className={`pb-2.5 px-3 text-xs font-medium transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
+            className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
               activeTab === 'whatsapp'
-                ? 'border-[#10B981] text-[#10B981] font-semibold'
-                : 'border-transparent text-[#7189BA] hover:text-[#10B981]'
+                ? 'border-emerald-600 text-emerald-600'
+                : 'border-transparent text-slate-500 hover:text-emerald-600'
             }`}
           >
             <Send className="w-3.5 h-3.5" />

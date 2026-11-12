@@ -67,46 +67,46 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen bg-transparent text-[#D7DCEA] flex flex-col justify-between p-4 sm:p-6 font-sans selection:bg-[#5B8BF7]/30 selection:text-white relative overflow-hidden">
-      {/* Background Ambient Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#5B8BF7]/10 blur-[120px] rounded-full pointer-events-none -z-10" />
-      <div className="absolute bottom-10 left-1/4 w-[400px] h-[250px] bg-[#4D6C9D]/10 blur-[100px] rounded-full pointer-events-none -z-10" />
+    <div className="min-h-screen bg-transparent text-slate-900 flex flex-col justify-between p-4 sm:p-6 font-sans selection:bg-blue-500/20 selection:text-blue-900 relative overflow-hidden">
+      {/* Background Soft Aurora Ambient Glows */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-blue-400/10 via-indigo-300/10 to-transparent blur-[120px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute bottom-10 left-1/4 w-[450px] h-[300px] bg-emerald-400/8 blur-[100px] rounded-full pointer-events-none -z-10" />
 
-      {/* Top Heritage Notice */}
+      {/* Top Notice */}
       <div className="max-w-md mx-auto w-full text-center pt-6 sm:pt-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0B0E17]/80 border border-white/10 text-[11px] font-mono text-[#8FA5D9] backdrop-blur-md shadow-sm">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
-          <span>THE I COMPANY · AGENTIC EXPERIENCE MMXXVI</span>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-slate-200/90 text-[11px] font-mono text-blue-700 backdrop-blur-md shadow-xs">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="font-semibold tracking-wider">THE I COMPANY · ATELIER MMXXVI</span>
         </div>
       </div>
 
-      {/* Main Login Card */}
+      {/* Main Login Glass Card */}
       <div className="w-full max-w-md mx-auto my-auto py-6">
-        <div className="bg-[#0B0E17]/85 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_30px_rgba(91,139,247,0.12)] p-6 sm:p-8 space-y-6 relative overflow-hidden">
-          {/* Card Top Border Highlight */}
-          <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#5B8BF7]/50 to-transparent absolute top-0 left-0" />
+        <div className="bg-white/80 backdrop-blur-2xl rounded-3xl border border-white/90 shadow-[0_20px_50px_rgba(0,0,0,0.06),0_0_0_1px_rgba(255,255,255,0.8)_inset] p-6 sm:p-8 space-y-6 relative overflow-hidden">
+          {/* Card Top Border Specular Highlight */}
+          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-blue-500/35 to-transparent absolute top-0 left-0" />
 
           {/* Brand Seal Header */}
           <div className="text-center space-y-2">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#16213B] to-[#0A0E18] text-white flex items-center justify-center font-serif text-2xl font-bold tracking-tight shadow-[0_0_20px_rgba(91,139,247,0.35)] border border-[#5B8BF7]/40 mx-auto relative">
-              <span className="bg-gradient-to-br from-white to-[#8FA5D9] bg-clip-text text-transparent">I</span>
-              <span className="absolute -bottom-1 -right-1 text-[8px] font-mono px-1 py-0.2 bg-[#5B8BF7] text-white rounded font-bold shadow-sm">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center font-serif text-2xl font-bold tracking-tight shadow-[0_4px_16px_rgba(37,99,235,0.3)] border border-blue-400/30 mx-auto relative">
+              <span>I</span>
+              <span className="absolute -bottom-1 -right-1 text-[8px] font-mono px-1 py-0.2 bg-slate-900 text-white rounded font-bold shadow-xs">
                 AI
               </span>
             </div>
 
-            <h1 className="text-2xl font-bold tracking-tight text-white">
+            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">
               The I Company
             </h1>
-            <p className="text-xs text-[#8E95A5]">
+            <p className="text-xs text-slate-500 font-medium">
               Sign in to your designated workspace. Accounts are managed exclusively by agency administrators.
             </p>
           </div>
 
           {/* Error Banner */}
           {errorMessage && (
-            <div className="p-3 rounded-xl bg-[#F43F5E]/15 border border-[#F43F5E]/30 text-xs text-[#FDA4AF] flex items-center gap-2 animate-shake">
-              <AlertCircle className="w-4 h-4 flex-shrink-0 text-[#F43F5E]" />
+            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-center gap-2 animate-shake">
+              <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-600" />
               <span>{errorMessage}</span>
             </div>
           )}
@@ -114,11 +114,11 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="text-xs font-medium text-[#D7DCEA] block mb-1">
+              <label className="text-xs font-semibold text-slate-700 block mb-1">
                 Assigned Email ID
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#5A6275]">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                   <Mail className="w-4 h-4" />
                 </div>
                 <input
@@ -127,17 +127,17 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g. admin@theicompany.com"
                   required
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-[#06080E] border border-white/10 focus:border-[#5B8BF7] focus:ring-1 focus:ring-[#5B8BF7] text-xs text-white placeholder-[#5A6275] transition-all font-mono outline-none"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15 transition-all font-mono outline-none shadow-xs"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs font-medium text-[#D7DCEA] block mb-1">
+              <label className="text-xs font-semibold text-slate-700 block mb-1">
                 Password
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#5A6275]">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                   <Lock className="w-4 h-4" />
                 </div>
                 <input
@@ -146,12 +146,12 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your security token"
                   required
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#06080E] border border-white/10 focus:border-[#5B8BF7] focus:ring-1 focus:ring-[#5B8BF7] text-xs text-white placeholder-[#5A6275] transition-all font-mono outline-none"
+                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15 transition-all font-mono outline-none shadow-xs"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#5A6275] hover:text-[#D7DCEA] cursor-pointer"
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 cursor-pointer"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -160,7 +160,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
 
             <button
               type="submit"
-              className="w-full py-2.5 rounded-xl bg-[#5B8BF7] hover:bg-[#4A7AE6] text-white font-medium text-xs shadow-[0_0_20px_rgba(91,139,247,0.35)] transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold text-xs shadow-[0_4px_16px_rgba(37,99,235,0.25)] transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
             >
               <span>Sign In to Workspace</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -168,19 +168,19 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
           </form>
 
           {/* Quick Demo Switcher */}
-          <div className="pt-3 border-t border-white/[0.08] space-y-2">
+          <div className="pt-3 border-t border-slate-100 space-y-2">
             <button
               type="button"
               onClick={() => setShowQuickAccess(!showQuickAccess)}
-              className="w-full flex items-center justify-between text-xs text-[#8E95A5] hover:text-white transition-colors py-1.5"
+              className="w-full flex items-center justify-between text-xs text-slate-500 hover:text-slate-900 transition-colors py-1.5"
             >
               <div className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#5B8BF7]" />
-                <span className="font-medium text-[11px]">
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
+                <span className="font-semibold text-[11px]">
                   {showQuickAccess ? 'Hide Quick Switcher' : 'Agency Reference Logins (Admin, Brand, Creator)'}
                 </span>
               </div>
-              <span className="text-[10px] font-mono text-[#8FA5D9] bg-[#101524] px-2 py-0.5 rounded-full border border-white/10">
+              <span className="text-[10px] font-mono text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200/60 font-semibold">
                 {showQuickAccess ? '▲ Close' : '▼ View'}
               </span>
             </button>
@@ -191,20 +191,20 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
                 <button
                   type="button"
                   onClick={() => handleQuickDemoLogin('acc-admin')}
-                  className="p-2.5 rounded-xl bg-[#06080E] hover:bg-[#101524] border border-white/10 hover:border-[#5B8BF7]/40 text-left transition-all flex items-center justify-between text-xs group cursor-pointer"
+                  className="p-2.5 rounded-xl bg-slate-50/90 hover:bg-white border border-slate-200/80 hover:border-blue-300 text-left transition-all flex items-center justify-between text-xs group cursor-pointer shadow-xs"
                 >
                   <div className="flex items-center gap-2.5">
-                    <span className="w-7 h-7 rounded-lg bg-[#5B8BF7]/20 border border-[#5B8BF7]/30 text-[#8FA5D9] flex items-center justify-center font-bold text-xs">
+                    <span className="w-7 h-7 rounded-lg bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center font-bold text-xs">
                       👑
                     </span>
                     <div>
-                      <div className="font-semibold text-white group-hover:text-[#8FA5D9] transition-colors">
+                      <div className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                         Super Admin (Agency HQ)
                       </div>
-                      <span className="text-[10px] text-[#5A6275] font-mono">admin@theicompany.com · admin123</span>
+                      <span className="text-[10px] text-slate-500 font-mono">admin@theicompany.com · admin123</span>
                     </div>
                   </div>
-                  <span className="text-[10px] text-[#10B981] font-medium px-2 py-0.5 rounded-full bg-[#10B981]/15 border border-[#10B981]/30">
+                  <span className="text-[10px] text-emerald-700 font-semibold px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200">
                     Full Control
                   </span>
                 </button>
@@ -222,20 +222,20 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
                         setPassword(acc.password);
                         onLogin(acc);
                       }}
-                      className="p-2.5 rounded-xl bg-[#06080E] hover:bg-[#101524] border border-white/10 hover:border-[#F43F5E]/40 text-left transition-all flex items-center justify-between text-xs group cursor-pointer"
+                      className="p-2.5 rounded-xl bg-slate-50/90 hover:bg-white border border-slate-200/80 hover:border-purple-300 text-left transition-all flex items-center justify-between text-xs group cursor-pointer shadow-xs"
                     >
                       <div className="flex items-center gap-2.5">
-                        <span className="w-7 h-7 rounded-lg bg-[#F43F5E]/20 border border-[#F43F5E]/30 text-[#FDA4AF] flex items-center justify-center text-xs">
+                        <span className="w-7 h-7 rounded-lg bg-purple-50 border border-purple-200 text-purple-600 flex items-center justify-center text-xs">
                           🏢
                         </span>
                         <div>
-                          <div className="font-semibold text-white group-hover:text-[#FDA4AF] transition-colors">
+                          <div className="font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
                             {acc.name}
                           </div>
-                          <span className="text-[10px] text-[#5A6275] font-mono">{acc.email} · {acc.password}</span>
+                          <span className="text-[10px] text-slate-500 font-mono">{acc.email} · {acc.password}</span>
                         </div>
                       </div>
-                      <span className="text-[10px] text-[#8E95A5] font-mono">Brand Portal ➔</span>
+                      <span className="text-[10px] text-slate-500 font-mono font-medium">Brand Portal ➔</span>
                     </button>
                   ))}
 
@@ -252,20 +252,20 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
                         setPassword(acc.password);
                         onLogin(acc);
                       }}
-                      className="p-2.5 rounded-xl bg-[#06080E] hover:bg-[#101524] border border-white/10 hover:border-[#10B981]/40 text-left transition-all flex items-center justify-between text-xs group cursor-pointer"
+                      className="p-2.5 rounded-xl bg-slate-50/90 hover:bg-white border border-slate-200/80 hover:border-emerald-300 text-left transition-all flex items-center justify-between text-xs group cursor-pointer shadow-xs"
                     >
                       <div className="flex items-center gap-2.5">
-                        <span className="w-7 h-7 rounded-lg bg-[#10B981]/20 border border-[#10B981]/30 text-[#6EE7B7] flex items-center justify-center text-xs">
+                        <span className="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center text-xs">
                           ✨
                         </span>
                         <div>
-                          <div className="font-semibold text-white group-hover:text-[#6EE7B7] transition-colors">
+                          <div className="font-bold text-slate-900 group-hover:text-emerald-600 transition-colors">
                             {acc.name}
                           </div>
-                          <span className="text-[10px] text-[#5A6275] font-mono">{acc.email} · {acc.password}</span>
+                          <span className="text-[10px] text-slate-500 font-mono">{acc.email} · {acc.password}</span>
                         </div>
                       </div>
-                      <span className="text-[10px] text-[#10B981] font-mono font-medium">Creator Desk ➔</span>
+                      <span className="text-[10px] text-emerald-700 font-mono font-semibold">Creator Desk ➔</span>
                     </button>
                   ))}
               </div>
@@ -275,7 +275,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
       </div>
 
       {/* Footer */}
-      <div className="max-w-md mx-auto w-full text-center pb-6 text-xs text-[#5A6275]">
+      <div className="max-w-md mx-auto w-full text-center pb-6 text-xs text-slate-400 font-medium">
         <p>The I Company Platform · End-to-End Escrow Protection · MMXXVI</p>
       </div>
     </div>

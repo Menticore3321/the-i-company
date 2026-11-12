@@ -85,7 +85,7 @@ export const VintageAudienceMatrix: React.FC = () => {
       title="Regional Audience & Creator Distribution"
       subtitle="Geographic concentration of managed talent audience reach across domestic hubs and overseas diaspora"
       badge={
-        <span className="font-mono text-xs px-2.5 py-1 rounded-full bg-[#5B8BF7]/10 border border-[#5B8BF7]/30 text-[#8FA5D9] font-medium tracking-wide">
+        <span className="font-mono text-xs px-3.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 font-bold tracking-wide shadow-xs">
           TOTAL NETWORK REACH: 26.2M
         </span>
       }
@@ -99,33 +99,33 @@ export const VintageAudienceMatrix: React.FC = () => {
               <button
                 key={hub.id}
                 onClick={() => setSelectedHub(hub)}
-                className={`p-4 rounded-xl text-left transition-all border relative overflow-hidden group ${
+                className={`p-4 rounded-2xl text-left transition-all border relative overflow-hidden group cursor-pointer ${
                   isSelected
-                    ? 'bg-[#121829]/90 border-[#5B8BF7]/60 shadow-[0_0_24px_rgba(91,139,247,0.18)]'
-                    : 'bg-[#0B0E17]/70 border-white/[0.07] hover:border-white/20 hover:bg-[#0F1424]/70'
+                    ? 'bg-blue-50/80 border-blue-400/90 shadow-[0_4px_20px_rgba(37,99,235,0.12)]'
+                    : 'bg-white/80 border-slate-200/80 hover:border-blue-300 hover:bg-white shadow-xs'
                 }`}
               >
                 {isSelected && (
-                  <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#5B8BF7] to-transparent" />
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
                 )}
                 <div className="flex items-start justify-between">
                   <div>
-                    <h4 className="font-sans text-base font-semibold text-white tracking-tight">{hub.city}</h4>
-                    <span className="text-[11px] text-[#8FA5D9]/70 font-sans block mt-0.5">{hub.region}</span>
+                    <h4 className="font-sans text-base font-bold text-slate-900 tracking-tight">{hub.city}</h4>
+                    <span className="text-[11px] text-slate-500 font-sans block mt-0.5 font-medium">{hub.region}</span>
                   </div>
-                  <span className={`text-xs font-mono font-medium px-2 py-0.5 rounded-full ${
+                  <span className={`text-xs font-mono font-bold px-2.5 py-0.5 rounded-full ${
                     isSelected 
-                      ? 'bg-[#5B8BF7] text-white shadow-[0_0_12px_rgba(91,139,247,0.5)]' 
-                      : 'bg-white/5 border border-white/10 text-[#8FA5D9]'
+                      ? 'bg-blue-600 text-white shadow-xs' 
+                      : 'bg-slate-100 text-slate-700 border border-slate-200'
                   }`}>
                     {hub.reach}
                   </span>
                 </div>
 
-                <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs text-[#7189BA]">
+                <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
                   <span>{hub.creators} Active Creators</span>
-                  <span className="font-medium text-[#10B981] flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+                  <span className="font-bold text-emerald-700 flex items-center gap-1 font-mono">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     {hub.avgEngagement} Avg ER
                   </span>
                 </div>
@@ -135,41 +135,41 @@ export const VintageAudienceMatrix: React.FC = () => {
         </div>
 
         {/* Selected Hub Deep Dive Card (1 col) */}
-        <div className="p-5 rounded-xl bg-[#0B0E17]/85 border border-white/10 flex flex-col justify-between relative overflow-hidden backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#5B8BF7]/40 to-transparent" />
+        <div className="p-5 rounded-2xl bg-white/85 border border-white/90 flex flex-col justify-between relative overflow-hidden backdrop-blur-xl shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
+          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
           <div>
-            <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-              <span className="font-mono text-[10px] tracking-widest text-[#7189BA] uppercase">TERRITORY PROFILE</span>
-              <span className="font-mono text-xs font-bold text-[#5B8BF7] tracking-wider">{selectedHub.city.toUpperCase()}</span>
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <span className="font-mono text-[10px] tracking-widest text-slate-400 uppercase font-bold">TERRITORY PROFILE</span>
+              <span className="font-mono text-xs font-extrabold text-blue-600 tracking-wider">{selectedHub.city.toUpperCase()}</span>
             </div>
 
             <div className="mt-4 space-y-3 text-xs">
               <div>
-                <span className="text-[#7189BA] block text-[11px] font-mono">Region Classification</span>
-                <span className="font-medium text-white/90">{selectedHub.region}</span>
+                <span className="text-slate-400 block text-[11px] font-mono font-semibold">Region Classification</span>
+                <span className="font-bold text-slate-800">{selectedHub.region}</span>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-white/[0.06]">
+              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
                 <div>
-                  <span className="text-[#7189BA] block text-[11px] font-mono">Audience Reach</span>
-                  <span className="font-sans text-lg font-bold text-white tracking-tight">{selectedHub.reach}</span>
+                  <span className="text-slate-400 block text-[11px] font-mono font-semibold">Audience Reach</span>
+                  <span className="font-sans text-xl font-extrabold text-slate-900 tracking-tight">{selectedHub.reach}</span>
                 </div>
                 <div>
-                  <span className="text-[#7189BA] block text-[11px] font-mono">Managed Creators</span>
-                  <span className="font-sans text-lg font-bold text-white tracking-tight">{selectedHub.creators} Profiles</span>
+                  <span className="text-slate-400 block text-[11px] font-mono font-semibold">Managed Creators</span>
+                  <span className="font-sans text-xl font-extrabold text-slate-900 tracking-tight">{selectedHub.creators} Profiles</span>
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-white/[0.06]">
-                <span className="text-[#7189BA] block text-[11px] font-mono">Dominant Category</span>
-                <span className="font-medium text-white/90">{selectedHub.dominantNiche}</span>
+              <div className="pt-2 border-t border-slate-100">
+                <span className="text-slate-400 block text-[11px] font-mono font-semibold">Dominant Category</span>
+                <span className="font-bold text-slate-800">{selectedHub.dominantNiche}</span>
               </div>
 
-              <div className="pt-2 border-t border-white/[0.06]">
-                <span className="text-[#7189BA] block text-[11px] font-mono mb-1.5">Active Brand Campaigns</span>
+              <div className="pt-2 border-t border-slate-100">
+                <span className="text-slate-400 block text-[11px] font-mono font-semibold mb-1.5">Active Brand Campaigns</span>
                 <div className="flex flex-wrap gap-1.5">
                   {selectedHub.activeCampaigns.map((camp, i) => (
-                    <span key={i} className="text-[10px] px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/10 text-[#D7DCEA]">
+                    <span key={i} className="text-[10px] px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-700 font-medium font-sans border border-slate-200">
                       {camp}
                     </span>
                   ))}
@@ -178,13 +178,12 @@ export const VintageAudienceMatrix: React.FC = () => {
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-white/[0.08] flex items-center justify-between text-[11px] text-[#7189BA]">
-            <span>Authenticity Index: <strong className="text-[#10B981] ml-1">94%</strong></span>
-            <span>Commercial Tier: <strong className="text-white ml-1 font-mono">Tier 1</strong></span>
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-medium">
+            <span>Authenticity Index: <strong className="text-emerald-700 ml-1 font-bold">94%</strong></span>
+            <span>Commercial Tier: <strong className="text-slate-900 ml-1 font-mono font-bold">Tier 1</strong></span>
           </div>
         </div>
       </div>
     </VintageCard>
   );
 };
-

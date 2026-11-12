@@ -136,26 +136,26 @@ export const SmartCampaignGeneratorModal: React.FC<SmartCampaignGeneratorModalPr
   const totalProjectedReach = generatedSquad.reduce((acc, inf) => acc + inf.followers, 0);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#020307]/80 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-2xl bg-[#0B0E17]/95 border border-white/10 rounded-2xl shadow-[0_16px_64px_rgba(0,0,0,0.8)] backdrop-blur-2xl text-[#D7DCEA] overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#5B8BF7] to-transparent" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-2xl bg-white/95 border border-white/90 rounded-3xl shadow-[0_25px_70px_rgba(15,23,42,0.18),0_0_0_1px_rgba(255,255,255,0.9)_inset] backdrop-blur-2xl text-slate-800 overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/60 to-transparent" />
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 bg-[#07090F]/90 border-b border-white/[0.08]">
+        <div className="flex items-center justify-between px-6 py-4 bg-white/70 backdrop-blur-md border-b border-slate-200/80">
           <div>
-            <span className="font-mono text-[10px] tracking-wider uppercase text-[#7189BA]">
+            <span className="font-mono text-[10px] tracking-wider uppercase text-slate-500 font-semibold">
               CAMPAIGN INTELLIGENCE
             </span>
-            <h3 className="font-sans text-lg font-bold text-white tracking-tight">
+            <h3 className="font-sans text-lg font-extrabold text-slate-900 tracking-tight">
               Generate Smart Campaign Brief
             </h3>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#8FA5D9] hover:text-white hover:bg-white/10 transition-colors"
+            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200/80 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
@@ -164,7 +164,7 @@ export const SmartCampaignGeneratorModal: React.FC<SmartCampaignGeneratorModalPr
             <form onSubmit={handleGenerate} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-medium text-white block mb-1 font-sans">
+                  <label className="text-xs font-bold text-slate-700 block mb-1 font-sans">
                     Campaign Title
                   </label>
                   <input
@@ -172,12 +172,12 @@ export const SmartCampaignGeneratorModal: React.FC<SmartCampaignGeneratorModalPr
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 focus:border-[#5B8BF7] text-xs text-white placeholder-white/30"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 focus:border-blue-500 focus:bg-white text-xs text-slate-900 placeholder-slate-400 font-medium"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-medium text-white block mb-1 font-sans">
+                  <label className="text-xs font-bold text-slate-700 block mb-1 font-sans">
                     Client Brand
                   </label>
                   <input
@@ -185,33 +185,33 @@ export const SmartCampaignGeneratorModal: React.FC<SmartCampaignGeneratorModalPr
                     value={brandName}
                     onChange={(e) => setBrandName(e.target.value)}
                     required
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 focus:border-[#5B8BF7] text-xs text-white placeholder-white/30"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 focus:border-blue-500 focus:bg-white text-xs text-slate-900 placeholder-slate-400 font-medium"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-medium text-white block mb-1 font-sans">
+                  <label className="text-xs font-bold text-slate-700 block mb-1 font-sans">
                     Target Niche
                   </label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value as InfluencerCategory)}
-                    className="w-full px-3 py-2.5 rounded-xl bg-[#07090F] border border-white/15 focus:border-[#5B8BF7] text-xs text-white"
+                    className="w-full px-3 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 focus:border-blue-500 focus:bg-white text-xs text-slate-900 font-medium"
                   >
                     {CATEGORIES.map(c => (
-                      <option key={c} value={c} className="bg-[#0B0E17] text-white">{c}</option>
+                      <option key={c} value={c} className="bg-white text-slate-900">{c}</option>
                     ))}
                   </select>
                 </div>
 
                 <div>
                   <div className="flex justify-between items-center mb-1">
-                    <label className="text-xs font-medium text-white font-sans">
+                    <label className="text-xs font-bold text-slate-700 font-sans">
                       Total Budget
                     </label>
-                    <span className="font-mono font-bold text-sm text-[#10B981]">
+                    <span className="font-mono font-extrabold text-sm text-emerald-600">
                       ₹{budget.toLocaleString()}
                     </span>
                   </div>
@@ -222,9 +222,9 @@ export const SmartCampaignGeneratorModal: React.FC<SmartCampaignGeneratorModalPr
                     step="50000"
                     value={budget}
                     onChange={(e) => setBudget(Number(e.target.value))}
-                    className="w-full accent-[#5B8BF7] cursor-pointer"
+                    className="w-full accent-blue-600 cursor-pointer"
                   />
-                  <div className="flex justify-between text-[10px] text-[#7189BA] font-mono mt-0.5">
+                  <div className="flex justify-between text-[10px] text-slate-500 font-mono mt-0.5">
                     <span>₹1.0L</span>
                     <span>₹15L</span>
                     <span>₹30L</span>
@@ -233,18 +233,18 @@ export const SmartCampaignGeneratorModal: React.FC<SmartCampaignGeneratorModalPr
               </div>
 
               <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="p-3.5 rounded-xl bg-[#07090F]/80 border border-white/10">
-                  <span className="text-[10px] text-[#7189BA] uppercase font-mono block">TARGET REELS</span>
+                <div className="p-4 rounded-2xl bg-slate-50/70 border border-slate-200">
+                  <span className="text-[10px] text-slate-500 uppercase font-mono font-bold block">TARGET REELS</span>
                   <div className="flex items-center gap-2 mt-2">
                     {[1, 2, 3, 5].map((cnt) => (
                       <button
                         key={cnt}
                         type="button"
                         onClick={() => setTargetReels(cnt)}
-                        className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                           targetReels === cnt
-                            ? 'bg-[#5B8BF7] text-white shadow-md'
-                            : 'bg-white/5 border border-white/10 text-[#8FA5D9] hover:bg-white/10'
+                            ? 'bg-blue-600 text-white shadow-sm'
+                            : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
                         }`}
                       >
                         {cnt}
@@ -253,18 +253,18 @@ export const SmartCampaignGeneratorModal: React.FC<SmartCampaignGeneratorModalPr
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-[#07090F]/80 border border-white/10">
-                  <span className="text-[10px] text-[#7189BA] uppercase font-mono block">TARGET STORIES</span>
+                <div className="p-4 rounded-2xl bg-slate-50/70 border border-slate-200">
+                  <span className="text-[10px] text-slate-500 uppercase font-mono font-bold block">TARGET STORIES</span>
                   <div className="flex items-center gap-2 mt-2">
                     {[2, 4, 6, 10].map((cnt) => (
                       <button
                         key={cnt}
                         type="button"
                         onClick={() => setTargetStories(cnt)}
-                        className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                           targetStories === cnt
-                            ? 'bg-[#5B8BF7] text-white shadow-md'
-                            : 'bg-white/5 border border-white/10 text-[#8FA5D9] hover:bg-white/10'
+                            ? 'bg-blue-600 text-white shadow-sm'
+                            : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
                         }`}
                       >
                         {cnt}
@@ -278,13 +278,13 @@ export const SmartCampaignGeneratorModal: React.FC<SmartCampaignGeneratorModalPr
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-medium text-[#8FA5D9] hover:text-white hover:bg-white/10"
+                  className="px-4 py-2 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-200 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#5B8BF7] to-[#4F75E8] hover:shadow-[0_0_20px_rgba(91,139,247,0.4)] text-white font-medium text-xs shadow-lg transition-all flex items-center gap-2"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-[0_4px_16px_rgba(37,99,235,0.25)] transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Recommend Creator Roster</span>
@@ -295,42 +295,42 @@ export const SmartCampaignGeneratorModal: React.FC<SmartCampaignGeneratorModalPr
             /* Generated Roster & Financial Plan */
             <div className="space-y-5">
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="p-3.5 rounded-xl bg-[#07090F]/80 border border-white/10">
-                  <span className="text-[10px] text-[#7189BA] font-mono uppercase">SELECTED TALENT</span>
-                  <div className="font-sans text-lg font-bold text-white mt-0.5">
+                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                  <span className="text-[10px] text-slate-500 font-mono font-bold uppercase">SELECTED TALENT</span>
+                  <div className="font-sans text-lg font-extrabold text-slate-900 mt-0.5">
                     {generatedSquad.length} Creators
                   </div>
-                  <span className="text-[10px] text-[#10B981] font-mono">100% niche aligned</span>
+                  <span className="text-[10px] text-emerald-700 font-mono font-semibold">100% niche aligned</span>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-[#07090F]/80 border border-white/10">
-                  <span className="text-[10px] text-[#7189BA] font-mono uppercase">PROJECTED REACH</span>
-                  <div className="font-sans text-lg font-bold text-white mt-0.5">
+                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                  <span className="text-[10px] text-slate-500 font-mono font-bold uppercase">PROJECTED REACH</span>
+                  <div className="font-sans text-lg font-extrabold text-slate-900 mt-0.5">
                     {(totalProjectedReach / 1000000).toFixed(1)}M
                   </div>
-                  <span className="text-[10px] text-[#8FA5D9] font-mono">Combined followers</span>
+                  <span className="text-[10px] text-blue-600 font-mono font-semibold">Combined followers</span>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-[#07090F]/80 border border-white/10">
-                  <span className="text-[10px] text-[#7189BA] font-mono uppercase">CREATOR PAYOUTS</span>
-                  <div className="font-mono text-lg font-bold text-[#10B981] mt-0.5">
+                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                  <span className="text-[10px] text-slate-500 font-mono font-bold uppercase">CREATOR PAYOUTS</span>
+                  <div className="font-mono text-lg font-extrabold text-emerald-600 mt-0.5">
                     ₹{creatorSpend.toLocaleString()}
                   </div>
-                  <span className="text-[10px] text-[#7189BA] font-mono">Milestone escrow</span>
+                  <span className="text-[10px] text-slate-500 font-mono">Milestone escrow</span>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-[#07090F]/80 border border-white/10">
-                  <span className="text-[10px] text-[#7189BA] font-mono uppercase">AGENCY MARGIN</span>
-                  <div className="font-mono text-lg font-bold text-[#5B8BF7] mt-0.5">
+                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                  <span className="text-[10px] text-slate-500 font-mono font-bold uppercase">AGENCY MARGIN</span>
+                  <div className="font-mono text-lg font-extrabold text-blue-600 mt-0.5">
                     ₹{agencyCommission.toLocaleString()}
                   </div>
-                  <span className="text-[10px] text-[#7189BA] font-mono">20% management cut</span>
+                  <span className="text-[10px] text-slate-500 font-mono">20% management cut</span>
                 </div>
               </div>
 
               {/* Influencer Squadron List */}
               <div className="space-y-2">
-                <span className="text-xs font-semibold text-white block font-sans">
+                <span className="text-xs font-bold text-slate-900 block font-sans">
                   Recommended Creator Allocation
                 </span>
 
@@ -338,30 +338,30 @@ export const SmartCampaignGeneratorModal: React.FC<SmartCampaignGeneratorModalPr
                   {generatedSquad.map((inf) => (
                     <div
                       key={inf.id}
-                      className="p-3 rounded-xl bg-[#07090F]/80 border border-white/10 flex items-center justify-between"
+                      className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between shadow-sm"
                     >
                       <div className="flex items-center gap-3">
                         <img
                           src={inf.avatar}
                           alt={inf.name}
-                          className="w-10 h-10 rounded-full object-cover border border-[#5B8BF7]/40"
+                          className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm"
                         />
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-white">{inf.name}</span>
-                            <span className="text-[9px] px-2 py-0.5 rounded-full bg-white/5 text-[#8FA5D9] border border-white/10 font-mono">
+                            <span className="text-xs font-bold text-slate-900">{inf.name}</span>
+                            <span className="text-[9px] px-2 py-0.5 rounded-full bg-white text-slate-600 border border-slate-200 font-mono font-medium">
                               {inf.tier}
                             </span>
                           </div>
-                          <span className="text-[11px] text-[#8FA5D9]/70 font-mono">@{inf.handle} · {inf.engagementRate}% ER</span>
+                          <span className="text-[11px] text-slate-500 font-mono">@{inf.handle} · {inf.engagementRate}% ER</span>
                         </div>
                       </div>
 
                       <div className="text-right">
-                        <div className="font-mono font-semibold text-xs text-[#10B981]">
+                        <div className="font-mono font-bold text-xs text-emerald-600">
                           ₹{inf.ratePerReel.toLocaleString()}
                         </div>
-                        <span className="text-[10px] text-[#7189BA] font-mono">1 Reel + Story</span>
+                        <span className="text-[10px] text-slate-500 font-mono">1 Reel + Story</span>
                       </div>
                     </div>
                   ))}
@@ -369,11 +369,11 @@ export const SmartCampaignGeneratorModal: React.FC<SmartCampaignGeneratorModalPr
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-3 flex justify-between items-center border-t border-white/[0.08]">
+              <div className="pt-3 flex justify-between items-center border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setIsGenerated(false)}
-                  className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-medium text-[#8FA5D9] hover:text-white hover:bg-white/10 transition-colors"
+                  className="px-4 py-2 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-200 transition-colors cursor-pointer"
                 >
                   ← Adjust Parameters
                 </button>
@@ -381,7 +381,7 @@ export const SmartCampaignGeneratorModal: React.FC<SmartCampaignGeneratorModalPr
                 <button
                   type="button"
                   onClick={handleCommitCampaign}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#5B8BF7] to-[#4F75E8] hover:shadow-[0_0_20px_rgba(91,139,247,0.4)] text-white font-medium text-xs shadow-lg transition-all"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-[0_4px_16px_rgba(37,99,235,0.25)] transition-all cursor-pointer"
                 >
                   Deploy Campaign Brief
                 </button>

@@ -78,56 +78,56 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Creator Profile Header */}
-      <div className="p-6 rounded-2xl bg-[#0B0E17]/85 border border-white/10 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#5B8BF7]/50 to-transparent" />
+      {/* Creator Profile Header (Light Glass Banner) */}
+      <div className="p-6 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-2xl shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
         
         <div className="flex items-start sm:items-center gap-4">
           <div className="relative flex-shrink-0">
             <img
               src={creator.avatar}
               alt={creator.name}
-              className="w-16 h-16 rounded-full object-cover border-2 border-[#5B8BF7]/60 shadow-[0_0_16px_rgba(91,139,247,0.3)]"
+              className="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-md"
             />
-            <span className="absolute bottom-0 right-0 p-1.5 rounded-full bg-gradient-to-tr from-[#FD1D1D] to-[#833AB4] text-white shadow-md">
+            <span className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-gradient-to-tr from-[#FD1D1D] to-[#833AB4] text-white shadow-xs">
               <Instagram className="w-3 h-3" />
             </span>
           </div>
 
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#7189BA]">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-bold">
                 TALENT ACCOUNT ·
               </span>
-              <h2 className="font-sans text-xl sm:text-2xl font-bold text-white tracking-tight">{creator.name}</h2>
-              <CheckCircle2 className="w-4 h-4 text-[#10B981]" />
-              <span className="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono font-medium text-[#8FA5D9]">
+              <h2 className="font-sans text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">{creator.name}</h2>
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <span className="px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] font-mono font-semibold text-slate-700">
                 {creator.tier}
               </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-[#10B981]/10 border border-[#10B981]/30 text-[10px] font-mono font-semibold text-[#10B981] flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+              <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-[10px] font-mono font-bold text-emerald-700 flex items-center gap-1 shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 {creator.authenticityScore}% Verified
               </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 text-xs text-[#8FA5D9]/80 mt-1.5 font-sans">
+            <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 mt-1.5 font-sans font-medium">
               <a
                 href={`https://instagram.com/${cleanHandle}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-medium text-white hover:text-[#5B8BF7] flex items-center gap-1 transition-colors"
+                className="font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors font-mono"
               >
                 <span>@{cleanHandle}</span>
-                <ExternalLink className="w-3 h-3 text-[#7189BA]" />
+                <ExternalLink className="w-3 h-3 text-blue-400" />
               </a>
               <span>·</span>
-              <span className="text-[#D7DCEA]">{creator.category}</span>
+              <span className="text-slate-700 font-semibold">{creator.category}</span>
               <span>·</span>
-              <span className="text-[#8FA5D9]">{creator.location}</span>
+              <span className="text-slate-500">{creator.location}</span>
             </div>
 
             {creator.bio && (
-              <p className="text-xs text-[#8FA5D9]/70 italic mt-2 max-w-2xl line-clamp-2">
+              <p className="text-xs text-slate-600 italic mt-2 max-w-2xl line-clamp-2 font-serif">
                 "{creator.bio}"
               </p>
             )}
@@ -135,15 +135,15 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
         </div>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 self-stretch lg:self-auto">
-          <div className="px-3.5 py-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-xs font-mono">
-            <span className="text-[10px] text-[#7189BA] block uppercase">Talent Access Email</span>
-            <strong className="text-white text-[11px]">{creator.loginEmail || `${cleanHandle}@creators.theicompany.com`}</strong>
+          <div className="px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono shadow-xs">
+            <span className="text-[10px] text-slate-400 block uppercase font-bold">Talent Access Email</span>
+            <strong className="text-slate-800 text-[11px]">{creator.loginEmail || `${cleanHandle}@creators.theicompany.com`}</strong>
           </div>
           <a
             href={`https://instagram.com/${cleanHandle}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2 rounded-xl bg-[#5B8BF7] hover:bg-[#4F75E8] text-white text-xs font-medium flex items-center justify-center gap-1.5 shadow-[0_0_20px_rgba(91,139,247,0.35)] transition-all"
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-[0_4px_14px_rgba(37,99,235,0.25)] transition-all cursor-pointer"
           >
             <Instagram className="w-3.5 h-3.5" />
             <span>Open Instagram Profile</span>
@@ -153,78 +153,78 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
 
       {/* Creator Metrics Strip */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-[#0B0E17]/80 border border-white/[0.08] backdrop-blur-xl relative overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#5B8BF7]/30 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] block">AUDIENCE REACH</span>
-          <div className="font-sans text-2xl font-bold text-white mt-1 tracking-tight">
+        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
+          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">AUDIENCE REACH</span>
+          <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             {formatFollowerCount(creator.followers)}
           </div>
-          <span className="text-[11px] text-[#10B981] mt-1 block font-medium flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+          <span className="text-[11px] text-emerald-700 mt-1 block font-bold font-mono flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             {creator.engagementRate}% Engagement Rate
           </span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#0B0E17]/80 border border-white/[0.08] backdrop-blur-xl relative overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#5B8BF7]/30 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] block">AVG REEL PERFORMANCE</span>
-          <div className="font-sans text-2xl font-bold text-white mt-1 tracking-tight">
+        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
+          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">AVG REEL PERFORMANCE</span>
+          <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             ~{formatFollowerCount(creator.avgReelViews)} views
           </div>
-          <span className="text-[11px] text-[#8FA5D9]/70 mt-1 block font-mono">
+          <span className="text-[11px] text-slate-500 mt-1 block font-mono">
             ~{formatFollowerCount(creator.avgLikes)} likes · ~{creator.avgComments} comments
           </span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#0B0E17]/80 border border-white/[0.08] backdrop-blur-xl relative overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#5B8BF7]/30 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] block">COMMERCIAL RATE CARD</span>
-          <div className="font-sans text-2xl font-bold text-white mt-1 tracking-tight">
+        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
+          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">COMMERCIAL RATE CARD</span>
+          <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             ₹{creator.ratePerReel.toLocaleString()}
           </div>
-          <span className="text-[11px] text-[#8FA5D9]/70 mt-1 block font-mono">
+          <span className="text-[11px] text-slate-500 mt-1 block font-mono">
             Story: ₹{(creator.ratePerStory / 1000).toFixed(0)}k · Post: ₹{(creator.ratePerPost / 1000).toFixed(0)}k
           </span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#0B0E17]/80 border border-white/[0.08] backdrop-blur-xl relative overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#10B981]/40 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] block">CLEARED ESCROW BALANCE</span>
-          <div className="font-sans text-2xl font-bold text-[#10B981] mt-1 tracking-tight flex items-center gap-1.5">
+        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
+          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-emerald-500/35 to-transparent" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">CLEARED ESCROW BALANCE</span>
+          <div className="font-sans text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1 tracking-tight">
             ₹{completedEarnings.toLocaleString()}
           </div>
-          <span className="text-[11px] text-[#8FA5D9]/70 mt-1 block font-mono">
+          <span className="text-[11px] text-slate-500 mt-1 block font-mono">
             ₹{inEscrow.toLocaleString()} in escrow pending review
           </span>
         </div>
       </div>
 
-      {/* SECTION I · VERIFIED RECENT CONTENT & REEL DELIVERABLES (The Scraped Live Reels) */}
+      {/* SECTION I · VERIFIED RECENT CONTENT & REEL DELIVERABLES */}
       <VintageCard
         sectionNumber="SECTION I · VERIFIED MEDIA DOSSIER"
         title={`Recent Content & Live Instagram Reels (${recentReels.length})`}
         subtitle="Real-time extracted deliverables from creator profile with exact views, engagement, and working video posters"
       >
         {recentReels.length === 0 ? (
-          <div className="p-8 text-center bg-[#07090F]/60 rounded-xl border border-dashed border-white/10 text-[#8FA5D9] text-xs">
-            <Play className="w-8 h-8 text-[#7189BA] mx-auto mb-2 opacity-50" />
-            <p className="font-sans text-base font-semibold text-white">No Live Reels Attached</p>
-            <p className="text-xs text-[#8FA5D9]/70 mt-1 font-mono">
+          <div className="p-8 text-center bg-slate-50/80 rounded-2xl border border-dashed border-slate-200 text-slate-500 text-xs">
+            <Play className="w-8 h-8 text-slate-400 mx-auto mb-2 opacity-60" />
+            <p className="font-sans text-base font-bold text-slate-800">No Live Reels Attached</p>
+            <p className="text-xs text-slate-500 mt-1 font-mono">
               Ask your Agency Administrator to run the live Chromium reel extraction for @{cleanHandle}.
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
             {recentReels.map((item) => (
               <div
                 key={item.id}
-                className="relative rounded-xl overflow-hidden border border-white/[0.08] bg-[#07090F]/80 flex flex-col group hover:border-[#5B8BF7]/60 hover:shadow-[0_0_24px_rgba(91,139,247,0.2)] transition-all"
+                className="relative rounded-2xl overflow-hidden border border-slate-200/90 bg-white shadow-xs flex flex-col group hover:border-blue-400 hover:shadow-md transition-all"
               >
                 {/* Reel Thumbnail with Fail-Safe Proxy */}
-                <div className="relative aspect-[4/5] overflow-hidden bg-[#020307]">
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center bg-gradient-to-b from-[#0B0E17] to-[#020307] text-[#8FA5D9]">
-                    <Play className="w-6 h-6 text-[#5B8BF7]/70 mb-1" />
-                    <span className="text-[9px] font-mono text-[#7189BA] line-clamp-2">{item.title}</span>
+                <div className="relative aspect-[4/5] overflow-hidden bg-slate-900">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center bg-gradient-to-b from-slate-800 to-slate-950 text-slate-300">
+                    <Play className="w-6 h-6 text-blue-400 mb-1" />
+                    <span className="text-[9px] font-mono text-slate-400 line-clamp-2">{item.title}</span>
                   </div>
 
                   <img
@@ -245,20 +245,20 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
                   />
 
                   {/* Reel Type Tag */}
-                  <div className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-black/75 backdrop-blur-md text-[9px] text-[#8FA5D9] font-mono flex items-center gap-1 z-20 border border-white/10">
+                  <div className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-black/75 backdrop-blur-md text-[9px] text-white font-mono flex items-center gap-1 z-20 border border-white/20">
                     <span>{item.type === 'Reel' ? '▶' : item.type === 'Carousel' ? '📷' : '🖼️'}</span>
                     <span>{item.type}</span>
                   </div>
 
                   {/* Bottom Stats Overlay */}
                   <div className="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/90 via-black/50 to-transparent text-[10px] text-white font-mono flex items-center justify-between z-20">
-                    <span className="font-semibold text-white">{formatFollowerCount(item.views || item.likes)} views</span>
+                    <span className="font-bold text-white">{formatFollowerCount(item.views || item.likes)} views</span>
                     {item.url && (
                       <a
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1 rounded-full bg-white/10 hover:bg-[#5B8BF7] text-white transition-colors"
+                        className="p-1 rounded-full bg-white/20 hover:bg-blue-600 text-white transition-colors"
                         title="Open on Instagram"
                       >
                         <ExternalLink className="w-3 h-3" />
@@ -268,13 +268,13 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
                 </div>
 
                 {/* Card Details */}
-                <div className="p-2.5 flex-1 flex flex-col justify-between">
-                  <p className="text-[11px] text-[#D7DCEA] font-medium line-clamp-2 leading-tight">
+                <div className="p-3 flex-1 flex flex-col justify-between">
+                  <p className="text-xs text-slate-800 font-semibold line-clamp-2 leading-snug">
                     {item.title}
                   </p>
-                  <div className="flex items-center justify-between text-[9px] text-[#7189BA] font-mono mt-2 pt-1.5 border-t border-white/[0.06]">
+                  <div className="flex items-center justify-between text-[10px] text-slate-500 font-mono mt-2 pt-1.5 border-t border-slate-100">
                     <span>{item.postedDaysAgo}d ago</span>
-                    <span className="text-[#10B981] font-semibold">{item.engagement}% ER</span>
+                    <span className="text-emerald-700 font-bold">{item.engagement}% ER</span>
                   </div>
                 </div>
               </div>
@@ -292,71 +292,71 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Gender Split */}
-            <div className="p-4 rounded-xl bg-[#07090F]/70 border border-white/[0.08] space-y-3">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] font-semibold block">
+            <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-3">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-slate-600 font-bold block">
                 GENDER CONCENTRATION
               </span>
               <div className="space-y-3">
                 <div>
                   <div className="flex justify-between text-xs mb-1.5 font-sans">
-                    <span className="text-[#D7DCEA]">Female</span>
-                    <span className="font-mono font-bold text-white">{creator.audience.gender.female}%</span>
+                    <span className="text-slate-700 font-medium">Female</span>
+                    <span className="font-mono font-bold text-slate-900">{creator.audience.gender.female}%</span>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-[#F43F5E] to-[#FB7185] rounded-full" style={{ width: `${creator.audience.gender.female}%` }} />
+                  <div className="w-full h-2 rounded-full bg-slate-200 overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-rose-500 to-pink-500 rounded-full" style={{ width: `${creator.audience.gender.female}%` }} />
                   </div>
                 </div>
 
                 <div>
                   <div className="flex justify-between text-xs mb-1.5 font-sans">
-                    <span className="text-[#D7DCEA]">Male</span>
-                    <span className="font-mono font-bold text-white">{creator.audience.gender.male}%</span>
+                    <span className="text-slate-700 font-medium">Male</span>
+                    <span className="font-mono font-bold text-slate-900">{creator.audience.gender.male}%</span>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-[#5B8BF7] to-[#7189BA] rounded-full" style={{ width: `${creator.audience.gender.male}%` }} />
+                  <div className="w-full h-2 rounded-full bg-slate-200 overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full" style={{ width: `${creator.audience.gender.male}%` }} />
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Top Geographic Hubs */}
-            <div className="p-4 rounded-xl bg-[#07090F]/70 border border-white/[0.08] space-y-3">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] font-semibold block">
+            <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-3">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-slate-600 font-bold block">
                 TOP INDIAN METRO HUBS
               </span>
               <div className="space-y-1.5">
                 {creator.audience.topCities.map((city, idx) => (
-                  <div key={idx} className="flex items-center justify-between text-xs py-1.5 border-b border-white/[0.06] last:border-0 font-sans">
-                    <span className="text-[#D7DCEA] flex items-center gap-1.5">
-                      <MapPin className="w-3 h-3 text-[#5B8BF7]" />
+                  <div key={idx} className="flex items-center justify-between text-xs py-1.5 border-b border-slate-200/60 last:border-0 font-sans">
+                    <span className="text-slate-800 flex items-center gap-1.5 font-medium">
+                      <MapPin className="w-3.5 h-3.5 text-blue-600" />
                       {city.city}
                     </span>
-                    <span className="font-mono font-semibold text-white">{city.percentage}%</span>
+                    <span className="font-mono font-bold text-slate-900">{city.percentage}%</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Growth & Consistency Trajectory */}
-            <div className="p-4 rounded-xl bg-[#07090F]/70 border border-white/[0.08] space-y-3">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] font-semibold block">
+            <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-3">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-slate-600 font-bold block">
                 PORTFOLIO TRAJECTORY
               </span>
               <div className="space-y-2 text-xs font-sans">
-                <div className="flex justify-between py-1 border-b border-white/[0.06]">
-                  <span className="text-[#8FA5D9]/80">Weekly Momentum:</span>
-                  <span className="font-mono font-semibold text-[#10B981]">+{creator.progressTrajectory.weekGrowth}%</span>
+                <div className="flex justify-between py-1 border-b border-slate-200/60">
+                  <span className="text-slate-600 font-medium">Weekly Momentum:</span>
+                  <span className="font-mono font-bold text-emerald-600">+{creator.progressTrajectory.weekGrowth}%</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-white/[0.06]">
-                  <span className="text-[#8FA5D9]/80">Monthly Momentum:</span>
-                  <span className="font-mono font-semibold text-[#10B981]">+{creator.progressTrajectory.monthGrowth}%</span>
+                <div className="flex justify-between py-1 border-b border-slate-200/60">
+                  <span className="text-slate-600 font-medium">Monthly Momentum:</span>
+                  <span className="font-mono font-bold text-emerald-600">+{creator.progressTrajectory.monthGrowth}%</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-white/[0.06]">
-                  <span className="text-[#8FA5D9]/80">Consistency Score:</span>
-                  <span className="font-mono font-semibold text-white">{creator.progressTrajectory.consistencyScore}/100</span>
+                <div className="flex justify-between py-1 border-b border-slate-200/60">
+                  <span className="text-slate-600 font-medium">Consistency Score:</span>
+                  <span className="font-mono font-bold text-slate-900">{creator.progressTrajectory.consistencyScore}/100</span>
                 </div>
               </div>
-              <p className="text-[11px] text-[#7189BA] italic font-sans pt-1">
+              <p className="text-[11px] text-slate-500 italic font-serif pt-1">
                 Recommendation: {creator.progressTrajectory.aiRecommendation}
               </p>
             </div>
@@ -371,10 +371,10 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
         subtitle="Submit drafted content links for brand review and trigger instant escrow release"
       >
         {myDeliverables.length === 0 ? (
-          <div className="p-8 text-center bg-[#07090F]/60 rounded-xl border border-dashed border-white/10 text-[#8FA5D9] text-xs">
-            <Clock className="w-8 h-8 text-[#7189BA] mx-auto mb-2 opacity-50" />
-            <p className="font-sans text-base font-semibold text-white">No Active Deliverables Pending</p>
-            <p className="text-xs text-[#8FA5D9]/70 mt-1 font-mono">
+          <div className="p-8 text-center bg-slate-50/80 rounded-2xl border border-dashed border-slate-200 text-slate-500 text-xs">
+            <Clock className="w-8 h-8 text-slate-400 mx-auto mb-2 opacity-60" />
+            <p className="font-sans text-base font-bold text-slate-800">No Active Deliverables Pending</p>
+            <p className="text-xs text-slate-500 mt-1 font-mono">
               Your profile is verified. When agency brands assign campaigns to @{cleanHandle}, they appear here for draft submission.
             </p>
           </div>
@@ -383,28 +383,28 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
             {myDeliverables.map(({ campaign, deliverable: del }) => (
               <div
                 key={del.id}
-                className="p-5 rounded-xl bg-[#07090F]/80 border border-white/10 hover:border-[#5B8BF7]/40 transition-all space-y-3 relative overflow-hidden"
+                className="p-5 rounded-2xl bg-white border border-slate-200/90 hover:border-blue-300 transition-all space-y-3 relative overflow-hidden shadow-xs"
               >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-white/[0.06]">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
                   <div>
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#5B8BF7] font-semibold">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-blue-600 font-bold">
                       {campaign.brandName}
                     </span>
-                    <h4 className="font-sans text-lg font-bold text-white mt-0.5 tracking-tight">{campaign.name}</h4>
-                    <p className="text-xs text-[#7189BA] font-mono">Format: {del.type} · Deadline: {del.dueDate}</p>
+                    <h4 className="font-sans text-lg font-bold text-slate-900 mt-0.5 tracking-tight">{campaign.name}</h4>
+                    <p className="text-xs text-slate-500 font-mono">Format: {del.type} · Deadline: {del.dueDate}</p>
                   </div>
 
                   <div className="flex flex-col sm:items-end">
-                    <span className="text-xs text-[#7189BA] block">Contracted Compensation:</span>
-                    <div className="font-mono text-lg font-bold text-[#10B981]">
+                    <span className="text-xs text-slate-500 block font-medium">Contracted Compensation:</span>
+                    <div className="font-mono text-lg font-bold text-emerald-600">
                       ₹{del.agreedPayout.toLocaleString()}
                     </div>
                     {onOpenContract && (
                       <button
                         onClick={() => onOpenContract(campaign)}
-                        className="mt-1 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 hover:bg-[#5B8BF7] hover:text-white text-[11px] font-medium text-[#D7DCEA] flex items-center gap-1.5 transition-all"
+                        className="mt-1 px-3 py-1 rounded-xl bg-slate-50 border border-slate-200 hover:bg-slate-100 text-[11px] font-semibold text-slate-700 flex items-center gap-1.5 transition-all shadow-xs"
                       >
-                        <FileText className="w-3 h-3 text-[#5B8BF7]" />
+                        <FileText className="w-3.5 h-3.5 text-blue-600" />
                         <span>View Deal Voucher (TDS)</span>
                       </button>
                     )}
@@ -419,11 +419,11 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
                       placeholder="Paste your unlisted Instagram Reel URL or draft link..."
                       value={inputUrls[del.id] || ''}
                       onChange={(e) => setInputUrls({ ...inputUrls, [del.id]: e.target.value })}
-                      className="flex-1 px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-xs text-white placeholder-white/30 focus:outline-none focus:border-[#5B8BF7] focus:bg-black/60 transition-colors"
+                      className="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition-colors"
                     />
                     <button
                       onClick={() => handleSubmitUrl(campaign.id, del.id)}
-                      className="px-4 py-2.5 rounded-xl bg-[#5B8BF7] hover:bg-[#4F75E8] text-white font-medium text-xs shadow-[0_0_16px_rgba(91,139,247,0.3)] transition-all flex items-center justify-center gap-1.5"
+                      className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold text-xs shadow-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                     >
                       <Send className="w-3.5 h-3.5" />
                       <span>Submit Draft Link</span>
@@ -432,18 +432,18 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
                 )}
 
                 {del.status === 'draft_submitted' && (
-                  <div className="p-3 rounded-xl bg-[#F59E0B]/10 border border-[#F59E0B]/30 flex items-center justify-between text-xs text-[#F59E0B]">
-                    <span>Draft submitted to {campaign.brandName}. Review in progress.</span>
-                    <span className="font-medium text-[11px] underline cursor-pointer hover:text-white" onClick={() => window.open(del.submittedUrl, '_blank')}>
+                  <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-between text-xs text-amber-800">
+                    <span className="font-medium">Draft submitted to {campaign.brandName}. Review in progress.</span>
+                    <span className="font-bold underline cursor-pointer hover:text-amber-950" onClick={() => window.open(del.submittedUrl, '_blank')}>
                       View Submitted Link
                     </span>
                   </div>
                 )}
 
                 {del.status === 'live' && (
-                  <div className="p-3 rounded-xl bg-[#10B981]/10 border border-[#10B981]/30 flex items-center justify-between text-xs text-[#10B981]">
-                    <span className="font-medium">Approved & Live on Instagram · Escrow Cleared</span>
-                    <span className="font-mono font-semibold">Live in Portfolio</span>
+                  <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-800">
+                    <span className="font-semibold">Approved & Live on Instagram · Escrow Cleared</span>
+                    <span className="font-mono font-bold">Live in Portfolio</span>
                   </div>
                 )}
               </div>
@@ -458,14 +458,14 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
         title="Commercial Payout Ledger & Direct Bank Transfer"
         subtitle="Instant payout withdrawal via secure NEFT/RTGS banking rail"
       >
-        <div className="p-6 rounded-2xl bg-[#0B0E17]/85 border border-white/10 backdrop-blur-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#10B981]/40 to-transparent" />
+        <div className="p-6 rounded-2xl bg-white/80 border border-slate-200/90 backdrop-blur-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden shadow-xs">
+          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-emerald-500/35 to-transparent" />
           <div>
-            <span className="text-[10px] font-mono uppercase tracking-wider text-[#7189BA]">CLEARED ESCROW BALANCE</span>
-            <div className="font-sans text-3xl font-bold text-white mt-1 tracking-tight">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold">CLEARED ESCROW BALANCE</span>
+            <div className="font-sans text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
               ₹{completedEarnings.toLocaleString()}
             </div>
-            <p className="text-xs text-[#8FA5D9]/70 mt-1 font-mono">
+            <p className="text-xs text-slate-500 mt-1 font-mono">
               Verified beneficiary account: HDFC Bank · Ending in ****4821 (IFSC: HDFC0001244)
             </p>
           </div>
@@ -480,10 +480,10 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
                 }
               }}
               disabled={completedEarnings === 0}
-              className={`px-5 py-2.5 rounded-xl font-medium text-xs shadow-lg transition-all flex items-center gap-2 ${
+              className={`px-5 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all flex items-center gap-2 ${
                 completedEarnings > 0
-                  ? 'bg-gradient-to-r from-[#10B981] to-[#059669] hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-white cursor-pointer'
-                  : 'bg-white/5 border border-white/10 text-white/30 cursor-not-allowed'
+                  ? 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white cursor-pointer shadow-[0_4px_14px_rgba(5,150,105,0.25)]'
+                  : 'bg-slate-100 border border-slate-200 text-slate-400 cursor-not-allowed'
               }`}
             >
               <Wallet className="w-4 h-4" />

@@ -135,31 +135,31 @@ Please log in and review your contracted campaigns, talent deliverables, and app
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#020307]/80 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in overflow-y-auto">
-      <div className="bg-[#0B0E17]/95 border border-white/10 rounded-2xl w-full max-w-lg shadow-[0_16px_64px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden my-auto relative text-[#D7DCEA]">
-        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#5B8BF7] to-transparent" />
+    <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in overflow-y-auto">
+      <div className="bg-white/95 border border-white/90 rounded-3xl w-full max-w-lg shadow-[0_25px_70px_rgba(15,23,42,0.18),0_0_0_1px_rgba(255,255,255,0.9)_inset] backdrop-blur-2xl overflow-hidden my-auto relative text-slate-800">
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/60 to-transparent" />
         
         {/* Header */}
-        <div className="p-6 border-b border-white/[0.08] bg-[#07090F]/90 flex items-center justify-between">
+        <div className="p-6 border-b border-slate-200/80 bg-white/70 backdrop-blur-md flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#5B8BF7] to-[#7189BA] text-white flex items-center justify-center shadow-[0_0_16px_rgba(91,139,247,0.3)]">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-[0_4px_16px_rgba(37,99,235,0.3)]">
               <Building2 className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA]">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-semibold">
                   ADMIN ACCESS CONTROL ·
                 </span>
-                <span className="font-mono text-[10px] text-[#10B981] font-semibold">CLIENT ONBOARDING</span>
+                <span className="font-mono text-[10px] text-emerald-600 font-bold">CLIENT ONBOARDING</span>
               </div>
-              <h3 className="font-sans text-xl font-bold text-white tracking-tight">
+              <h3 className="font-sans text-xl font-extrabold text-slate-900 tracking-tight">
                 Onboard Brand Client & Generate Credentials
               </h3>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-[#8FA5D9] hover:text-white hover:bg-white/10 transition-colors"
+            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200/80 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -168,8 +168,8 @@ Please log in and review your contracted campaigns, talent deliverables, and app
         {/* Content */}
         {!isCreated ? (
           <form onSubmit={handleSubmit} className="p-6 space-y-5">
-            <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-xs text-[#8FA5D9] flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#10B981] flex-shrink-0" />
+            <div className="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200 text-xs text-emerald-900 flex items-center gap-2.5">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
               <span>
                 Admin will create the Brand's official portal and issue their dedicated login email & password.
               </span>
@@ -177,7 +177,7 @@ Please log in and review your contracted campaigns, talent deliverables, and app
 
             {/* Brand Name */}
             <div>
-              <label className="text-xs font-semibold text-white block mb-1 font-sans">
+              <label className="text-xs font-bold text-slate-700 block mb-1 font-sans">
                 Brand Name *
               </label>
               <input
@@ -186,48 +186,48 @@ Please log in and review your contracted campaigns, talent deliverables, and app
                 value={name}
                 onChange={(e) => handleNameChange(e.target.value)}
                 placeholder="e.g. Zomato, Puma India, CRED..."
-                className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-xs text-white focus:outline-none focus:border-[#5B8BF7] transition-all font-sans placeholder-white/30"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 transition-all font-sans placeholder-slate-400"
               />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Industry */}
               <div>
-                <label className="text-xs font-semibold text-white block mb-1 font-sans">
+                <label className="text-xs font-bold text-slate-700 block mb-1 font-sans">
                   Industry / Category
                 </label>
                 <select
                   value={industry}
                   onChange={(e) => setIndustry(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-xl bg-[#07090F] border border-white/15 text-xs text-white focus:outline-none focus:border-[#5B8BF7]"
+                  className="w-full px-3 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-xs text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-500"
                 >
-                  <option value="D2C & Consumer Tech" className="bg-[#0B0E17] text-white">D2C & Consumer Tech</option>
-                  <option value="Fashion & Apparel" className="bg-[#0B0E17] text-white">Fashion & Apparel</option>
-                  <option value="Food & Beverages" className="bg-[#0B0E17] text-white">Food & Beverages</option>
-                  <option value="Fintech & Banking" className="bg-[#0B0E17] text-white">Fintech & Banking</option>
-                  <option value="Health & Wellness" className="bg-[#0B0E17] text-white">Health & Wellness</option>
-                  <option value="Gaming & Esports" className="bg-[#0B0E17] text-white">Gaming & Esports</option>
-                  <option value="Automotive & Travel" className="bg-[#0B0E17] text-white">Automotive & Travel</option>
+                  <option value="D2C & Consumer Tech">D2C & Consumer Tech</option>
+                  <option value="Fashion & Apparel">Fashion & Apparel</option>
+                  <option value="Food & Beverages">Food & Beverages</option>
+                  <option value="Fintech & Banking">Fintech & Banking</option>
+                  <option value="Health & Wellness">Health & Wellness</option>
+                  <option value="Gaming & Esports">Gaming & Esports</option>
+                  <option value="Automotive & Travel">Automotive & Travel</option>
                 </select>
               </div>
 
               {/* Initial Budget */}
               <div>
-                <label className="text-xs font-semibold text-white block mb-1 font-sans">
+                <label className="text-xs font-bold text-slate-700 block mb-1 font-sans">
                   Allocated Escrow Budget (₹)
                 </label>
                 <input
                   type="number"
                   value={initialBudget}
                   onChange={(e) => setInitialBudget(Number(e.target.value))}
-                  className="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/15 text-xs text-white font-mono focus:outline-none focus:border-[#5B8BF7]"
+                  className="w-full px-3 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-xs text-slate-900 font-mono font-semibold focus:bg-white focus:outline-none focus:border-blue-500"
                 />
               </div>
             </div>
 
             {/* Contact Email */}
             <div>
-              <label className="text-xs font-semibold text-white block mb-1 font-sans">
+              <label className="text-xs font-bold text-slate-700 block mb-1 font-sans">
                 Official Contact Email (Optional)
               </label>
               <input
@@ -235,21 +235,21 @@ Please log in and review your contracted campaigns, talent deliverables, and app
                 value={contactEmail}
                 onChange={(e) => setContactEmail(e.target.value)}
                 placeholder="e.g. marketing@brand.com"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-xs text-white focus:outline-none focus:border-[#5B8BF7] placeholder-white/30"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-blue-500 placeholder-slate-400"
               />
             </div>
 
             {/* Generated Credentials Section */}
-            <div className="p-4 rounded-xl bg-[#07090F]/80 border border-white/10 space-y-3.5">
+            <div className="p-4 rounded-2xl bg-blue-50/50 border border-blue-100 space-y-3.5">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] font-semibold flex items-center gap-1.5">
-                  <Key className="w-3.5 h-3.5 text-[#5B8BF7]" />
+                <span className="font-mono text-[10px] uppercase tracking-wider text-slate-600 font-bold flex items-center gap-1.5">
+                  <Key className="w-3.5 h-3.5 text-blue-600" />
                   <span>Admin-Assigned Login Credentials</span>
                 </span>
                 <button
                   type="button"
                   onClick={handleGenerateStrongPassword}
-                  className="text-[11px] font-sans text-[#5B8BF7] hover:underline flex items-center gap-1 cursor-pointer"
+                  className="text-[11px] font-sans font-semibold text-blue-600 hover:underline flex items-center gap-1 cursor-pointer"
                 >
                   <Sparkles className="w-3 h-3" />
                   <span>Generate New</span>
@@ -258,7 +258,7 @@ Please log in and review your contracted campaigns, talent deliverables, and app
 
               <div className="space-y-2">
                 <div>
-                  <label className="text-[11px] text-[#8FA5D9] block mb-0.5 font-sans">Assigned Login Email</label>
+                  <label className="text-[11px] font-medium text-slate-600 block mb-0.5 font-sans">Assigned Login Email</label>
                   <div className="relative">
                     <input
                       type="email"
@@ -266,14 +266,14 @@ Please log in and review your contracted campaigns, talent deliverables, and app
                       value={loginEmail}
                       onChange={(e) => setLoginEmail(e.target.value)}
                       placeholder="brand@brands.theicompany.com"
-                      className="w-full pl-8 pr-3 py-2 rounded-lg bg-black/40 border border-white/15 text-xs font-mono text-white focus:outline-none focus:border-[#5B8BF7] placeholder-white/30"
+                      className="w-full pl-8 pr-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-mono text-slate-900 focus:outline-none focus:border-blue-500 placeholder-slate-400"
                     />
-                    <Mail className="w-3.5 h-3.5 text-[#7189BA] absolute left-2.5 top-3" />
+                    <Mail className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-[11px] text-[#8FA5D9] block mb-0.5 font-sans">Assigned Password</label>
+                  <label className="text-[11px] font-medium text-slate-600 block mb-0.5 font-sans">Assigned Password</label>
                   <div className="relative">
                     <input
                       type="text"
@@ -281,9 +281,9 @@ Please log in and review your contracted campaigns, talent deliverables, and app
                       value={loginPassword}
                       onChange={(e) => setLoginPassword(e.target.value)}
                       placeholder="e.g. brand#4821"
-                      className="w-full pl-8 pr-3 py-2 rounded-lg bg-black/40 border border-white/15 text-xs font-mono font-semibold text-white focus:outline-none focus:border-[#5B8BF7] placeholder-white/30"
+                      className="w-full pl-8 pr-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-mono font-bold text-slate-900 focus:outline-none focus:border-blue-500 placeholder-slate-400"
                     />
-                    <Lock className="w-3.5 h-3.5 text-[#7189BA] absolute left-2.5 top-3" />
+                    <Lock className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
                   </div>
                 </div>
               </div>
@@ -292,7 +292,7 @@ Please log in and review your contracted campaigns, talent deliverables, and app
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-[#5B8BF7] to-[#4F75E8] hover:shadow-[0_0_24px_rgba(91,139,247,0.4)] text-white font-medium text-xs shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white font-bold text-xs shadow-[0_4px_16px_rgba(37,99,235,0.25)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.35)] transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <Sparkles className="w-4 h-4 text-white" />
               <span>Activate Brand Account & Issue Portal Access</span>
@@ -301,33 +301,33 @@ Please log in and review your contracted campaigns, talent deliverables, and app
         ) : (
           /* SUCCESS CREDENTIALS PACKET */
           <div className="p-6 space-y-5">
-            <div className="p-4 rounded-xl bg-[#10B981]/15 border border-[#10B981]/30 text-center space-y-1">
-              <Check className="w-8 h-8 text-[#10B981] mx-auto" />
-              <h4 className="font-sans text-lg font-bold text-white tracking-tight">
+            <div className="p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-1">
+              <Check className="w-8 h-8 text-emerald-600 mx-auto" />
+              <h4 className="font-sans text-lg font-extrabold text-slate-900 tracking-tight">
                 Brand Account Activated Successfully!
               </h4>
-              <p className="text-xs text-[#10B981] font-mono">
+              <p className="text-xs text-emerald-700 font-mono font-medium">
                 {name} is now onboarded and registered in Supabase Cloud Database.
               </p>
             </div>
 
             {/* Copyable Credentials Voucher */}
-            <div className="p-4 rounded-xl bg-black/50 border border-white/10 font-mono text-xs space-y-2.5">
-              <div className="flex justify-between items-center pb-2 border-b border-white/[0.08]">
-                <span className="text-[#7189BA] text-[10px] uppercase font-sans font-semibold">PORTAL CREDENTIALS SLIP</span>
-                <span className="text-[10px] text-[#10B981] font-sans font-semibold">READY FOR DISPATCH</span>
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 font-mono text-xs space-y-2.5 shadow-sm">
+              <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+                <span className="text-slate-500 text-[10px] uppercase font-sans font-bold">PORTAL CREDENTIALS SLIP</span>
+                <span className="text-[10px] text-emerald-700 font-sans font-bold">READY FOR DISPATCH</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#8FA5D9]/80">Portal URL:</span>
-                <span className="font-semibold text-[#5B8BF7]">{portalUrl}</span>
+                <span className="text-slate-500">Portal URL:</span>
+                <span className="font-bold text-blue-600">{portalUrl}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#8FA5D9]/80">Assigned Email:</span>
-                <span className="font-semibold text-white">{loginEmail}</span>
+                <span className="text-slate-500">Assigned Email:</span>
+                <span className="font-bold text-slate-900">{loginEmail}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-[#8FA5D9]/80">Password:</span>
-                <span className="font-bold text-white bg-white/10 px-2 py-0.5 rounded border border-white/20">{loginPassword}</span>
+              <div className="flex justify-between items-center">
+                <span className="text-slate-500">Password:</span>
+                <span className="font-mono font-bold text-slate-900 bg-white px-2 py-0.5 rounded border border-slate-200">{loginPassword}</span>
               </div>
             </div>
 
@@ -336,9 +336,9 @@ Please log in and review your contracted campaigns, talent deliverables, and app
               <button
                 type="button"
                 onClick={handleCopyCredentials}
-                className="py-2.5 px-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-medium text-white flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                className="py-2.5 px-3 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-sm"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-[#10B981]" /> : <Copy className="w-3.5 h-3.5 text-[#8FA5D9]" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
                 <span>{copied ? 'Copied' : 'Copy Slip'}</span>
               </button>
 
@@ -346,7 +346,7 @@ Please log in and review your contracted campaigns, talent deliverables, and app
                 href={`https://wa.me/?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#10B981] to-[#059669] hover:shadow-[0_0_16px_rgba(16,185,129,0.3)] text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-all"
+                className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-sm"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>WhatsApp</span>
@@ -354,7 +354,7 @@ Please log in and review your contracted campaigns, talent deliverables, and app
 
               <a
                 href={`mailto:${contactEmail || loginEmail}?subject=${emailSubject}&body=${emailBody}`}
-                className="py-2.5 px-3 rounded-xl bg-[#5B8BF7] hover:bg-[#4F75E8] text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-all shadow-[0_0_16px_rgba(91,139,247,0.3)]"
+                className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-sm"
               >
                 <Mail className="w-3.5 h-3.5" />
                 <span>Email Client</span>
@@ -364,7 +364,7 @@ Please log in and review your contracted campaigns, talent deliverables, and app
             <button
               type="button"
               onClick={handleFinish}
-              className="w-full py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-medium text-white transition-colors cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-slate-100 border border-slate-200 hover:bg-slate-200 text-xs font-bold text-slate-700 transition-colors cursor-pointer"
             >
               Done & Return to Master Deck
             </button>

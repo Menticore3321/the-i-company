@@ -249,7 +249,7 @@ export const App: React.FC = () => {
   const activeCreator = influencers.find(i => i.id === currentUser.associatedId) || influencers[0];
 
   return (
-    <div className="min-h-screen bg-transparent text-[#D7DCEA] flex flex-col font-sans selection:bg-[#5B8BF7]/30 selection:text-white">
+    <div className="min-h-screen bg-transparent text-slate-900 flex flex-col font-sans selection:bg-blue-500/20 selection:text-blue-900">
       {/* Minimal Vintage Header */}
       <VintageHeader
         currentUser={currentUser}
@@ -307,13 +307,13 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      {/* Agentic Luminous Floating Toast */}
+      {/* Light Frosted Luminous Floating Toast */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-xl bg-[#0B0E17]/95 text-white text-xs font-sans shadow-agentic-glow flex items-center gap-3 border border-white/10 backdrop-blur-xl animate-fade-in">
-          <span className="w-5 h-5 rounded-full bg-[#10B981]/20 border border-[#10B981]/40 text-[#10B981] flex items-center justify-center flex-shrink-0">
-            <Check className="w-3 h-3 text-[#10B981]" />
+        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-white/95 text-slate-900 text-xs font-sans shadow-[0_12px_36px_rgba(0,0,0,0.1)] flex items-center gap-3 border border-white/80 backdrop-blur-xl animate-fade-in">
+          <span className="w-5 h-5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center flex-shrink-0">
+            <Check className="w-3 h-3 text-emerald-600" />
           </span>
-          <span className="font-medium text-[#D7DCEA]">{toastMessage}</span>
+          <span className="font-semibold text-slate-800">{toastMessage}</span>
         </div>
       )}
 

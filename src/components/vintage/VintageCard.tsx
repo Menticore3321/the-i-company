@@ -20,25 +20,25 @@ export const VintageCard: React.FC<VintageCardProps> = ({
   action
 }) => {
   return (
-    <div className={`bg-[#0B0E17]/85 backdrop-blur-xl rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)] hover:border-white/20 transition-all duration-300 relative overflow-hidden group ${className}`}>
-      {/* Top Luminous Ambient Accent */}
-      <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#5B8BF7]/50 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
+    <div className={`bg-white/75 backdrop-blur-2xl rounded-2xl border border-white/90 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.07)] hover:bg-white/85 transition-all duration-300 relative overflow-hidden group ${className}`}>
+      {/* Top Luminous Ambient Reflection Accent */}
+      <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-blue-500/35 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
 
       {(title || sectionNumber || badge) && (
-        <div className="px-6 py-4.5 border-b border-white/[0.07] flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/[0.02]">
+        <div className="px-6 py-4.5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/40">
           <div>
             {sectionNumber && (
-              <span className="font-mono text-[10px] tracking-widest uppercase text-[#8FA5D9] font-semibold block mb-1">
+              <span className="font-mono text-[10px] tracking-widest uppercase text-blue-600 font-bold block mb-1">
                 {sectionNumber}
               </span>
             )}
             {title && (
-              <h3 className="text-base sm:text-lg font-semibold text-white tracking-tight">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight font-sans">
                 {title}
               </h3>
             )}
             {subtitle && (
-              <p className="text-xs text-[#8E95A5] mt-0.5 leading-relaxed">
+              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed font-medium">
                 {subtitle}
               </p>
             )}

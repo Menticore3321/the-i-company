@@ -45,38 +45,38 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Brand Header Banner */}
-      <div className="p-6 rounded-2xl bg-[#0B0E17]/85 border border-white/10 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#5B8BF7]/50 to-transparent" />
+      {/* Brand Header Banner (Light Glass) */}
+      <div className="p-6 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-2xl shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
         
         <div className="flex items-center gap-4">
           <img
             src={activeBrand.logo}
             alt={activeBrand.name}
-            className="w-14 h-14 rounded-2xl object-cover border border-white/10 shadow-md"
+            className="w-14 h-14 rounded-2xl object-cover border border-slate-200 shadow-sm"
           />
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#7189BA]">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-bold">
                 ENTERPRISE CLIENT PORTAL ·
               </span>
-              <h2 className="font-sans text-xl font-bold text-white tracking-tight">{activeBrand.name}</h2>
+              <h2 className="font-sans text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">{activeBrand.name}</h2>
             </div>
-            <p className="text-xs text-[#8FA5D9]/70 mt-1 font-sans">
+            <p className="text-xs text-slate-500 mt-1 font-medium">
               {activeBrand.industry} · Primary Contact: {activeBrand.contactEmail}
             </p>
           </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <div className="px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-[#8FA5D9]">
-            <span className="text-[#7189BA]">Account: </span>
-            <strong className="text-white">{activeBrand.loginEmail || activeBrand.contactEmail}</strong>
+          <div className="px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono text-slate-700 shadow-xs">
+            <span className="text-slate-400 font-bold">Account: </span>
+            <strong className="text-slate-900">{activeBrand.loginEmail || activeBrand.contactEmail}</strong>
           </div>
 
           <button
             onClick={onOpenCampaignGenerator}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#5B8BF7] hover:bg-[#4F75E8] text-white text-xs font-medium shadow-[0_0_20px_rgba(91,139,247,0.35)] transition-all"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-semibold shadow-[0_4px_14px_rgba(37,99,235,0.25)] transition-all cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>Generate Campaign Brief</span>
@@ -86,43 +86,43 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
 
       {/* Brand KPI Strip */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-[#0B0E17]/80 border border-white/[0.08] backdrop-blur-xl relative overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#5B8BF7]/30 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] block">ACTIVE CAMPAIGNS</span>
-          <div className="font-sans text-2xl font-bold text-white mt-1 tracking-tight">
+        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
+          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">ACTIVE CAMPAIGNS</span>
+          <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             {brandCampaigns.length} Active
           </div>
-          <span className="text-[11px] text-[#8FA5D9]/70 mt-1 block font-mono">Live across India creator networks</span>
+          <span className="text-[11px] text-slate-500 mt-1 block font-mono">Live across India creator networks</span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#0B0E17]/80 border border-white/[0.08] backdrop-blur-xl relative overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#5B8BF7]/30 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] block">PROJECTED IMPRESSIONS</span>
-          <div className="font-sans text-2xl font-bold text-white mt-1 tracking-tight">
+        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
+          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">PROJECTED IMPRESSIONS</span>
+          <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             {(totalImpressions / 1000000).toFixed(1)}M
           </div>
-          <span className="text-[11px] text-[#10B981] mt-1 block font-mono flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+          <span className="text-[11px] text-emerald-700 mt-1 block font-mono font-bold flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             Blended multi-tier reach
           </span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#0B0E17]/80 border border-white/[0.08] backdrop-blur-xl relative overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#5B8BF7]/30 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] block">DEPLOYED BUDGET</span>
-          <div className="font-sans text-2xl font-bold text-white mt-1 tracking-tight">
+        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
+          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">DEPLOYED BUDGET</span>
+          <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             ₹{(totalSpent / 100000).toFixed(1)} Lakhs
           </div>
-          <span className="text-[11px] text-[#8FA5D9]/70 mt-1 block font-mono">Contracted across deliverables</span>
+          <span className="text-[11px] text-slate-500 mt-1 block font-mono">Contracted across deliverables</span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#0B0E17]/80 border border-white/[0.08] backdrop-blur-xl relative overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#F59E0B]/40 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] block">PENDING REVIEWS</span>
-          <div className="font-sans text-2xl font-bold text-[#F59E0B] mt-1 tracking-tight">
+        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
+          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-amber-500/35 to-transparent" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">PENDING REVIEWS</span>
+          <div className="font-sans text-2xl sm:text-3xl font-extrabold text-amber-600 mt-1 tracking-tight">
             {pendingApprovals.length} Drafts
           </div>
-          <span className="text-[11px] text-[#8FA5D9]/70 mt-1 block font-mono">Awaiting client sign-off</span>
+          <span className="text-[11px] text-slate-500 mt-1 block font-mono">Awaiting client sign-off</span>
         </div>
       </div>
 
@@ -133,43 +133,43 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
         subtitle="Review creator scripts, video drafts, and grant publishing clearance for Instagram release"
         badge={
           pendingApprovals.length > 0 ? (
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/30 font-medium font-mono">
+            <span className="text-xs px-3 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200 font-bold font-mono">
               {pendingApprovals.length} Action Required
             </span>
           ) : (
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/30 font-medium font-mono">
+            <span className="text-xs px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold font-mono">
               All Approved
             </span>
           )
         }
       >
         {pendingApprovals.length === 0 ? (
-          <div className="p-8 text-center bg-[#07090F]/60 rounded-xl border border-dashed border-white/10 text-[#8FA5D9] text-xs">
-            <CheckCircle2 className="w-8 h-8 text-[#10B981] mx-auto mb-2 opacity-80" />
-            <p className="font-sans text-base font-semibold text-white">All Submitted Content Cleared</p>
-            <p className="text-xs text-[#8FA5D9]/70 mt-1 font-mono">Creators have been notified to publish approved deliverables on their channels.</p>
+          <div className="p-8 text-center bg-slate-50/80 rounded-2xl border border-dashed border-slate-200 text-slate-500 text-xs">
+            <CheckCircle2 className="w-8 h-8 text-emerald-600 mx-auto mb-2 opacity-80" />
+            <p className="font-sans text-base font-bold text-slate-800">All Submitted Content Cleared</p>
+            <p className="text-xs text-slate-500 mt-1 font-mono">Creators have been notified to publish approved deliverables on their channels.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {pendingApprovals.map((del) => (
               <div
                 key={del.id}
-                className="p-5 rounded-xl bg-[#07090F]/80 border border-white/10 hover:border-[#5B8BF7]/40 transition-all space-y-3 relative overflow-hidden"
+                className="p-5 rounded-2xl bg-white border border-slate-200/90 hover:border-blue-300 transition-all space-y-3 relative overflow-hidden shadow-xs"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-white">@{del.influencerHandle}</span>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/30 font-mono uppercase">
+                  <span className="text-xs font-bold text-slate-900">@{del.influencerHandle}</span>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] bg-amber-50 text-amber-700 border border-amber-200 font-mono font-bold uppercase">
                     Draft Submitted
                   </span>
                 </div>
 
-                <div className="font-sans text-base font-semibold text-white">
+                <div className="font-sans text-base font-bold text-slate-900">
                   {del.type} Deliverable for {activeBrand.name}
                 </div>
 
-                <div className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-xs text-[#8FA5D9] flex items-center justify-between font-mono">
+                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-600 flex items-center justify-between font-mono">
                   <span>Contracted Milestone Payout:</span>
-                  <strong className="text-white">₹{del.agreedPayout.toLocaleString()}</strong>
+                  <strong className="text-slate-900 font-bold">₹{del.agreedPayout.toLocaleString()}</strong>
                 </div>
 
                 <div className="flex items-center gap-2 pt-2">
@@ -177,9 +177,9 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
                     href={del.submittedUrl || '#'}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex-1 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-center text-[#D7DCEA] hover:bg-white/10 flex items-center justify-center gap-1.5 transition-colors font-medium"
+                    className="flex-1 px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs text-center text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-1.5 transition-colors font-semibold shadow-xs"
                   >
-                    <ExternalLink className="w-3.5 h-3.5 text-[#7189BA]" />
+                    <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
                     <span>Preview Draft Video</span>
                   </a>
 
@@ -190,7 +190,7 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
                         onApproveDeliverable(parentCamp.id, del.id);
                       }
                     }}
-                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#10B981] to-[#059669] hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] text-white font-medium text-xs flex items-center gap-1.5 transition-all"
+                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold text-xs flex items-center gap-1.5 transition-all shadow-[0_4px_12px_rgba(5,150,105,0.2)] cursor-pointer"
                   >
                     <ThumbsUp className="w-3.5 h-3.5" />
                     <span>Approve & Clear Escrow</span>
@@ -212,25 +212,25 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
           {brandCampaigns.map((camp) => (
             <div
               key={camp.id}
-              className="p-5 rounded-xl bg-[#07090F]/80 border border-white/10 hover:border-white/20 transition-all space-y-4 relative overflow-hidden"
+              className="p-5 rounded-2xl bg-white border border-slate-200/90 hover:border-slate-300 transition-all space-y-4 relative overflow-hidden shadow-xs"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-white/[0.06]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-sans text-lg font-bold text-white tracking-tight">{camp.name}</h3>
-                    <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-white/5 text-[#8FA5D9] border border-white/10 font-mono">
+                    <h3 className="font-sans text-lg font-bold text-slate-900 tracking-tight">{camp.name}</h3>
+                    <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-mono font-semibold">
                       {camp.niche}
                     </span>
                   </div>
-                  <span className="text-xs text-[#7189BA] font-mono mt-1 block">
+                  <span className="text-xs text-slate-500 font-mono mt-1 block">
                     Campaign timeline: {camp.startDate} to {camp.endDate}
                   </span>
                 </div>
 
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                   <div className="text-right">
-                    <span className="text-xs text-[#7189BA] block font-mono">Total Campaign Budget:</span>
-                    <div className="font-mono text-lg font-bold text-[#10B981]">
+                    <span className="text-xs text-slate-500 block font-medium">Total Campaign Budget:</span>
+                    <div className="font-mono text-lg font-bold text-emerald-600">
                       ₹{(camp.totalBudget / 100000).toFixed(2)} Lakhs
                     </div>
                   </div>
@@ -238,9 +238,9 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
                   {onOpenContract && (
                     <button
                       onClick={() => onOpenContract(camp)}
-                      className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-[#5B8BF7] hover:text-white text-xs font-medium text-[#D7DCEA] flex items-center justify-center gap-1.5 transition-all"
+                      className="px-3.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:bg-slate-100 text-xs font-semibold text-slate-700 flex items-center justify-center gap-1.5 transition-all shadow-xs"
                     >
-                      <FileText className="w-3.5 h-3.5 text-[#5B8BF7]" />
+                      <FileText className="w-3.5 h-3.5 text-blue-600" />
                       <span>Agreement & GST Invoice</span>
                     </button>
                   )}
@@ -250,23 +250,23 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
               {/* Deliverable Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {camp.deliverables.map((del) => (
-                  <div key={del.id} className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.07] space-y-1.5 text-xs">
+                  <div key={del.id} className="p-3.5 rounded-xl bg-slate-50/80 border border-slate-200/80 space-y-1.5 text-xs">
                     <div className="flex justify-between items-center">
-                      <span className="font-semibold text-white">@{del.influencerHandle}</span>
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono uppercase border ${
+                      <span className="font-bold text-slate-900">@{del.influencerHandle}</span>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase border ${
                         del.status === 'live'
-                          ? 'bg-[#10B981]/15 text-[#10B981] border-[#10B981]/30'
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                           : del.status === 'draft_submitted'
-                          ? 'bg-[#F59E0B]/15 text-[#F59E0B] border-[#F59E0B]/30'
-                          : 'bg-white/5 text-[#7189BA] border-white/10'
+                          ? 'bg-amber-50 text-amber-700 border-amber-200'
+                          : 'bg-white text-slate-600 border-slate-200'
                       }`}>
                         {del.status.replace('_', ' ')}
                       </span>
                     </div>
-                    <div className="text-[#8FA5D9]/70 font-mono text-[11px]">{del.type} · Due {del.dueDate}</div>
-                    <div className="pt-2 border-t border-white/[0.06] flex justify-between font-mono text-[11px]">
-                      <span className="text-[#7189BA]">Payout:</span>
-                      <span className="text-white font-semibold">₹{del.agreedPayout.toLocaleString()}</span>
+                    <div className="text-slate-500 font-mono text-[11px]">{del.type} · Due {del.dueDate}</div>
+                    <div className="pt-2 border-t border-slate-200/60 flex justify-between font-mono text-[11px]">
+                      <span className="text-slate-500">Payout:</span>
+                      <span className="text-slate-900 font-bold">₹{del.agreedPayout.toLocaleString()}</span>
                     </div>
                   </div>
                 ))}
