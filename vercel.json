@@ -3,6 +3,14 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/api/thumbnail",
+      "destination": "https://the-i-company-scraper.onrender.com/thumbnail"
+    },
+    {
+      "source": "/api/instagram",
+      "destination": "https://theicompany.netlify.app/.netlify/functions/instagram"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
