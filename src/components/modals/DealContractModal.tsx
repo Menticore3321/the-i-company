@@ -233,9 +233,12 @@ https://theicompany.netlify.app`;
                   <div className="font-mono text-[10px] tracking-widest uppercase text-[#78716C]">
                     COMMERCIAL COLLABORATION AGREEMENT · MMXXVI
                   </div>
-                  <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1C1917] mt-1">
-                    The I Company Atelier
-                  </h1>
+                  <div className="flex items-center gap-2.5 mt-1">
+                    <img src="/logo-icon.png" alt="The I Company" className="w-8 h-8 object-contain" />
+                    <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1C1917]">
+                      The I Company Atelier
+                    </h1>
+                  </div>
                   <p className="text-xs font-sans text-[#78716C] mt-1 max-w-sm">
                     Operating as Influencer Marketing Agency of Record & Escrow Clearing House, Mumbai, India.
                   </p>
@@ -345,7 +348,7 @@ https://theicompany.netlify.app`;
                 {/* Vintage Stamped Seal */}
                 <div className="flex flex-col items-center justify-center text-center col-span-2 sm:col-span-1">
                   <div className="w-20 h-20 rounded-full border-2 border-dashed border-[#2E523E] flex flex-col items-center justify-center p-2 text-[#2E523E] rotate-[-6deg] bg-[#EEF5F1]/60">
-                    <ShieldCheck className="w-5 h-5 text-[#2E523E] mb-0.5" />
+                    <img src="/logo-icon.png" alt="The I Company" className="w-5 h-5 object-contain mb-0.5" />
                     <span className="text-[8px] font-mono font-bold tracking-widest uppercase">THE I COMPANY</span>
                     <span className="text-[7px] font-sans uppercase">OFFICIAL SEAL</span>
                     <span className="text-[7px] font-mono">MMXXVI</span>
@@ -366,9 +369,12 @@ https://theicompany.netlify.app`;
                   <div className="font-mono text-[10px] tracking-widest uppercase text-[#78716C]">
                     TAX INVOICE · ORIGINAL FOR RECIPIENT
                   </div>
-                  <h2 className="font-serif text-2xl font-bold text-[#1C1917] mt-1">
-                    The I Company Pvt. Ltd.
-                  </h2>
+                  <div className="flex items-center gap-2 mt-1">
+                    <img src="/logo-icon.png" alt="The I Company" className="w-6 h-6 object-contain" />
+                    <h2 className="font-serif text-2xl font-bold text-[#1C1917]">
+                      The I Company Pvt. Ltd.
+                    </h2>
+                  </div>
                   <p className="text-xs text-[#57534E] mt-1 leading-relaxed">
                     Atelier 104, Nariman Point Commercial Chambers<br />
                     Mumbai, Maharashtra, India · 400021<br />

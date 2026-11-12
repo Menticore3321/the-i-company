@@ -431,7 +431,8 @@ export const App: React.FC = () => {
       {/* Weather Card Style Frosted Glass Footer */}
       <footer className="mt-auto border-t border-white/60 bg-white/40 backdrop-blur-xl px-6 sm:px-8 py-4 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <span className="font-bold text-slate-900 text-sm font-sans">The I Company</span>
+          <img src="/logo-icon.png" alt="The I Company" className="w-5 h-5 object-contain" />
+          <span className="font-extrabold text-slate-900 text-sm font-sans">The I Company</span>
           <span className="text-slate-300">·</span>
           <span>Talent & Brand Intelligence · Role: {currentUser.role.toUpperCase()}</span>
         </div>

@@ -85,8 +85,8 @@ export const LoginView: React.FC<LoginViewProps> = ({
 
       {/* Top Notice with Live Wallpaper Switcher */}
       <div className="max-w-md mx-auto w-full flex items-center justify-between pt-4 sm:pt-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full weather-glass-pod text-[11px] font-mono text-blue-800 shadow-xs">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full weather-glass-pod text-[11px] font-mono text-slate-800 shadow-xs">
+          <img src="/logo-icon.png" alt="" className="w-4 h-4 object-contain" />
           <span className="font-bold tracking-wider">THE I COMPANY · ATELIER MMXXVI</span>
         </div>
 
@@ -108,11 +108,12 @@ export const LoginView: React.FC<LoginViewProps> = ({
 
           {/* Brand Seal Header */}
           <div className="text-center space-y-2">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center font-serif text-2xl font-bold tracking-tight shadow-[0_4px_16px_rgba(37,99,235,0.3)] border border-blue-400/30 mx-auto relative">
-              <span>I</span>
-              <span className="absolute -bottom-1 -right-1 text-[8px] font-mono px-1 py-0.2 bg-slate-900 text-white rounded font-bold shadow-xs">
-                AI
-              </span>
+            <div className="w-16 h-16 rounded-2xl bg-white/90 p-2.5 flex items-center justify-center shadow-[0_4px_20px_rgba(15,23,42,0.08)] border border-white mx-auto relative group hover:scale-105 transition-transform">
+              <img 
+                src="/logo-icon.png" 
+                alt="The I Company" 
+                className="w-full h-full object-contain"
+              />
             </div>
 
             <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">

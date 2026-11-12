@@ -62,13 +62,17 @@ export const VintageHeader: React.FC<VintageHeaderProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3 flex items-center justify-between gap-4">
         {/* Brand & Workspace Identity */}
         <div className="flex items-center gap-3 select-none">
-          {/* Luminous Emblem */}
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-[0_4px_14px_rgba(37,99,235,0.25)] border border-blue-400/30 flex-shrink-0">
-            <span className="font-serif">I</span>
+          {/* Official Emblem Logo */}
+          <div className="w-9 h-9 rounded-xl bg-white/80 p-1 flex items-center justify-center shadow-[0_2px_10px_rgba(15,23,42,0.06)] border border-white/90 flex-shrink-0">
+            <img 
+              src="/logo-icon.png" 
+              alt="The I Company" 
+              className="w-full h-full object-contain" 
+            />
           </div>
 
           <div className="flex items-center gap-2.5">
-            <h1 className="text-base sm:text-lg font-bold tracking-tight text-slate-900 font-sans">
+            <h1 className="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 font-sans">
               The I Company
             </h1>
             <span className={`text-[11px] font-sans font-semibold px-2.5 py-0.5 rounded-full border shadow-xs ${

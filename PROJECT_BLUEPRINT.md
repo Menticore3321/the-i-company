@@ -1,7 +1,7 @@
 <!-- AUTO-SYNC-START -->
 ## 🔄 Automated Verification & State Manifest (Auto-Updated)
-> **Last Synchronized**: `2026-11-12T15:27:32.602Z`  
-> **Active Git Commit**: `23c0b10` (`main`) — *fix: change index.html body bg to light bg-slate-50*  
+> **Last Synchronized**: `2026-11-12T15:51:47.602Z`  
+> **Active Git Commit**: `e6c173c` (`main`) — *feat(mobile): bind capacitor android mobile app to live Vercel production URL*  
 > **Database Status**: `CONNECTED (Supabase PostgreSQL)`  
 > **Android Native**: `SYNCHRONIZED (Capacitor Android)`  
 > **Discovered Portals (3)**: `AdminMasterView.tsx`, `BrandPortalView.tsx`, `CreatorPortalView.tsx`  
