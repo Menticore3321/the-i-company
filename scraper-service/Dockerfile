@@ -11,12 +11,13 @@ RUN apt-get update \
 
 WORKDIR /app
 
-# Copy package files and install dependencies
-COPY package*.json ./
-RUN npm ci --only=production
+# Copy scraper service dependencies
+COPY scraper-service/package*.json ./
 
-# Copy application source code
-COPY . .
+RUN npm install --omit=dev
+
+# Copy scraper service application code
+COPY scraper-service/ ./
 
 # Set Puppeteer environment variables
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false \
@@ -27,4 +28,3 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false \
 EXPOSE 4000
 
 CMD ["npm", "start"]
-
