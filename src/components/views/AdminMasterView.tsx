@@ -26,7 +26,8 @@ import {
   Key,
   FileText,
   Send,
-  Mail
+  Mail,
+  UserCheck
 } from 'lucide-react';
 
 interface AdminMasterViewProps {
@@ -41,6 +42,8 @@ interface AdminMasterViewProps {
   onOpenCampaignGenerator: () => void;
   onApproveDeliverable: (campaignId: string, deliverableId: string) => void;
   onOpenContract?: (campaign: Campaign) => void;
+  onSwitchToCreator?: (influencer: Influencer) => void;
+  onSwitchToAccount?: (account: UserAccount) => void;
 }
 
 export const AdminMasterView: React.FC<AdminMasterViewProps> = ({
@@ -54,7 +57,9 @@ export const AdminMasterView: React.FC<AdminMasterViewProps> = ({
   onOpenAddBrandModal,
   onOpenCampaignGenerator,
   onApproveDeliverable,
-  onOpenContract
+  onOpenContract,
+  onSwitchToCreator,
+  onSwitchToAccount
 }) => {
   const [activeTab, setActiveTab] = useState<'roster' | 'brands' | 'campaigns' | 'geo' | 'accounts' | 'ledger'>('roster');
   const [searchQuery, setSearchQuery] = useState('');
@@ -374,15 +379,30 @@ Please sign in and access your designated workspace.`);
                     </td>
 
                     <td className="py-3 px-4 text-right">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onSelectInfluencer(inf);
-                        }}
-                        className="px-2.5 py-1 rounded bg-[#FAF8F5] border border-[#E2DDD5] text-xs text-[#1C1917] hover:bg-[#1C1917] hover:text-white transition-colors"
-                      >
-                        Inspect ↗
-                      </button>
+                      <div className="flex items-center justify-end gap-1.5">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onSelectInfluencer(inf);
+                          }}
+                          className="px-2.5 py-1 rounded bg-[#FAF8F5] border border-[#E2DDD5] text-xs text-[#1C1917] hover:bg-[#1C1917] hover:text-white transition-colors"
+                        >
+                          Inspect ↗
+                        </button>
+                        {onSwitchToCreator && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onSwitchToCreator(inf);
+                            }}
+                            className="px-2.5 py-1 rounded bg-[#EEF5F1] border border-[#D1E3D8] text-xs text-[#2E523E] hover:bg-[#2E523E] hover:text-white transition-colors font-medium flex items-center gap-1 shadow-vintage-xs"
+                            title="Open creator's live studio dashboard"
+                          >
+                            <span>Studio</span>
+                            <span>➔</span>
+                          </button>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -674,6 +694,17 @@ Please sign in and access your designated workspace.`);
                           <Mail className="w-3.5 h-3.5" />
                           <span className="text-[11px] hidden sm:inline">Email</span>
                         </a>
+
+                        {onSwitchToAccount && (
+                          <button
+                            onClick={() => onSwitchToAccount(acc)}
+                            title="Directly enter this portal"
+                            className="p-1.5 rounded bg-[#FAF8F5] hover:bg-[#1C1917] text-[#1C1917] hover:text-white border border-[#E2DDD5] text-xs transition-colors inline-flex items-center gap-1"
+                          >
+                            <UserCheck className="w-3.5 h-3.5 text-[#2E523E]" />
+                            <span className="text-[11px] hidden sm:inline">Open</span>
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>

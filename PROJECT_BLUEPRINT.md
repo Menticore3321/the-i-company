@@ -1,7 +1,7 @@
 <!-- AUTO-SYNC-START -->
 ## 🔄 Automated Verification & State Manifest (Auto-Updated)
-> **Last Synchronized**: `2026-11-12T06:15:37.396Z`  
-> **Active Git Commit**: `3e0165e` (`main`) — *fix(scraper): extend client timeout to 45s and fix thumbnail CDN fallback for headless reels*  
+> **Last Synchronized**: `2026-11-12T06:23:49.011Z`  
+> **Active Git Commit**: `a6d2ae5` (`main`) — *fix(media): implement high-speed zero-CORS thumbnail proxy and referrer-free reel covers*  
 > **Database Status**: `CONNECTED (Supabase PostgreSQL)`  
 > **Android Native**: `SYNCHRONIZED (Capacitor Android)`  
 > **Discovered Portals (3)**: `AdminMasterView.tsx`, `BrandPortalView.tsx`, `CreatorPortalView.tsx`  

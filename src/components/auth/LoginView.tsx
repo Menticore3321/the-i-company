@@ -27,12 +27,13 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
   const [showQuickAccess, setShowQuickAccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const allKnownAccounts: UserAccount[] = [...accounts, ...INITIAL_ACCOUNTS];
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
 
     const cleanEmail = email.trim().toLowerCase();
-    const allKnownAccounts = [...accounts, ...INITIAL_ACCOUNTS];
     const found = allKnownAccounts.find(
       acc => acc.email.toLowerCase() === cleanEmail && acc.password === password
     );
@@ -202,45 +203,65 @@ export const LoginView: React.FC<LoginViewProps> = ({ accounts, onLogin }) => {
                   </span>
                 </button>
 
-                {/* Brand 1: Nothing India */}
-                <button
-                  type="button"
-                  onClick={() => handleQuickDemoLogin('acc-br-1')}
-                  className="p-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F5F2EB] border border-[#E7E2DA] text-left transition-colors flex items-center justify-between text-xs group"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-7 h-7 rounded-md bg-[#FAF8F5] border border-[#E2DDD5] flex items-center justify-center text-xs">
-                      🏢
-                    </span>
-                    <div>
-                      <div className="font-semibold text-[#1C1917] group-hover:text-[#C25E3E]">
-                        Nothing India (Brand Client)
+                {/* Brand Accounts */}
+                {allKnownAccounts
+                  .filter(acc => acc.role === 'brand')
+                  .filter((acc, idx, arr) => arr.findIndex(a => a.email === acc.email) === idx)
+                  .map((acc) => (
+                    <button
+                      key={acc.id}
+                      type="button"
+                      onClick={() => {
+                        setEmail(acc.email);
+                        setPassword(acc.password);
+                        onLogin(acc);
+                      }}
+                      className="p-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F5F2EB] border border-[#E7E2DA] text-left transition-colors flex items-center justify-between text-xs group"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-7 h-7 rounded-md bg-[#FAF8F5] border border-[#E2DDD5] flex items-center justify-center text-xs">
+                          🏢
+                        </span>
+                        <div>
+                          <div className="font-semibold text-[#1C1917] group-hover:text-[#C25E3E]">
+                            {acc.name}
+                          </div>
+                          <span className="text-[10px] text-[#78716C] font-mono">{acc.email} · {acc.password}</span>
+                        </div>
                       </div>
-                      <span className="text-[10px] text-[#78716C] font-mono">nothing@brands.theicompany.com · nothing123</span>
-                    </div>
-                  </div>
-                  <span className="text-[10px] text-[#78716C] font-mono">Brand Portal</span>
-                </button>
+                      <span className="text-[10px] text-[#78716C] font-mono">Brand Portal ➔</span>
+                    </button>
+                  ))}
 
-                {/* Creator 1: Tech Burner */}
-                <button
-                  type="button"
-                  onClick={() => handleQuickDemoLogin('acc-inf-1')}
-                  className="p-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F5F2EB] border border-[#E7E2DA] text-left transition-colors flex items-center justify-between text-xs group"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-7 h-7 rounded-md bg-[#FAF8F5] border border-[#E2DDD5] flex items-center justify-center text-xs">
-                      ✨
-                    </span>
-                    <div>
-                      <div className="font-semibold text-[#1C1917] group-hover:text-[#C25E3E]">
-                        Shlok Srivastava (@techburner)
+                {/* Creator Accounts (Includes all newly onboarded creators) */}
+                {allKnownAccounts
+                  .filter(acc => acc.role === 'influencer')
+                  .filter((acc, idx, arr) => arr.findIndex(a => a.email === acc.email) === idx)
+                  .map((acc) => (
+                    <button
+                      key={acc.id}
+                      type="button"
+                      onClick={() => {
+                        setEmail(acc.email);
+                        setPassword(acc.password);
+                        onLogin(acc);
+                      }}
+                      className="p-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F5F2EB] border border-[#E7E2DA] text-left transition-colors flex items-center justify-between text-xs group"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-7 h-7 rounded-md bg-[#FAF8F5] border border-[#E2DDD5] flex items-center justify-center text-xs">
+                          ✨
+                        </span>
+                        <div>
+                          <div className="font-semibold text-[#1C1917] group-hover:text-[#C25E3E]">
+                            {acc.name}
+                          </div>
+                          <span className="text-[10px] text-[#78716C] font-mono">{acc.email} · {acc.password}</span>
+                        </div>
                       </div>
-                      <span className="text-[10px] text-[#78716C] font-mono">techburner@creators.theicompany.com · tech123</span>
-                    </div>
-                  </div>
-                  <span className="text-[10px] text-[#2E523E] font-mono">Creator Desk</span>
-                </button>
+                      <span className="text-[10px] text-[#2E523E] font-mono font-medium">Creator Desk ➔</span>
+                    </button>
+                  ))}
               </div>
             )}
           </div>

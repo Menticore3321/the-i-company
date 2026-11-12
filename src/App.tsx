@@ -208,6 +208,33 @@ export const App: React.FC = () => {
     showToast(`Disbursement Cleared: ₹${amount.toLocaleString()} transferred via escrow banking rail.`);
   };
 
+  // Direct workspace switcher for Admin
+  const handleSwitchToCreator = (inf: Influencer) => {
+    const acc = accounts.find(a => a.associatedId === inf.id && a.role === 'influencer');
+    if (acc) {
+      setCurrentUser(acc);
+      showToast(`Switched workspace: Viewing Creator Studio for ${inf.name} (@${inf.handle})`);
+    } else {
+      const syntheticAcc: UserAccount = {
+        id: `acc-${inf.id}`,
+        email: inf.loginEmail || `${inf.handle}@creators.theicompany.com`,
+        password: inf.loginPassword || 'creator#1234',
+        role: 'influencer',
+        name: `${inf.name} (@${inf.handle})`,
+        associatedId: inf.id,
+        status: 'active',
+        lastLogin: 'Just now'
+      };
+      setCurrentUser(syntheticAcc);
+      showToast(`Switched workspace: Viewing Creator Studio for ${inf.name} (@${inf.handle})`);
+    }
+  };
+
+  const handleSwitchToAccount = (acc: UserAccount) => {
+    setCurrentUser(acc);
+    showToast(`Switched workspace: Now logged in as ${acc.name}`);
+  };
+
   // -------------------------------------------------------------
   // If NOT logged in, show the Login Gateway
   // -------------------------------------------------------------
@@ -250,6 +277,8 @@ export const App: React.FC = () => {
             onOpenCampaignGenerator={() => setIsCampaignGeneratorOpen(true)}
             onApproveDeliverable={handleApproveDeliverable}
             onOpenContract={(camp) => setSelectedContractCampaign(camp)}
+            onSwitchToCreator={handleSwitchToCreator}
+            onSwitchToAccount={handleSwitchToAccount}
           />
         )}
 
