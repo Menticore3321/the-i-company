@@ -36,6 +36,39 @@ export default defineConfig({
             }
             return;
           }
+
+          if (req.url && (req.url.startsWith('/api/thumbnail') || req.url.startsWith('/.netlify/functions/thumbnail'))) {
+            const urlObj = new URL(req.url, 'http://localhost:3000');
+            const shortcode = urlObj.searchParams.get('shortcode') || '';
+            const directUrl = urlObj.searchParams.get('url') || '';
+
+            const event = {
+              httpMethod: req.method || 'GET',
+              queryStringParameters: { shortcode, url: directUrl },
+              headers: req.headers as Record<string, string>
+            };
+
+            try {
+              const { handler: thumbnailHandler } = await import('./netlify/functions/thumbnail.js');
+              const response = await thumbnailHandler(event);
+              res.statusCode = response.statusCode;
+              if (response.headers) {
+                Object.entries(response.headers).forEach(([k, v]) => {
+                  res.setHeader(k, v as string);
+                });
+              }
+              if (response.isBase64Encoded && response.body) {
+                res.end(Buffer.from(response.body, 'base64'));
+              } else {
+                res.end(response.body);
+              }
+            } catch (err: any) {
+              res.statusCode = 500;
+              res.setHeader('Content-Type', 'text/plain');
+              res.end('Thumbnail proxy error: ' + err.message);
+            }
+            return;
+          }
           next();
         });
       }

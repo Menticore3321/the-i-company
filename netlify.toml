@@ -18,6 +18,12 @@
   force = true
 
 [[redirects]]
+  from = "/api/thumbnail"
+  to = "/.netlify/functions/thumbnail"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

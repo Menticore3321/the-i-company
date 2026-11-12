@@ -67,6 +67,49 @@ app.get('/health', (req, res) => {
 });
 
 /**
+ * GET /thumbnail?shortcode=DfEf6V4RtLv
+ * High-performance streaming proxy for Instagram reel thumbnails
+ */
+app.get('/thumbnail', async (req, res) => {
+  const shortcode = req.query.shortcode;
+  const directUrl = req.query.url;
+
+  if (!shortcode && !directUrl) {
+    return res.status(400).send('Missing shortcode or url parameter');
+  }
+
+  const targetUrl = directUrl || `https://www.instagram.com/p/${shortcode}/media/?size=l`;
+
+  try {
+    const upstreamRes = await fetch(targetUrl, {
+      redirect: 'follow',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+        'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8'
+      }
+    });
+
+    if (!upstreamRes.ok) {
+      return res.status(upstreamRes.status).send('Failed to fetch cover from Instagram');
+    }
+
+    const contentType = upstreamRes.headers.get('content-type') || 'image/jpeg';
+    const buffer = await upstreamRes.arrayBuffer();
+
+    res.set({
+      'Content-Type': contentType,
+      'Access-Control-Allow-Origin': '*',
+      'Cache-Control': 'public, max-age=86400, stale-while-revalidate=604800'
+    });
+
+    res.send(Buffer.from(buffer));
+  } catch (err) {
+    console.error('[Thumbnail Proxy Error]:', err.message);
+    res.status(500).send('Thumbnail fetch error: ' + err.message);
+  }
+});
+
+/**
  * GET /reels?handle=techburner&limit=10
  * Scrapes real top 10 reels with media, views, links and engagement
  */
@@ -139,11 +182,11 @@ app.get('/reels', async (req, res) => {
       }
     });
 
-    // Accelerate page loading by skipping heavy images and fonts
+    // Accelerate page loading by skipping heavy video streams and fonts (allow images for thumbnails)
     await page.setRequestInterception(true);
     page.on('request', (req) => {
       const rType = req.resourceType();
-      if (['image', 'media', 'font'].includes(rType)) {
+      if (['media', 'font'].includes(rType)) {
         req.abort();
       } else {
         req.continue();
@@ -191,16 +234,23 @@ app.get('/reels', async (req, res) => {
             }
           }
 
-          // Extract thumbnail
+          // Extract thumbnail (direct CDN URL or srcset)
           const img = a.querySelector('img');
-          const thumb = img ? (img.getAttribute('src') || img.currentSrc || img.src || '') : '';
+          let thumb = '';
+          if (img) {
+            thumb = img.currentSrc || img.getAttribute('src') || img.src || '';
+            if (!thumb && img.srcset) {
+              const parts = img.srcset.split(',');
+              thumb = parts[parts.length - 1]?.trim().split(' ')[0] || '';
+            }
+          }
 
           results.push({
             id: `reel-${shortcode}`,
             type: 'Reel',
             title: `Reel · @${handle} (${rawViews || 'Viral'})`,
             rawViews: rawViews,
-            thumbnail: thumb || `https://www.instagram.com/p/${shortcode}/media/?size=l`,
+            thumbnail: thumb || `https://the-i-company-scraper.onrender.com/thumbnail?shortcode=${shortcode}`,
             url: `https://www.instagram.com/reel/${shortcode}/`,
             postedDaysAgo: 2
           });
@@ -217,7 +267,7 @@ app.get('/reels', async (req, res) => {
         const shortcode = r.url.match(/\/reel\/([a-zA-Z0-9_-]+)/)?.[1] || '';
         combined.push({
           ...r,
-          thumbnail: r.thumbnail || (shortcode ? `https://www.instagram.com/p/${shortcode}/media/?size=l` : ''),
+          thumbnail: r.thumbnail || (shortcode ? `https://the-i-company-scraper.onrender.com/thumbnail?shortcode=${shortcode}` : ''),
           views: parseViewsString(r.rawViews),
           likes: Math.round(parseViewsString(r.rawViews) * 0.065),
           comments: Math.max(15, Math.round(parseViewsString(r.rawViews) * 0.002))

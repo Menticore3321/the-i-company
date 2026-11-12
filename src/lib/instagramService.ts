@@ -107,9 +107,17 @@ export async function fetchLiveReelsFromMicroservice(
         return json.reels.map((r: any) => {
           const shortcodeMatch = r.url?.match(/\/reel\/([a-zA-Z0-9_-]+)/);
           const shortcode = shortcodeMatch ? shortcodeMatch[1] : '';
+          
+          let thumb = r.thumbnail || '';
+          if (!thumb || thumb.includes('instagram.com/p/')) {
+            thumb = shortcode 
+              ? `/api/thumbnail?shortcode=${shortcode}`
+              : `https://the-i-company-scraper.onrender.com/thumbnail?shortcode=${shortcode}`;
+          }
+
           return {
             ...r,
-            thumbnail: r.thumbnail || (shortcode ? `https://www.instagram.com/p/${shortcode}/media/?size=l` : '')
+            thumbnail: thumb
           };
         });
       }

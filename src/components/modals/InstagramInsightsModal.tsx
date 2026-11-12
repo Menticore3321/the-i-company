@@ -235,9 +235,27 @@ export const InstagramInsightsModal: React.FC<InstagramInsightsModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {influencer.recentContent.map((post) => (
                 <div key={post.id} className="p-3.5 rounded-xl bg-white border border-[#E7E2DA] flex gap-3">
-                  <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-[#F5F2EB]">
-                    <img src={post.thumbnail} alt={post.title} className="w-full h-full object-cover" />
-                    <span className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/80 text-[8px] text-white font-mono">
+                  <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-[#2A2421]">
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-[#2E2824] to-[#1C1917] text-white">
+                      <span className="text-[10px] font-mono text-[#D6CFBF]">▶ Reel</span>
+                    </div>
+                    <img 
+                      src={post.thumbnail} 
+                      alt={post.title} 
+                      referrerPolicy="no-referrer"
+                      className="relative z-10 w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        const shortcodeMatch = post.url?.match(/\/reel\/([a-zA-Z0-9_-]+)/);
+                        const shortcode = shortcodeMatch ? shortcodeMatch[1] : '';
+                        if (shortcode && !target.src.includes('thumbnail')) {
+                          target.src = `/api/thumbnail?shortcode=${shortcode}`;
+                        } else if (shortcode && !target.src.includes('onrender.com')) {
+                          target.src = `https://the-i-company-scraper.onrender.com/thumbnail?shortcode=${shortcode}`;
+                        }
+                      }}
+                    />
+                    <span className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/80 text-[8px] text-white font-mono z-20">
                       {post.type}
                     </span>
                   </div>

@@ -684,21 +684,43 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                         {editableMedia.map((item) => (
                           <div key={item.id} className="relative rounded-xl overflow-hidden border border-[#E7E2DA] bg-[#FAF8F5] flex flex-col group hover:border-[#1C1917] transition-all">
-                            <div className="relative aspect-[4/5] overflow-hidden bg-[#1C1917]/5">
-                              <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                              <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/75 text-[9px] text-white font-mono flex items-center gap-1">
+                            <div className="relative aspect-[4/5] overflow-hidden bg-[#2A2421]">
+                              {/* Background Fallback in case of slow network */}
+                              <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center bg-gradient-to-b from-[#2E2824] to-[#1C1917] text-white">
+                                <Play className="w-5 h-5 text-[#E7E2DA]/70 mb-1" />
+                                <span className="text-[9px] font-mono text-[#D6CFBF] line-clamp-2">{item.title}</span>
+                              </div>
+
+                              <img 
+                                src={item.thumbnail} 
+                                alt={item.title}
+                                referrerPolicy="no-referrer"
+                                className="relative z-10 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                onError={(e) => {
+                                  const target = e.currentTarget;
+                                  const shortcodeMatch = item.url?.match(/\/reel\/([a-zA-Z0-9_-]+)/);
+                                  const shortcode = shortcodeMatch ? shortcodeMatch[1] : '';
+                                  
+                                  if (shortcode && !target.src.includes('thumbnail')) {
+                                    target.src = `/api/thumbnail?shortcode=${shortcode}`;
+                                  } else if (shortcode && !target.src.includes('onrender.com')) {
+                                    target.src = `https://the-i-company-scraper.onrender.com/thumbnail?shortcode=${shortcode}`;
+                                  }
+                                }}
+                              />
+                              <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/75 text-[9px] text-white font-mono flex items-center gap-1 z-20">
                                 <span>{item.type === 'Reel' ? '▶' : item.type === 'Carousel' ? '📷' : '🖼️'}</span>
                                 <span>{item.type}</span>
                               </div>
                               <button
                                 type="button"
                                 onClick={() => handleDeleteMedia(item.id)}
-                                className="absolute top-1.5 right-1.5 p-1 rounded-full bg-black/70 hover:bg-[#C25E3E] text-white transition-colors opacity-0 group-hover:opacity-100 cursor-pointer"
+                                className="absolute top-1.5 right-1.5 p-1 rounded-full bg-black/70 hover:bg-[#C25E3E] text-white transition-colors opacity-0 group-hover:opacity-100 cursor-pointer z-20"
                                 title="Delete media"
                               >
                                 <Trash2 className="w-3 h-3" />
                               </button>
-                              <div className="absolute inset-x-0 bottom-0 p-1.5 bg-gradient-to-t from-black/85 via-black/40 to-transparent text-[10px] text-white font-mono flex items-center justify-between">
+                              <div className="absolute inset-x-0 bottom-0 p-1.5 bg-gradient-to-t from-black/85 via-black/40 to-transparent text-[10px] text-white font-mono flex items-center justify-between z-20">
                                 <span className="font-semibold">{formatFollowerCount(item.views || item.likes)} views</span>
                                 {item.url && (
                                   <a
