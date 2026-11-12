@@ -135,29 +135,31 @@ Please log in and review your contracted campaigns, talent deliverables, and app
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#1C1917]/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in overflow-y-auto">
-      <div className="bg-[#FAF8F5] border border-[#E7E2DA] rounded-2xl w-full max-w-lg shadow-vintage-2xl overflow-hidden my-auto">
+    <div className="fixed inset-0 z-50 bg-[#020307]/80 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in overflow-y-auto">
+      <div className="bg-[#0B0E17]/95 border border-white/10 rounded-2xl w-full max-w-lg shadow-[0_16px_64px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden my-auto relative text-[#D7DCEA]">
+        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#5B8BF7] to-transparent" />
+        
         {/* Header */}
-        <div className="p-6 border-b border-[#E7E2DA] bg-[#F7F4EE] flex items-center justify-between">
+        <div className="p-6 border-b border-white/[0.08] bg-[#07090F]/90 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#1C1917] text-white flex items-center justify-center shadow-vintage-sm">
-              <Building2 className="w-5 h-5 text-[#FAF8F5]" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#5B8BF7] to-[#7189BA] text-white flex items-center justify-center shadow-[0_0_16px_rgba(91,139,247,0.3)]">
+              <Building2 className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-[#78716C]">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA]">
                   ADMIN ACCESS CONTROL ·
                 </span>
-                <span className="font-mono text-[10px] text-[#2E523E] font-semibold">CLIENT ONBOARDING</span>
+                <span className="font-mono text-[10px] text-[#10B981] font-semibold">CLIENT ONBOARDING</span>
               </div>
-              <h3 className="font-serif text-xl font-bold text-[#1C1917]">
+              <h3 className="font-sans text-xl font-bold text-white tracking-tight">
                 Onboard Brand Client & Generate Credentials
               </h3>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-white border border-[#E2DDD5] text-[#78716C] hover:text-[#1C1917] hover:bg-[#FAF8F5] transition-colors"
+            className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-[#8FA5D9] hover:text-white hover:bg-white/10 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -166,8 +168,8 @@ Please log in and review your contracted campaigns, talent deliverables, and app
         {/* Content */}
         {!isCreated ? (
           <form onSubmit={handleSubmit} className="p-6 space-y-5">
-            <div className="p-3.5 rounded-xl bg-[#F0ECE4]/60 border border-[#E2DDD5] text-xs text-[#57534E] flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#2E523E] flex-shrink-0" />
+            <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-xs text-[#8FA5D9] flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#10B981] flex-shrink-0" />
               <span>
                 Admin will create the Brand's official portal and issue their dedicated login email & password.
               </span>
@@ -175,7 +177,7 @@ Please log in and review your contracted campaigns, talent deliverables, and app
 
             {/* Brand Name */}
             <div>
-              <label className="text-xs font-semibold text-[#1C1917] block mb-1">
+              <label className="text-xs font-semibold text-white block mb-1 font-sans">
                 Brand Name *
               </label>
               <input
@@ -184,48 +186,48 @@ Please log in and review your contracted campaigns, talent deliverables, and app
                 value={name}
                 onChange={(e) => handleNameChange(e.target.value)}
                 placeholder="e.g. Zomato, Puma India, CRED..."
-                className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917] focus:ring-1 focus:ring-[#1C1917] transition-all font-sans"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-xs text-white focus:outline-none focus:border-[#5B8BF7] transition-all font-sans placeholder-white/30"
               />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Industry */}
               <div>
-                <label className="text-xs font-semibold text-[#1C1917] block mb-1">
+                <label className="text-xs font-semibold text-white block mb-1 font-sans">
                   Industry / Category
                 </label>
                 <select
                   value={industry}
                   onChange={(e) => setIndustry(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                  className="w-full px-3 py-2.5 rounded-xl bg-[#07090F] border border-white/15 text-xs text-white focus:outline-none focus:border-[#5B8BF7]"
                 >
-                  <option value="D2C & Consumer Tech">D2C & Consumer Tech</option>
-                  <option value="Fashion & Apparel">Fashion & Apparel</option>
-                  <option value="Food & Beverages">Food & Beverages</option>
-                  <option value="Fintech & Banking">Fintech & Banking</option>
-                  <option value="Health & Wellness">Health & Wellness</option>
-                  <option value="Gaming & Esports">Gaming & Esports</option>
-                  <option value="Automotive & Travel">Automotive & Travel</option>
+                  <option value="D2C & Consumer Tech" className="bg-[#0B0E17] text-white">D2C & Consumer Tech</option>
+                  <option value="Fashion & Apparel" className="bg-[#0B0E17] text-white">Fashion & Apparel</option>
+                  <option value="Food & Beverages" className="bg-[#0B0E17] text-white">Food & Beverages</option>
+                  <option value="Fintech & Banking" className="bg-[#0B0E17] text-white">Fintech & Banking</option>
+                  <option value="Health & Wellness" className="bg-[#0B0E17] text-white">Health & Wellness</option>
+                  <option value="Gaming & Esports" className="bg-[#0B0E17] text-white">Gaming & Esports</option>
+                  <option value="Automotive & Travel" className="bg-[#0B0E17] text-white">Automotive & Travel</option>
                 </select>
               </div>
 
               {/* Initial Budget */}
               <div>
-                <label className="text-xs font-semibold text-[#1C1917] block mb-1">
+                <label className="text-xs font-semibold text-white block mb-1 font-sans">
                   Allocated Escrow Budget (₹)
                 </label>
                 <input
                   type="number"
                   value={initialBudget}
                   onChange={(e) => setInitialBudget(Number(e.target.value))}
-                  className="w-full px-3 py-2.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] font-mono focus:outline-none focus:border-[#1C1917]"
+                  className="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/15 text-xs text-white font-mono focus:outline-none focus:border-[#5B8BF7]"
                 />
               </div>
             </div>
 
             {/* Contact Email */}
             <div>
-              <label className="text-xs font-semibold text-[#1C1917] block mb-1">
+              <label className="text-xs font-semibold text-white block mb-1 font-sans">
                 Official Contact Email (Optional)
               </label>
               <input
@@ -233,21 +235,21 @@ Please log in and review your contracted campaigns, talent deliverables, and app
                 value={contactEmail}
                 onChange={(e) => setContactEmail(e.target.value)}
                 placeholder="e.g. marketing@brand.com"
-                className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-xs text-white focus:outline-none focus:border-[#5B8BF7] placeholder-white/30"
               />
             </div>
 
             {/* Generated Credentials Section */}
-            <div className="p-4 rounded-xl bg-white border border-[#E2DDD5] space-y-3.5 shadow-vintage-xs">
+            <div className="p-4 rounded-xl bg-[#07090F]/80 border border-white/10 space-y-3.5">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-[#78716C] font-semibold flex items-center gap-1.5">
-                  <Key className="w-3.5 h-3.5 text-[#C25E3E]" />
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] font-semibold flex items-center gap-1.5">
+                  <Key className="w-3.5 h-3.5 text-[#5B8BF7]" />
                   <span>Admin-Assigned Login Credentials</span>
                 </span>
                 <button
                   type="button"
                   onClick={handleGenerateStrongPassword}
-                  className="text-[11px] font-sans text-[#C25E3E] hover:underline flex items-center gap-1"
+                  className="text-[11px] font-sans text-[#5B8BF7] hover:underline flex items-center gap-1 cursor-pointer"
                 >
                   <Sparkles className="w-3 h-3" />
                   <span>Generate New</span>
@@ -256,7 +258,7 @@ Please log in and review your contracted campaigns, talent deliverables, and app
 
               <div className="space-y-2">
                 <div>
-                  <label className="text-[11px] text-[#78716C] block mb-0.5">Assigned Login Email</label>
+                  <label className="text-[11px] text-[#8FA5D9] block mb-0.5 font-sans">Assigned Login Email</label>
                   <div className="relative">
                     <input
                       type="email"
@@ -264,14 +266,14 @@ Please log in and review your contracted campaigns, talent deliverables, and app
                       value={loginEmail}
                       onChange={(e) => setLoginEmail(e.target.value)}
                       placeholder="brand@brands.theicompany.com"
-                      className="w-full pl-8 pr-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:bg-white focus:outline-none focus:border-[#1C1917]"
+                      className="w-full pl-8 pr-3 py-2 rounded-lg bg-black/40 border border-white/15 text-xs font-mono text-white focus:outline-none focus:border-[#5B8BF7] placeholder-white/30"
                     />
-                    <Mail className="w-3.5 h-3.5 text-[#78716C] absolute left-2.5 top-3" />
+                    <Mail className="w-3.5 h-3.5 text-[#7189BA] absolute left-2.5 top-3" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-[11px] text-[#78716C] block mb-0.5">Assigned Password</label>
+                  <label className="text-[11px] text-[#8FA5D9] block mb-0.5 font-sans">Assigned Password</label>
                   <div className="relative">
                     <input
                       type="text"
@@ -279,9 +281,9 @@ Please log in and review your contracted campaigns, talent deliverables, and app
                       value={loginPassword}
                       onChange={(e) => setLoginPassword(e.target.value)}
                       placeholder="e.g. brand#4821"
-                      className="w-full pl-8 pr-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] text-xs font-mono font-semibold text-[#1C1917] focus:bg-white focus:outline-none focus:border-[#1C1917]"
+                      className="w-full pl-8 pr-3 py-2 rounded-lg bg-black/40 border border-white/15 text-xs font-mono font-semibold text-white focus:outline-none focus:border-[#5B8BF7] placeholder-white/30"
                     />
-                    <Lock className="w-3.5 h-3.5 text-[#78716C] absolute left-2.5 top-3" />
+                    <Lock className="w-3.5 h-3.5 text-[#7189BA] absolute left-2.5 top-3" />
                   </div>
                 </div>
               </div>
@@ -290,42 +292,42 @@ Please log in and review your contracted campaigns, talent deliverables, and app
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-3 rounded-lg bg-[#1C1917] hover:bg-[#2E2A27] text-white font-medium text-xs shadow-vintage-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-[#5B8BF7] to-[#4F75E8] hover:shadow-[0_0_24px_rgba(91,139,247,0.4)] text-white font-medium text-xs shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-              <Sparkles className="w-4 h-4 text-[#FBF9F5]" />
+              <Sparkles className="w-4 h-4 text-white" />
               <span>Activate Brand Account & Issue Portal Access</span>
             </button>
           </form>
         ) : (
           /* SUCCESS CREDENTIALS PACKET */
           <div className="p-6 space-y-5">
-            <div className="p-4 rounded-xl bg-[#EEF5F1] border border-[#D1E3D8] text-center space-y-1">
-              <Check className="w-8 h-8 text-[#2E523E] mx-auto" />
-              <h4 className="font-serif text-lg font-bold text-[#1C1917]">
+            <div className="p-4 rounded-xl bg-[#10B981]/15 border border-[#10B981]/30 text-center space-y-1">
+              <Check className="w-8 h-8 text-[#10B981] mx-auto" />
+              <h4 className="font-sans text-lg font-bold text-white tracking-tight">
                 Brand Account Activated Successfully!
               </h4>
-              <p className="text-xs text-[#2E523E]">
+              <p className="text-xs text-[#10B981] font-mono">
                 {name} is now onboarded and registered in Supabase Cloud Database.
               </p>
             </div>
 
             {/* Copyable Credentials Voucher */}
-            <div className="p-4 rounded-xl bg-white border border-[#E7E2DA] font-mono text-xs space-y-2.5 shadow-vintage-xs">
-              <div className="flex justify-between items-center pb-2 border-b border-[#F0ECE4]">
-                <span className="text-[#78716C] text-[10px] uppercase font-sans font-semibold">PORTAL CREDENTIALS SLIP</span>
-                <span className="text-[10px] text-[#2E523E] font-sans font-semibold">READY FOR DISPATCH</span>
+            <div className="p-4 rounded-xl bg-black/50 border border-white/10 font-mono text-xs space-y-2.5">
+              <div className="flex justify-between items-center pb-2 border-b border-white/[0.08]">
+                <span className="text-[#7189BA] text-[10px] uppercase font-sans font-semibold">PORTAL CREDENTIALS SLIP</span>
+                <span className="text-[10px] text-[#10B981] font-sans font-semibold">READY FOR DISPATCH</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#78716C]">Portal URL:</span>
-                <span className="font-semibold text-[#1C1917]">{portalUrl}</span>
+                <span className="text-[#8FA5D9]/80">Portal URL:</span>
+                <span className="font-semibold text-[#5B8BF7]">{portalUrl}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#78716C]">Assigned Email:</span>
-                <span className="font-semibold text-[#1C1917]">{loginEmail}</span>
+                <span className="text-[#8FA5D9]/80">Assigned Email:</span>
+                <span className="font-semibold text-white">{loginEmail}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#78716C]">Password:</span>
-                <span className="font-bold text-[#C25E3E] bg-[#FDF3EE] px-1.5 py-0.5 rounded border border-[#F2DACF]">{loginPassword}</span>
+                <span className="text-[#8FA5D9]/80">Password:</span>
+                <span className="font-bold text-white bg-white/10 px-2 py-0.5 rounded border border-white/20">{loginPassword}</span>
               </div>
             </div>
 
@@ -334,9 +336,9 @@ Please log in and review your contracted campaigns, talent deliverables, and app
               <button
                 type="button"
                 onClick={handleCopyCredentials}
-                className="py-2.5 px-3 rounded-lg bg-white border border-[#D6CFBF] hover:bg-[#FAF8F5] text-xs font-medium text-[#1C1917] flex items-center justify-center gap-1.5 transition-colors shadow-vintage-xs"
+                className="py-2.5 px-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-medium text-white flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-[#2E523E]" /> : <Copy className="w-3.5 h-3.5 text-[#57534E]" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-[#10B981]" /> : <Copy className="w-3.5 h-3.5 text-[#8FA5D9]" />}
                 <span>{copied ? 'Copied' : 'Copy Slip'}</span>
               </button>
 
@@ -344,7 +346,7 @@ Please log in and review your contracted campaigns, talent deliverables, and app
                 href={`https://wa.me/?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-2.5 px-3 rounded-lg bg-[#2E523E] hover:bg-[#244231] text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-colors shadow-vintage-xs"
+                className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#10B981] to-[#059669] hover:shadow-[0_0_16px_rgba(16,185,129,0.3)] text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-all"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>WhatsApp</span>
@@ -352,7 +354,7 @@ Please log in and review your contracted campaigns, talent deliverables, and app
 
               <a
                 href={`mailto:${contactEmail || loginEmail}?subject=${emailSubject}&body=${emailBody}`}
-                className="py-2.5 px-3 rounded-lg bg-[#1C1917] hover:bg-[#2E2A27] text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-colors shadow-vintage-xs"
+                className="py-2.5 px-3 rounded-xl bg-[#5B8BF7] hover:bg-[#4F75E8] text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-all shadow-[0_0_16px_rgba(91,139,247,0.3)]"
               >
                 <Mail className="w-3.5 h-3.5" />
                 <span>Email Client</span>
@@ -362,7 +364,7 @@ Please log in and review your contracted campaigns, talent deliverables, and app
             <button
               type="button"
               onClick={handleFinish}
-              className="w-full py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] hover:bg-[#F2EDE4] text-xs font-medium text-[#1C1917] transition-colors"
+              className="w-full py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-medium text-white transition-colors cursor-pointer"
             >
               Done & Return to Master Deck
             </button>

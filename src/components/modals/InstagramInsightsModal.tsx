@@ -31,22 +31,24 @@ export const InstagramInsightsModal: React.FC<InstagramInsightsModalProps> = ({
   if (!influencer) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#1C1917]/50 backdrop-blur-sm">
-      <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white border border-[#E7E2DA] rounded-2xl shadow-vintage-lg text-[#1C1917]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#020307]/80 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-[#0B0E17]/95 border border-white/10 rounded-2xl shadow-[0_16px_64px_rgba(0,0,0,0.8)] backdrop-blur-2xl text-[#D7DCEA] relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#5B8BF7] to-transparent" />
+        
         {/* Header */}
-        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-[#FAF8F5] border-b border-[#E7E2DA]">
+        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-[#07090F]/90 backdrop-blur-xl border-b border-white/[0.08]">
           <div>
-            <span className="font-mono text-[10px] tracking-wider uppercase text-[#78716C]">
+            <span className="font-mono text-[10px] tracking-wider uppercase text-[#7189BA]">
               CREATOR TELEMETRY DOSSIER · ID: {influencer.id.toUpperCase()}
             </span>
-            <h3 className="font-serif text-lg font-bold text-[#1C1917]">
+            <h3 className="font-sans text-lg font-bold text-white tracking-tight">
               Instagram Analytics & Valuation
             </h3>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-[#78716C] hover:text-[#1C1917] hover:bg-[#F5F2EB] transition-colors"
+            className="p-1.5 rounded-lg text-[#8FA5D9] hover:text-white hover:bg-white/10 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -54,40 +56,41 @@ export const InstagramInsightsModal: React.FC<InstagramInsightsModalProps> = ({
 
         <div className="p-6 space-y-6">
           {/* Top Profile Card */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-xl bg-[#FAF8F5] border border-[#E7E2DA]">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-xl bg-[#07090F]/80 border border-white/10">
             <div className="flex items-center gap-4">
               <div className="relative">
                 <img
                   src={influencer.avatar}
                   alt={influencer.name}
-                  className="w-16 h-16 rounded-full object-cover border-2 border-[#1C1917]"
+                  className="w-16 h-16 rounded-full object-cover border-2 border-[#5B8BF7]/60 shadow-[0_0_16px_rgba(91,139,247,0.3)]"
                 />
-                <span className="absolute bottom-0 right-0 p-1 rounded-full bg-[#1C1917] text-white">
+                <span className="absolute bottom-0 right-0 p-1.5 rounded-full bg-gradient-to-tr from-[#FD1D1D] to-[#833AB4] text-white">
                   <Instagram className="w-3 h-3" />
                 </span>
               </div>
 
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-serif text-xl font-bold text-[#1C1917]">{influencer.name}</h3>
-                  <CheckCircle2 className="w-4 h-4 text-[#2E523E]" />
+                  <h3 className="font-sans text-xl font-bold text-white">{influencer.name}</h3>
+                  <CheckCircle2 className="w-4 h-4 text-[#10B981]" />
                 </div>
-                <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-[#78716C]">
-                  <span className="font-medium text-[#1C1917]">@{influencer.handle}</span>
+                <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-[#8FA5D9]/80 font-sans">
+                  <span className="font-medium text-white">@{influencer.handle}</span>
                   <span>•</span>
                   <span>{influencer.category}</span>
                   <span>•</span>
                   <span>{influencer.location}</span>
                 </div>
-                <p className="text-xs text-[#57534E] mt-1 line-clamp-1 italic font-serif">{influencer.bio}</p>
+                <p className="text-xs text-[#8FA5D9]/70 mt-1 line-clamp-1 italic">{influencer.bio}</p>
               </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <span className="px-2.5 py-1 rounded bg-white text-[#1C1917] border border-[#E2DDD5] text-xs font-medium">
+              <span className="px-2.5 py-1 rounded-full bg-white/5 text-[#8FA5D9] border border-white/10 text-xs font-mono font-medium">
                 {influencer.tier}
               </span>
-              <span className="px-2.5 py-1 rounded bg-[#EEF5F1] text-[#2E523E] border border-[#D1E3D8] text-xs font-semibold">
+              <span className="px-2.5 py-1 rounded-full bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 text-xs font-mono font-semibold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
                 {influencer.authenticityScore}% Verified
               </span>
             </div>
@@ -95,85 +98,85 @@ export const InstagramInsightsModal: React.FC<InstagramInsightsModalProps> = ({
 
           {/* Quick Metrics Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-            <div className="p-4 rounded-xl bg-white border border-[#E7E2DA]">
-              <span className="font-mono text-[10px] text-[#78716C] uppercase">FOLLOWERS</span>
-              <div className="font-serif text-2xl font-bold text-[#1C1917] mt-1">
+            <div className="p-4 rounded-xl bg-[#07090F]/70 border border-white/[0.08]">
+              <span className="font-mono text-[10px] text-[#7189BA] uppercase">FOLLOWERS</span>
+              <div className="font-sans text-2xl font-bold text-white mt-1">
                 {(influencer.followers / 1000).toFixed(0)}k
               </div>
-              <span className="text-[11px] text-[#2E523E]">+{influencer.progressTrajectory.monthGrowth}% 30d</span>
+              <span className="text-[11px] text-[#10B981] font-mono">+{influencer.progressTrajectory.monthGrowth}% 30d</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-white border border-[#E7E2DA]">
-              <span className="font-mono text-[10px] text-[#78716C] uppercase">ENGAGEMENT RATE</span>
-              <div className="font-serif text-2xl font-bold text-[#2E523E] mt-1">
+            <div className="p-4 rounded-xl bg-[#07090F]/70 border border-white/[0.08]">
+              <span className="font-mono text-[10px] text-[#7189BA] uppercase">ENGAGEMENT RATE</span>
+              <div className="font-sans text-2xl font-bold text-[#10B981] mt-1">
                 {influencer.engagementRate}%
               </div>
-              <span className="text-[11px] text-[#78716C]">vs 2.4% industry avg</span>
+              <span className="text-[11px] text-[#7189BA] font-mono">vs 2.4% avg</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-white border border-[#E7E2DA]">
-              <span className="font-mono text-[10px] text-[#78716C] uppercase">AVG REEL VIEWS</span>
-              <div className="font-serif text-2xl font-bold text-[#1C1917] mt-1">
+            <div className="p-4 rounded-xl bg-[#07090F]/70 border border-white/[0.08]">
+              <span className="font-mono text-[10px] text-[#7189BA] uppercase">AVG REEL VIEWS</span>
+              <div className="font-sans text-2xl font-bold text-white mt-1">
                 {(influencer.avgReelViews / 1000).toFixed(0)}k
               </div>
-              <span className="text-[11px] text-[#78716C]">Per 60s video</span>
+              <span className="text-[11px] text-[#7189BA] font-mono">Per 60s video</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-white border border-[#E7E2DA]">
-              <span className="font-mono text-[10px] text-[#78716C] uppercase">CONSISTENCY</span>
-              <div className="font-serif text-2xl font-bold text-[#C25E3E] mt-1">
+            <div className="p-4 rounded-xl bg-[#07090F]/70 border border-white/[0.08]">
+              <span className="font-mono text-[10px] text-[#7189BA] uppercase">CONSISTENCY</span>
+              <div className="font-sans text-2xl font-bold text-[#5B8BF7] mt-1">
                 {influencer.progressTrajectory.consistencyScore}/100
               </div>
-              <span className="text-[11px] text-[#78716C]">High cadence</span>
+              <span className="text-[11px] text-[#7189BA] font-mono">High cadence</span>
             </div>
           </div>
 
           {/* AI Strategic Assessment */}
-          <div className="p-5 rounded-xl bg-[#FAF8F5] border border-[#E7E2DA]">
-            <div className="flex items-center justify-between pb-2 border-b border-[#EFECE6]">
+          <div className="p-5 rounded-xl bg-[#07090F]/80 border border-white/10">
+            <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#C25E3E]" />
-                <h4 className="font-serif text-base font-semibold text-[#1C1917]">
+                <Sparkles className="w-4 h-4 text-[#5B8BF7]" />
+                <h4 className="font-sans text-base font-semibold text-white">
                   Agency Strategic Assessment & Growth Diagnosis
                 </h4>
               </div>
-              <span className="text-xs font-mono font-medium text-[#78716C]">Status: {influencer.performanceStatus.toUpperCase()}</span>
+              <span className="text-xs font-mono font-medium text-[#7189BA]">Status: {influencer.performanceStatus.toUpperCase()}</span>
             </div>
-            <div className="mt-3 p-3.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#57534E] leading-relaxed">
-              <strong className="text-[#1C1917] font-medium mr-1">Strategic Prescription:</strong>
+            <div className="mt-3 p-3.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-xs text-[#D7DCEA] leading-relaxed">
+              <strong className="text-[#5B8BF7] font-medium mr-1">Strategic Prescription:</strong>
               {influencer.progressTrajectory.aiRecommendation}
             </div>
           </div>
 
           {/* Negotiated Rate Card */}
-          <div className="p-5 rounded-xl bg-white border border-[#E7E2DA] space-y-3">
-            <h4 className="font-serif text-base font-semibold text-[#1C1917]">
+          <div className="p-5 rounded-xl bg-[#07090F]/80 border border-white/10 space-y-3">
+            <h4 className="font-sans text-base font-semibold text-white">
               Commercial Rate Card (The I Company Standard)
             </h4>
 
             <div className="grid grid-cols-3 gap-3 text-center">
-              <div className="p-4 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA]">
-                <span className="font-mono text-[10px] text-[#78716C] uppercase">SPONSORED REEL</span>
-                <div className="font-serif text-xl font-bold text-[#2E523E] mt-1">
+              <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                <span className="font-mono text-[10px] text-[#7189BA] uppercase">SPONSORED REEL</span>
+                <div className="font-mono text-xl font-bold text-[#10B981] mt-1">
                   ₹{influencer.ratePerReel.toLocaleString()}
                 </div>
-                <span className="text-[10px] text-[#78716C]">60-90 sec with CTA sticker</span>
+                <span className="text-[10px] text-[#8FA5D9]/70 font-mono">60-90 sec with CTA</span>
               </div>
 
-              <div className="p-4 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA]">
-                <span className="font-mono text-[10px] text-[#78716C] uppercase">STORY CAMPAIGN</span>
-                <div className="font-serif text-xl font-bold text-[#1C1917] mt-1">
+              <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                <span className="font-mono text-[10px] text-[#7189BA] uppercase">STORY CAMPAIGN</span>
+                <div className="font-mono text-xl font-bold text-white mt-1">
                   ₹{influencer.ratePerStory.toLocaleString()}
                 </div>
-                <span className="text-[10px] text-[#78716C]">3-frame sequenced story</span>
+                <span className="text-[10px] text-[#8FA5D9]/70 font-mono">3-frame story</span>
               </div>
 
-              <div className="p-4 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA]">
-                <span className="font-mono text-[10px] text-[#78716C] uppercase">STATIC / CAROUSEL</span>
-                <div className="font-serif text-xl font-bold text-[#1C1917] mt-1">
+              <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                <span className="font-mono text-[10px] text-[#7189BA] uppercase">STATIC / CAROUSEL</span>
+                <div className="font-mono text-xl font-bold text-white mt-1">
                   ₹{influencer.ratePerPost.toLocaleString()}
                 </div>
-                <span className="text-[10px] text-[#78716C]">Permanent grid feature</span>
+                <span className="text-[10px] text-[#8FA5D9]/70 font-mono">Permanent grid</span>
               </div>
             </div>
           </div>
@@ -181,28 +184,28 @@ export const InstagramInsightsModal: React.FC<InstagramInsightsModalProps> = ({
           {/* Demographics & Top Cities */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Gender & Age */}
-            <div className="p-5 rounded-xl bg-[#FAF8F5] border border-[#E7E2DA] space-y-3">
-              <h4 className="font-serif text-sm font-semibold text-[#1C1917]">Audience Demographic Breakdown</h4>
+            <div className="p-5 rounded-xl bg-[#07090F]/80 border border-white/10 space-y-3">
+              <h4 className="font-sans text-sm font-semibold text-white">Audience Demographic Breakdown</h4>
               <div className="space-y-1">
-                <div className="flex justify-between text-xs text-[#78716C]">
+                <div className="flex justify-between text-xs text-[#8FA5D9] font-mono">
                   <span>Male: {influencer.audience.gender.male}%</span>
                   <span>Female: {influencer.audience.gender.female}%</span>
                 </div>
-                <div className="w-full h-2 rounded-full bg-[#E7E2DA] overflow-hidden flex">
-                  <div className="bg-[#1C1917] h-full" style={{ width: `${influencer.audience.gender.male}%` }} />
-                  <div className="bg-[#C25E3E] h-full" style={{ width: `${influencer.audience.gender.female}%` }} />
+                <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden flex">
+                  <div className="bg-[#5B8BF7] h-full" style={{ width: `${influencer.audience.gender.male}%` }} />
+                  <div className="bg-[#F43F5E] h-full" style={{ width: `${influencer.audience.gender.female}%` }} />
                 </div>
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-[#EFECE6]">
+              <div className="space-y-2 pt-2 border-t border-white/[0.06]">
                 {influencer.audience.ageDistribution.map((item, idx) => (
-                  <div key={idx} className="space-y-0.5 text-xs">
-                    <div className="flex justify-between text-[#78716C]">
+                  <div key={idx} className="space-y-1 text-xs">
+                    <div className="flex justify-between text-[#8FA5D9] font-mono">
                       <span>Age {item.range}</span>
-                      <strong className="text-[#1C1917] font-mono">{item.percentage}%</strong>
+                      <strong className="text-white">{item.percentage}%</strong>
                     </div>
-                    <div className="w-full h-1.5 rounded-full bg-[#E7E2DA] overflow-hidden">
-                      <div className="bg-[#1C1917] h-full rounded-full" style={{ width: `${item.percentage * 1.5}%` }} />
+                    <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+                      <div className="bg-[#5B8BF7] h-full rounded-full" style={{ width: `${item.percentage * 1.5}%` }} />
                     </div>
                   </div>
                 ))}
@@ -210,16 +213,16 @@ export const InstagramInsightsModal: React.FC<InstagramInsightsModalProps> = ({
             </div>
 
             {/* Top Geographic Clusters */}
-            <div className="p-5 rounded-xl bg-[#FAF8F5] border border-[#E7E2DA] space-y-3">
-              <h4 className="font-serif text-sm font-semibold text-[#1C1917]">Audience Geographic Hubs</h4>
+            <div className="p-5 rounded-xl bg-[#07090F]/80 border border-white/10 space-y-3">
+              <h4 className="font-sans text-sm font-semibold text-white">Audience Geographic Hubs</h4>
               <div className="space-y-2">
                 {influencer.audience.topCities.map((city, idx) => (
-                  <div key={idx} className="p-2.5 rounded-lg bg-white border border-[#E7E2DA] flex items-center justify-between text-xs">
+                  <div key={idx} className="p-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] flex items-center justify-between text-xs">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-[#A8A29E]">0{idx + 1}.</span>
-                      <span className="font-medium text-[#1C1917]">{city.city}</span>
+                      <span className="font-mono text-[#7189BA]">0{idx + 1}.</span>
+                      <span className="font-medium text-white">{city.city}</span>
                     </div>
-                    <span className="font-mono font-semibold text-[#2E523E]">{city.percentage}% of audience</span>
+                    <span className="font-mono font-semibold text-[#10B981]">{city.percentage}% of audience</span>
                   </div>
                 ))}
               </div>
@@ -228,16 +231,16 @@ export const InstagramInsightsModal: React.FC<InstagramInsightsModalProps> = ({
 
           {/* Recent Content Showcase */}
           <div className="space-y-3">
-            <h4 className="font-serif text-base font-semibold text-[#1C1917]">
+            <h4 className="font-sans text-base font-semibold text-white">
               Verified Recent Content & Performance
             </h4>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {influencer.recentContent.map((post) => (
-                <div key={post.id} className="p-3.5 rounded-xl bg-white border border-[#E7E2DA] flex gap-3">
-                  <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-[#2A2421]">
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-[#2E2824] to-[#1C1917] text-white">
-                      <span className="text-[10px] font-mono text-[#D6CFBF]">▶ Reel</span>
+                <div key={post.id} className="p-3.5 rounded-xl bg-[#07090F]/80 border border-white/10 flex gap-3 hover:border-[#5B8BF7]/50 transition-colors">
+                  <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-[#020307]">
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-[#0B0E17] to-[#020307] text-[#8FA5D9]">
+                      <span className="text-[10px] font-mono">▶ Reel</span>
                     </div>
                     <img 
                       src={post.thumbnail} 
@@ -255,28 +258,28 @@ export const InstagramInsightsModal: React.FC<InstagramInsightsModalProps> = ({
                         }
                       }}
                     />
-                    <span className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/80 text-[8px] text-white font-mono z-20">
+                    <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded-full bg-black/80 text-[8px] text-white font-mono z-20 border border-white/10">
                       {post.type}
                     </span>
                   </div>
 
                   <div className="flex flex-col justify-between overflow-hidden">
                     <div>
-                      <h5 className="text-xs text-[#1C1917] font-medium line-clamp-2">{post.title}</h5>
-                      <span className="text-[10px] text-[#A8A29E] mt-0.5 block">{post.postedDaysAgo} days ago</span>
+                      <h5 className="text-xs text-white font-medium line-clamp-2 leading-tight">{post.title}</h5>
+                      <span className="text-[10px] text-[#7189BA] font-mono mt-0.5 block">{post.postedDaysAgo} days ago</span>
                     </div>
 
-                    <div className="flex items-center gap-3 text-[11px] font-mono text-[#78716C] mt-2">
+                    <div className="flex items-center gap-3 text-[11px] font-mono text-[#8FA5D9] mt-2">
                       <span className="flex items-center gap-1">
-                        <Eye className="w-3 h-3" />
+                        <Eye className="w-3 h-3 text-[#7189BA]" />
                         {(post.views / 1000).toFixed(0)}k
                       </span>
                       <span className="flex items-center gap-1">
-                        <Heart className="w-3 h-3 text-[#C25E3E]" />
+                        <Heart className="w-3 h-3 text-[#F43F5E]" />
                         {(post.likes / 1000).toFixed(0)}k
                       </span>
                       <span className="flex items-center gap-1">
-                        <MessageCircle className="w-3 h-3" />
+                        <MessageCircle className="w-3 h-3 text-[#7189BA]" />
                         {post.comments}
                       </span>
                     </div>

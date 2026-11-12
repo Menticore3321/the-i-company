@@ -44,65 +44,70 @@ export const VintageHeader: React.FC<VintageHeaderProps> = ({
   }, []);
 
   return (
-    <header className="border-b border-[#E7E2DA] bg-[#FBF9F5]/90 backdrop-blur-md sticky top-0 z-40">
-      {/* Top Heritage Ribbon */}
-      <div className="border-b border-[#EFECE6] bg-[#F7F4EE] px-4 sm:px-8 py-1.5 flex flex-wrap items-center justify-between text-[11px] font-mono text-[#78716C]">
+    <header className="border-b border-white/[0.08] bg-[#07090F]/85 backdrop-blur-2xl sticky top-0 z-40">
+      {/* Top Agentic Status Ribbon */}
+      <div className="border-b border-white/[0.05] bg-[#04060B]/80 px-4 sm:px-8 py-1.5 flex flex-wrap items-center justify-between text-[11px] font-mono text-[#8E95A5]">
         <div className="flex items-center gap-3">
-          <span className="inline-block w-2 h-2 rounded-full bg-[#2E523E]" />
-          <span className="font-semibold text-[#1C1917] tracking-wider uppercase">
-            {currentUser.role === 'agency' && 'The I Company · Executive Admin Deck'}
-            {currentUser.role === 'brand' && `The I Company · Brand Client Portal (${currentUser.name})`}
-            {currentUser.role === 'influencer' && `The I Company · Creator Studio (${currentUser.name})`}
-          </span>
-          <span className="text-[#D6CFBF] hidden md:inline">|</span>
-          <span className="hidden md:inline text-[#78716C]">
-            Status: Authenticated Session · {currentUser.email}
+          <div className="flex items-center gap-1.5">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]"></span>
+            </span>
+            <span className="font-semibold text-white tracking-wider uppercase">
+              {currentUser.role === 'agency' && 'The I Company · Executive Command Deck'}
+              {currentUser.role === 'brand' && `The I Company · Brand Client Portal (${currentUser.name})`}
+              {currentUser.role === 'influencer' && `The I Company · Creator Studio (${currentUser.name})`}
+            </span>
+          </div>
+          <span className="text-white/20 hidden md:inline">|</span>
+          <span className="hidden md:inline text-[#8E95A5]">
+            Session: <span className="text-[#8FA5D9]">{currentUser.email}</span>
           </span>
         </div>
 
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-[#A8A29E] hidden sm:inline">IST:</span>
-            <span className="text-[#1C1917] font-medium">{time}</span>
+            <span className="text-[#5A6275] hidden sm:inline">IST:</span>
+            <span className="text-white font-medium">{time}</span>
           </div>
-          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#EEF5F1] border border-[#D1E3D8] text-[#2E523E] text-[10px] font-bold">
-            <ShieldCheck className="w-3 h-3 text-[#2E523E]" />
+          <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#10B981]/15 border border-[#10B981]/30 text-[#10B981] text-[10px] font-bold shadow-[0_0_12px_rgba(16,185,129,0.2)]">
+            <ShieldCheck className="w-3 h-3 text-[#10B981]" />
             <span>ESCROW SECURED</span>
           </div>
         </div>
       </div>
 
-      {/* Main Vintage Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      {/* Main Agentic Navigation Bar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         {/* Brand Monogram & Title */}
         <div className="flex items-center gap-3.5 select-none">
-          {/* Atelier Seal */}
-          <div className="w-10 h-10 rounded-lg bg-[#1C1917] text-[#FBF9F5] flex items-center justify-center font-serif text-xl font-bold tracking-tight shadow-vintage-sm border border-[#3E3834] relative flex-shrink-0">
-            <span>I</span>
-            <span className="absolute -bottom-1 -right-1 text-[8px] font-mono px-1 py-0.2 bg-[#C25E3E] text-white rounded font-bold">
-              EST.26
+          {/* Glowing Agentic Emblem */}
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#16213B] to-[#0A0E18] text-white flex items-center justify-center font-bold text-xl tracking-tight shadow-[0_0_20px_rgba(91,139,247,0.35)] border border-[#5B8BF7]/40 relative flex-shrink-0 group">
+            <span className="bg-gradient-to-br from-white to-[#8FA5D9] bg-clip-text text-transparent font-serif">I</span>
+            <span className="absolute -bottom-1 -right-1 text-[8px] font-mono px-1 py-0.2 bg-[#5B8BF7] text-white rounded font-bold shadow-sm">
+              AI
             </span>
           </div>
 
           <div>
             <div className="flex items-center gap-2.5">
-              <h1 className="font-serif text-xl font-bold tracking-tight text-[#1C1917]">
-                The I Company
+              <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                <span>The I Company</span>
               </h1>
-              <span className={`text-[10px] font-mono tracking-widest uppercase px-2 py-0.5 rounded border ${
+              <span className={`text-[10px] font-mono tracking-widest uppercase px-2.5 py-0.5 rounded-full border ${
                 currentUser.role === 'agency'
-                  ? 'bg-[#EEF5F1] text-[#2E523E] border-[#D1E3D8]'
+                  ? 'bg-[#5B8BF7]/15 text-[#8FA5D9] border-[#5B8BF7]/35 shadow-[0_0_10px_rgba(91,139,247,0.15)]'
                   : currentUser.role === 'brand'
-                  ? 'bg-[#FDF3EE] text-[#C25E3E] border-[#F2DACF]'
-                  : 'bg-[#FDF8EC] text-[#B8860B] border-[#F5E6BD]'
+                  ? 'bg-[#F43F5E]/15 text-[#FDA4AF] border-[#F43F5E]/35'
+                  : 'bg-[#10B981]/15 text-[#6EE7B7] border-[#10B981]/35'
               }`}>
                 {currentUser.role === 'agency' && 'SUPER ADMIN'}
                 {currentUser.role === 'brand' && 'BRAND CLIENT'}
-                {currentUser.role === 'influencer' && 'CREATOR PORTFOLIO'}
+                {currentUser.role === 'influencer' && 'CREATOR STUDIO'}
               </span>
             </div>
-            <p className="text-xs text-[#78716C] font-sans">
-              {currentUser.role === 'agency' && 'Executive Administration, Talent Roster & Escrow Vault'}
+            <p className="text-xs text-[#8E95A5] mt-0.5">
+              {currentUser.role === 'agency' && 'Autonomous Talent Intelligence, Verified Media & Escrow Vault'}
               {currentUser.role === 'brand' && `Dedicated Campaign Portfolio for ${currentUser.name}`}
               {currentUser.role === 'influencer' && `Creator Production Desk for ${currentUser.name}`}
             </p>
@@ -110,31 +115,31 @@ export const VintageHeader: React.FC<VintageHeaderProps> = ({
         </div>
 
         {/* User Identity & Actions */}
-        <div className="flex items-center gap-3 self-end sm:self-auto flex-wrap">
+        <div className="flex items-center gap-2.5 self-end sm:self-auto flex-wrap">
           {/* Action buttons for Admin */}
           {currentUser.role === 'agency' && (
             <div className="flex items-center gap-2">
               <button
                 onClick={onOpenAddModal}
-                className="whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-[#F5F2EB] border border-[#E2DDD5] text-[#1C1917] text-xs font-sans font-medium shadow-vintage-sm transition-all"
+                className="whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#101524] hover:bg-[#161F36] border border-white/10 hover:border-[#5B8BF7]/50 text-[#D7DCEA] hover:text-white text-xs font-medium shadow-vintage-xs transition-all cursor-pointer"
               >
-                <Instagram className="w-3.5 h-3.5 text-[#C25E3E]" />
+                <Instagram className="w-3.5 h-3.5 text-[#5B8BF7]" />
                 <span>+ Link Creator</span>
               </button>
 
               <button
                 onClick={onOpenAddBrandModal}
-                className="whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-[#F5F2EB] border border-[#E2DDD5] text-[#1C1917] text-xs font-sans font-medium shadow-vintage-sm transition-all"
+                className="whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#101524] hover:bg-[#161F36] border border-white/10 hover:border-[#10B981]/50 text-[#D7DCEA] hover:text-white text-xs font-medium shadow-vintage-xs transition-all cursor-pointer"
               >
-                <Building2 className="w-3.5 h-3.5 text-[#2E523E]" />
+                <Building2 className="w-3.5 h-3.5 text-[#10B981]" />
                 <span>+ Add Brand</span>
               </button>
 
               <button
                 onClick={onOpenCampaignGenerator}
-                className="whitespace-nowrap flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#1C1917] hover:bg-[#2E2A27] text-white text-xs font-sans font-medium shadow-vintage-sm transition-all"
+                className="whitespace-nowrap flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#5B8BF7] hover:bg-[#4A7AE6] text-white text-xs font-medium shadow-[0_0_20px_rgba(91,139,247,0.4)] transition-all cursor-pointer"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#E7E2DA]" />
+                <Sparkles className="w-3.5 h-3.5 text-white" />
                 <span>+ Brief</span>
               </button>
             </div>
@@ -144,9 +149,9 @@ export const VintageHeader: React.FC<VintageHeaderProps> = ({
           {currentUser.role === 'brand' && onOpenCampaignGenerator && (
             <button
               onClick={onOpenCampaignGenerator}
-              className="whitespace-nowrap flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#1C1917] hover:bg-[#2E2A27] text-white text-xs font-sans font-medium shadow-vintage-sm transition-all"
+              className="whitespace-nowrap flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#5B8BF7] hover:bg-[#4A7AE6] text-white text-xs font-medium shadow-[0_0_20px_rgba(91,139,247,0.4)] transition-all cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#E7E2DA]" />
+              <Sparkles className="w-3.5 h-3.5 text-white" />
               <span>+ Request Campaign Brief</span>
             </button>
           )}
@@ -155,7 +160,7 @@ export const VintageHeader: React.FC<VintageHeaderProps> = ({
           <button
             onClick={onLogout}
             title="Sign out of current workspace"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FAF8F5] hover:bg-[#FDF3EE] border border-[#E2DDD5] hover:border-[#F2DACF] text-xs font-medium text-[#78716C] hover:text-[#C25E3E] transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#101524]/60 hover:bg-[#F43F5E]/15 border border-white/10 hover:border-[#F43F5E]/40 text-[#8E95A5] hover:text-[#F43F5E] text-xs font-medium transition-colors cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Sign Out</span>

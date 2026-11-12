@@ -4,39 +4,83 @@
 
 @layer base {
   body {
-    background-color: #FBF9F5;
-    color: #1C1917;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #020307;
+    background-image: 
+      radial-gradient(circle at 50% -10%, rgba(91, 139, 247, 0.15) 0%, rgba(6, 8, 14, 0.9) 40%, #020307 90%),
+      radial-gradient(circle at 90% 40%, rgba(77, 108, 157, 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 10% 60%, rgba(91, 139, 247, 0.05) 0%, transparent 40%);
+    background-attachment: fixed;
+    color: #D7DCEA;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
   }
 
-  h1, h2, h3, .font-serif {
-    font-family: 'Newsreader', Georgia, serif;
+  h1, h2, h3, h4, .font-serif, .font-display {
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.025em;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
   }
 }
 
-/* Minimal Vintage Custom Scrollbar */
+/* Agentic Futuristic Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F5F2EB;
+  background: #06080E;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D6CFBF;
-  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #A8A29E;
+  background: rgba(91, 139, 247, 0.5);
 }
 
-/* Subtle vintage paper texture utility */
-.paper-texture {
-  background-color: #FFFFFF;
-  background-image: radial-gradient(#1C1917 0.4px, transparent 0.4px);
-  background-size: 16px 16px;
-  background-position: 0 0;
+/* Agentic Glass & Ambient Utilities */
+.agentic-glass {
+  background: rgba(11, 14, 23, 0.78);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.agentic-glass-elevated {
+  background: rgba(16, 21, 35, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.agentic-glow-blue {
+  box-shadow: 0 0 25px rgba(91, 139, 247, 0.25);
+}
+
+.agentic-glow-emerald {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.agentic-glow-coral {
+  box-shadow: 0 0 20px rgba(244, 63, 94, 0.2);
+}
+
+/* Soft luminous card top stroke */
+.agentic-card-stroke {
+  position: relative;
+}
+
+.agentic-card-stroke::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
 }

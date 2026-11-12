@@ -20,25 +20,25 @@ export const VintageCard: React.FC<VintageCardProps> = ({
   action
 }) => {
   return (
-    <div className={`bg-white rounded-xl border border-[#E7E2DA] shadow-vintage-sm hover:shadow-vintage-md transition-all duration-300 relative overflow-hidden ${className}`}>
-      {/* Optional top accent line */}
-      <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-[#E7E2DA] to-transparent" />
+    <div className={`bg-[#0B0E17]/85 backdrop-blur-xl rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)] hover:border-white/20 transition-all duration-300 relative overflow-hidden group ${className}`}>
+      {/* Top Luminous Ambient Accent */}
+      <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#5B8BF7]/50 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
 
       {(title || sectionNumber || badge) && (
-        <div className="px-5 py-4 border-b border-[#F0ECE4] flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-[#FCFAF7]/60">
+        <div className="px-6 py-4.5 border-b border-white/[0.07] flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/[0.02]">
           <div>
             {sectionNumber && (
-              <span className="font-mono text-[10px] tracking-widest uppercase text-[#A8A29E] block mb-0.5">
+              <span className="font-mono text-[10px] tracking-widest uppercase text-[#8FA5D9] font-semibold block mb-1">
                 {sectionNumber}
               </span>
             )}
             {title && (
-              <h3 className="font-serif text-lg font-semibold text-[#1C1917] tracking-tight">
+              <h3 className="text-base sm:text-lg font-semibold text-white tracking-tight">
                 {title}
               </h3>
             )}
             {subtitle && (
-              <p className="text-xs text-[#78716C] mt-0.5 font-sans leading-relaxed">
+              <p className="text-xs text-[#8E95A5] mt-0.5 leading-relaxed">
                 {subtitle}
               </p>
             )}
@@ -51,10 +51,9 @@ export const VintageCard: React.FC<VintageCardProps> = ({
         </div>
       )}
 
-      <div className="p-5">
+      <div className="p-6">
         {children}
       </div>
     </div>
   );
 };
-

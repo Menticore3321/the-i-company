@@ -249,7 +249,7 @@ export const App: React.FC = () => {
   const activeCreator = influencers.find(i => i.id === currentUser.associatedId) || influencers[0];
 
   return (
-    <div className="min-h-screen bg-[#FBF9F5] text-[#1C1917] flex flex-col font-sans selection:bg-[#EAE4D9]">
+    <div className="min-h-screen bg-transparent text-[#D7DCEA] flex flex-col font-sans selection:bg-[#5B8BF7]/30 selection:text-white">
       {/* Minimal Vintage Header */}
       <VintageHeader
         currentUser={currentUser}
@@ -307,13 +307,13 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      {/* Minimal Vintage Floating Toast */}
+      {/* Agentic Luminous Floating Toast */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-xl bg-[#1C1917] text-white text-xs font-sans shadow-vintage-lg flex items-center gap-2.5 border border-[#3E3834] animate-fade-in">
-          <span className="w-5 h-5 rounded-full bg-[#2E523E] text-white flex items-center justify-center flex-shrink-0">
-            <Check className="w-3 h-3" />
+        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-xl bg-[#0B0E17]/95 text-white text-xs font-sans shadow-agentic-glow flex items-center gap-3 border border-white/10 backdrop-blur-xl animate-fade-in">
+          <span className="w-5 h-5 rounded-full bg-[#10B981]/20 border border-[#10B981]/40 text-[#10B981] flex items-center justify-center flex-shrink-0">
+            <Check className="w-3 h-3 text-[#10B981]" />
           </span>
-          <span className="font-medium">{toastMessage}</span>
+          <span className="font-medium text-[#D7DCEA]">{toastMessage}</span>
         </div>
       )}
 

@@ -298,29 +298,31 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#1C1917]/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in overflow-y-auto">
-      <div className="bg-[#FAF8F5] border border-[#E7E2DA] rounded-2xl w-full max-w-xl shadow-vintage-2xl overflow-hidden my-auto max-h-[94vh] flex flex-col">
+    <div className="fixed inset-0 z-50 bg-[#020307]/80 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in overflow-y-auto">
+      <div className="bg-[#0B0E17]/95 border border-white/10 rounded-2xl w-full max-w-xl shadow-[0_16px_64px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden my-auto max-h-[94vh] flex flex-col relative text-[#D7DCEA]">
+        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#5B8BF7] to-transparent" />
+        
         {/* Header */}
-        <div className="p-6 border-b border-[#E7E2DA] bg-[#F7F4EE] flex items-center justify-between">
+        <div className="p-6 border-b border-white/[0.08] bg-[#07090F]/90 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#1C1917] text-white flex items-center justify-center shadow-vintage-sm">
-              <Instagram className="w-5 h-5 text-[#FAF8F5]" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FD1D1D] to-[#833AB4] text-white flex items-center justify-center shadow-[0_0_16px_rgba(253,29,29,0.3)]">
+              <Instagram className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-[#78716C]">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA]">
                   ADMIN ACCESS CONTROL ·
                 </span>
-                <span className="font-mono text-[10px] text-[#2E523E] font-semibold">CUSTOM SCRAPER ENGINE</span>
+                <span className="font-mono text-[10px] text-[#10B981] font-semibold">CUSTOM SCRAPER ENGINE</span>
               </div>
-              <h3 className="font-serif text-xl font-bold text-[#1C1917]">
+              <h3 className="font-sans text-xl font-bold text-white tracking-tight">
                 Onboard Creator & Issue Studio Credentials
               </h3>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-white border border-[#E2DDD5] text-[#78716C] hover:text-[#1C1917] hover:bg-[#FAF8F5] transition-colors"
+            className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-[#8FA5D9] hover:text-white hover:bg-white/10 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -334,7 +336,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
               <form onSubmit={handleStartScan} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="sm:col-span-2">
-                    <label className="text-xs font-semibold text-[#1C1917] block mb-1">
+                    <label className="text-xs font-semibold text-white block mb-1 font-sans">
                       Instagram Handle or Profile Link *
                     </label>
                     <div className="relative">
@@ -344,23 +346,23 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                         onChange={(e) => setHandle(e.target.value)}
                         placeholder="e.g. techburner or instagram.com/komalpandeyofficial"
                         required
-                        className="w-full pl-8 pr-3.5 py-2.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] font-mono focus:outline-none focus:border-[#1C1917]"
+                        className="w-full pl-8 pr-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-xs text-white font-mono focus:outline-none focus:border-[#5B8BF7] transition-colors placeholder-white/30"
                       />
-                      <span className="absolute left-3 top-2.5 text-xs text-[#78716C] font-mono">@</span>
+                      <span className="absolute left-3 top-2.5 text-xs text-[#7189BA] font-mono">@</span>
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-xs font-semibold text-[#1C1917] block mb-1">
+                    <label className="text-xs font-semibold text-white block mb-1 font-sans">
                       Niche Category
                     </label>
                     <select
                       value={category}
                       onChange={(e) => setCategory(e.target.value as InfluencerCategory)}
-                      className="w-full px-3 py-2.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                      className="w-full px-3 py-2.5 rounded-xl bg-[#07090F] border border-white/15 text-xs text-white focus:outline-none focus:border-[#5B8BF7] transition-colors"
                     >
                       {CATEGORIES.map((cat) => (
-                        <option key={cat} value={cat}>{cat}</option>
+                        <option key={cat} value={cat} className="bg-[#0B0E17] text-white">{cat}</option>
                       ))}
                     </select>
                   </div>
@@ -371,27 +373,27 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                   <button
                     type="button"
                     onClick={() => setShowEngineSettings(!showEngineSettings)}
-                    className="text-[11px] font-mono text-[#78716C] hover:text-[#1C1917] flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="text-[11px] font-mono text-[#8FA5D9] hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
-                    <SlidersHorizontal className="w-3 h-3 text-[#78716C]" />
+                    <SlidersHorizontal className="w-3 h-3 text-[#5B8BF7]" />
                     <span>{showEngineSettings ? 'Hide Custom Scraper Bridge' : 'Configure Custom Instagram Session Key (Optional)'}</span>
                     {sessionId && (
-                      <span className="w-2 h-2 rounded-full bg-[#2E523E] inline-block ml-1"></span>
+                      <span className="w-2 h-2 rounded-full bg-[#10B981] inline-block ml-1 animate-pulse"></span>
                     )}
                   </button>
 
                   {showEngineSettings && (
-                    <div className="mt-2 p-3.5 rounded-xl bg-[#F7F4EE] border border-[#E7E2DA] space-y-2 text-xs animate-fade-in">
+                    <div className="mt-2 p-4 rounded-xl bg-[#07090F]/90 border border-white/10 space-y-3 text-xs animate-fade-in">
                       <div className="flex items-center justify-between">
-                        <span className="font-mono text-[10px] uppercase font-bold text-[#1C1917]">
+                        <span className="font-mono text-[10px] uppercase font-bold text-white tracking-wider">
                           Proprietary Instagram Session Bridge
                         </span>
-                        <span className="text-[10px] text-[#2E523E] font-mono font-semibold">
+                        <span className="text-[10px] text-[#10B981] font-mono font-semibold">
                           {sessionId ? '🟢 AUTHENTICATED GRAPH' : '⚪ OPENGRAPH FALLBACK'}
                         </span>
                       </div>
-                      <p className="text-[11px] text-[#78716C] leading-relaxed">
-                        Optionally paste the <code className="bg-white px-1 py-0.5 rounded border border-[#E2DDD5] text-[#1C1917] font-mono">sessionid</code> cookie from any dummy Instagram account to unlock single-digit follower accuracy and real Reels extraction.
+                      <p className="text-[11px] text-[#8FA5D9]/70 leading-relaxed font-sans">
+                        Optionally paste the <code className="bg-black/50 px-1 py-0.5 rounded border border-white/10 text-[#5B8BF7] font-mono">sessionid</code> cookie from any dummy Instagram account to unlock single-digit follower accuracy and real Reels extraction.
                       </p>
                       <div className="flex gap-2">
                         <input
@@ -402,7 +404,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                             setSavedInstagramSession(e.target.value);
                           }}
                           placeholder="Paste IG sessionid cookie (e.g. 683921...)"
-                          className="flex-1 px-3 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                          className="flex-1 px-3 py-2 rounded-lg bg-black/40 border border-white/15 text-xs font-mono text-white focus:outline-none focus:border-[#5B8BF7]"
                         />
                         {sessionId && (
                           <button
@@ -411,7 +413,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                               setSessionId('');
                               setSavedInstagramSession('');
                             }}
-                            className="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#C25E3E] hover:bg-[#FDF3EE] cursor-pointer"
+                            className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-xs text-[#F43F5E] hover:bg-white/10 cursor-pointer"
                           >
                             Clear
                           </button>
@@ -419,18 +421,18 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                       </div>
 
                       {/* Option A Headless Scraper Microservice Endpoint */}
-                      <div className="pt-2 border-t border-[#E7E2DA] space-y-1.5">
+                      <div className="pt-2 border-t border-white/[0.06] space-y-2">
                         <div className="flex items-center justify-between">
-                          <span className="font-mono text-[10px] uppercase font-bold text-[#1C1917] flex items-center gap-1.5">
-                            <Server className="w-3 h-3 text-[#2E523E]" />
+                          <span className="font-mono text-[10px] uppercase font-bold text-white flex items-center gap-1.5">
+                            <Server className="w-3 h-3 text-[#10B981]" />
                             Option A: Headless Chromium Microservice
                           </span>
-                          <span className="text-[10px] font-mono font-semibold text-[#2E523E]">
+                          <span className="text-[10px] font-mono font-semibold text-[#10B981]">
                             {scraperServiceUrl ? '🟢 CONFIGURED' : '⚪ NOT CONFIGURED'}
                           </span>
                         </div>
-                        <p className="text-[11px] text-[#78716C] leading-relaxed">
-                          Enter your dedicated Headless Chromium Scraper URL (e.g. <code className="bg-white px-1 py-0.5 rounded border border-[#E2DDD5] text-[#1C1917] font-mono">http://localhost:4000</code> or Render URL) to extract live 10 reels.
+                        <p className="text-[11px] text-[#8FA5D9]/70 leading-relaxed font-sans">
+                          Enter your dedicated Headless Chromium Scraper URL (e.g. <code className="bg-black/50 px-1 py-0.5 rounded border border-white/10 text-[#5B8BF7] font-mono">http://localhost:4000</code> or Render URL) to extract live 10 reels.
                         </p>
                         <div className="flex gap-2">
                           <input
@@ -441,7 +443,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                               setScraperServiceUrl(e.target.value);
                             }}
                             placeholder="e.g. http://localhost:4000 or https://the-i-company-scraper.onrender.com"
-                            className="flex-1 px-3 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                            className="flex-1 px-3 py-2 rounded-lg bg-black/40 border border-white/15 text-xs font-mono text-white focus:outline-none focus:border-[#5B8BF7]"
                           />
                           {scraperServiceUrl && (
                             <button
@@ -450,7 +452,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                                 setScraperServiceUrlState('');
                                 setScraperServiceUrl('');
                               }}
-                              className="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#C25E3E] hover:bg-[#FDF3EE] cursor-pointer"
+                              className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-xs text-[#F43F5E] hover:bg-white/10 cursor-pointer"
                             >
                               Reset
                             </button>
@@ -464,11 +466,11 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                 <button
                   type="submit"
                   disabled={isScanning || !handle.trim()}
-                  className="w-full py-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F2EDE4] border border-[#D6CFBF] text-[#1C1917] font-medium text-xs shadow-vintage-xs flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50"
+                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#5B8BF7] to-[#4F75E8] hover:shadow-[0_0_20px_rgba(91,139,247,0.4)] text-white font-medium text-xs flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50"
                 >
                   {isScanning ? (
                     <>
-                      <Loader2 className="w-3.5 h-3.5 animate-spin text-[#1C1917]" />
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-white" />
                       <span>
                         {scanStep === 1 && 'Querying Proprietary Instagram Engine...'}
                         {scanStep === 2 && 'Extracting authentic profile, followers & avatar...'}
@@ -477,7 +479,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                     </>
                   ) : (
                     <>
-                      <Search className="w-3.5 h-3.5 text-[#1C1917]" />
+                      <Search className="w-3.5 h-3.5 text-white" />
                       <span>{scannedResult ? 'Re-scan Live Instagram Data' : 'Extract Live Instagram Data'}</span>
                     </>
                   )}
@@ -486,64 +488,64 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
 
               {/* Scanned & Editable Dossier */}
               {scannedResult && (
-                <div className="space-y-4 pt-4 border-t border-[#E7E2DA] animate-fade-in">
+                <div className="space-y-4 pt-4 border-t border-white/[0.08] animate-fade-in">
                   {/* Status Banner */}
-                  <div className={`p-3 rounded-xl border flex items-center justify-between text-xs ${
+                  <div className={`p-3.5 rounded-xl border flex items-center justify-between text-xs ${
                     isLiveExtracted 
-                      ? 'bg-[#EEF5F1] border-[#D1E3D8]' 
-                      : 'bg-[#FAF4E8] border-[#E9DFCE]'
+                      ? 'bg-[#10B981]/10 border-[#10B981]/30' 
+                      : 'bg-white/[0.03] border-white/10'
                   }`}>
                     <div className="flex items-center gap-2.5">
                       <img
                         src={customAvatar || scannedResult.avatar}
                         alt={customName || scannedResult.name}
-                        className="w-11 h-11 rounded-full object-cover border border-[#1C1917] shadow-vintage-xs"
+                        className="w-11 h-11 rounded-full object-cover border border-white/20 shadow-md"
                       />
                       <div>
                         <div className="flex items-center gap-2">
-                          <strong className="text-[#1C1917] font-serif text-sm">
+                          <strong className="text-white font-sans text-sm font-semibold">
                             {customName || scannedResult.name}
                           </strong>
                           {isLiveExtracted ? (
-                            <span className="px-2 py-0.5 rounded-full bg-[#2E523E] text-white text-[9px] font-mono uppercase tracking-wider font-semibold">
+                            <span className="px-2 py-0.5 rounded-full bg-[#10B981] text-black text-[9px] font-mono uppercase tracking-wider font-bold">
                               {extractionMode === 'authenticated_private_api' ? 'Private API Verified' : 'Live Scraped'}
                             </span>
                           ) : (
-                            <span className="px-2 py-0.5 rounded-full bg-[#78716C] text-white text-[9px] font-mono uppercase tracking-wider font-semibold">
+                            <span className="px-2 py-0.5 rounded-full bg-white/10 text-[#8FA5D9] text-[9px] font-mono uppercase tracking-wider font-semibold">
                               Manual Entry
                             </span>
                           )}
                         </div>
-                        <span className="text-[11px] text-[#78716C]">
+                        <span className="text-[11px] text-[#8FA5D9]/70 font-mono block mt-0.5">
                           @{scannedResult.handle} · {formatFollowerCount(customFollowers || scannedResult.followers)} followers
                         </span>
                       </div>
                     </div>
 
                     <div className="text-right">
-                      <span className="font-mono font-bold text-[#2E523E] text-xs block">
+                      <span className="font-mono font-bold text-[#10B981] text-xs block">
                         {scannedResult.authenticityScore}% Authenticity
                       </span>
-                      <span className="text-[10px] text-[#78716C] block">
+                      <span className="text-[10px] text-[#7189BA] block font-mono">
                         {scannedResult.engagementRate}% Engagement
                       </span>
                     </div>
                   </div>
 
                   {extractionNotice && (
-                    <div className="text-[11px] text-[#78716C] italic px-1">
+                    <div className="text-[11px] text-[#8FA5D9]/70 italic px-1 font-mono">
                       ℹ️ {extractionNotice}
                     </div>
                   )}
 
                   {/* Extracted Recent Content Manager */}
-                  <div className="space-y-3 p-4 rounded-xl bg-white border border-[#E7E2DA]">
+                  <div className="space-y-3 p-4 rounded-xl bg-[#07090F]/80 border border-white/10">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div>
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-[#78716C] font-semibold block">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-[#7189BA] font-semibold block">
                           Recent Media & Viral Reels ({editableMedia.length})
                         </span>
-                        <span className="text-[11px] text-[#A8A29E]">
+                        <span className="text-[11px] text-[#8FA5D9]/60">
                           Verified reel deliverables · Edit, remove or scrape live from Instagram
                         </span>
                       </div>
@@ -552,49 +554,49 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                           type="button"
                           onClick={handleFetchMicroserviceReels}
                           disabled={isFetchingReels || !handle.trim()}
-                          className="px-2.5 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#2E523E]/30 hover:bg-[#EEF5F1] text-xs text-[#2E523E] font-medium flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50 shadow-vintage-xs"
+                          className="px-2.5 py-1.5 rounded-lg bg-[#10B981]/15 border border-[#10B981]/30 hover:bg-[#10B981]/25 text-xs text-[#10B981] font-medium flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
                           title="Scrape top 10 reels via Headless Chromium"
                         >
                           {isFetchingReels ? (
-                            <Loader2 className="w-3.5 h-3.5 animate-spin text-[#2E523E]" />
+                            <Loader2 className="w-3.5 h-3.5 animate-spin text-[#10B981]" />
                           ) : (
-                            <Zap className="w-3.5 h-3.5 text-[#2E523E]" />
+                            <Zap className="w-3.5 h-3.5 text-[#10B981]" />
                           )}
                           <span>{isFetchingReels ? 'Scraping 10 Reels...' : 'Live Scrape 10 Reels'}</span>
                         </button>
                         <button
                           type="button"
                           onClick={() => setShowAddMedia(!showAddMedia)}
-                          className="px-2.5 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] hover:bg-[#F2EDE4] text-xs text-[#1C1917] font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-vintage-xs"
+                          className="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-xs text-white font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
                         >
-                          <Plus className="w-3.5 h-3.5 text-[#1C1917]" />
+                          <Plus className="w-3.5 h-3.5 text-white" />
                           <span>{showAddMedia ? 'Cancel' : '+ Add Live Reel'}</span>
                         </button>
                       </div>
                     </div>
 
                     {isFetchingReels && (
-                      <div className="p-3 rounded-lg bg-[#FAF8F5] border border-[#2E523E]/20 text-xs text-[#2E523E] flex items-center gap-2.5 animate-pulse">
-                        <Loader2 className="w-4 h-4 animate-spin flex-shrink-0 text-[#2E523E]" />
+                      <div className="p-3 rounded-lg bg-[#10B981]/10 border border-[#10B981]/20 text-xs text-[#10B981] flex items-center gap-2.5 animate-pulse">
+                        <Loader2 className="w-4 h-4 animate-spin flex-shrink-0 text-[#10B981]" />
                         <div>
                           <div className="font-semibold">Launching Headless Chromium on Render (~15–20s)...</div>
-                          <div className="text-[11px] text-[#78716C]">Navigating to Instagram @{handle.replace('@', '')} and scraping real reels with views</div>
+                          <div className="text-[11px] text-[#8FA5D9]/70 font-mono">Navigating to Instagram @{handle.replace('@', '')} and scraping real reels with views</div>
                         </div>
                       </div>
                     )}
 
                     {fetchReelsMessage && !isFetchingReels && (
-                      <div className="p-2 rounded-lg bg-[#F7F4EE] border border-[#E7E2DA] text-[11px] text-[#1C1917] font-mono">
+                      <div className="p-2.5 rounded-lg bg-black/40 border border-white/10 text-[11px] text-white font-mono">
                         {fetchReelsMessage}
                       </div>
                     )}
 
                     {/* Inline Add Live Reel / Post Form */}
                     {showAddMedia && (
-                      <div className="p-3.5 rounded-xl bg-[#F7F4EE] border border-[#E7E2DA] space-y-3 animate-fade-in">
-                        <div className="flex items-center justify-between border-b border-[#E7E2DA] pb-2">
-                          <span className="text-xs font-semibold text-[#1C1917] flex items-center gap-1.5">
-                            <Play className="w-3.5 h-3.5 text-[#C25E3E]" />
+                      <div className="p-3.5 rounded-xl bg-black/40 border border-white/10 space-y-3 animate-fade-in">
+                        <div className="flex items-center justify-between border-b border-white/[0.08] pb-2">
+                          <span className="text-xs font-semibold text-white flex items-center gap-1.5">
+                            <Play className="w-3.5 h-3.5 text-[#5B8BF7]" />
                             Add Live Instagram Reel / Deliverable
                           </span>
                           <div className="flex gap-1">
@@ -605,8 +607,8 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                                 onClick={() => setNewMediaType(t)}
                                 className={`px-2 py-0.5 rounded text-[10px] font-mono transition-colors ${
                                   newMediaType === t 
-                                    ? 'bg-[#1C1917] text-white font-semibold' 
-                                    : 'bg-white border border-[#E7E2DA] text-[#78716C]'
+                                    ? 'bg-[#5B8BF7] text-white font-semibold' 
+                                    : 'bg-white/5 border border-white/10 text-[#8FA5D9]'
                                 }`}
                               >
                                 {t}
@@ -617,7 +619,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
                           <div>
-                            <label className="text-[10px] font-mono text-[#78716C] uppercase block mb-1">
+                            <label className="text-[10px] font-mono text-[#7189BA] uppercase block mb-1">
                               Instagram Reel / Post URL *
                             </label>
                             <input
@@ -625,12 +627,12 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                               value={newMediaUrl}
                               onChange={(e) => setNewMediaUrl(e.target.value)}
                               placeholder="e.g. instagram.com/reel/C8xYz123"
-                              className="w-full px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                              className="w-full px-2.5 py-1.5 rounded-lg bg-black/50 border border-white/15 text-xs font-mono text-white focus:outline-none focus:border-[#5B8BF7]"
                             />
                           </div>
 
                           <div>
-                            <label className="text-[10px] font-mono text-[#78716C] uppercase block mb-1">
+                            <label className="text-[10px] font-mono text-[#7189BA] uppercase block mb-1">
                               Views / Reach Count
                             </label>
                             <input
@@ -638,12 +640,12 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                               value={newMediaViews}
                               onChange={(e) => setNewMediaViews(e.target.value)}
                               placeholder="e.g. 1500000 or 1.5M"
-                              className="w-full px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                              className="w-full px-2.5 py-1.5 rounded-lg bg-black/50 border border-white/15 text-xs font-mono text-white focus:outline-none focus:border-[#5B8BF7]"
                             />
                           </div>
 
                           <div className="sm:col-span-2">
-                            <label className="text-[10px] font-mono text-[#78716C] uppercase block mb-1">
+                            <label className="text-[10px] font-mono text-[#7189BA] uppercase block mb-1">
                               Reel Title / Caption Hook
                             </label>
                             <input
@@ -651,7 +653,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                               value={newMediaTitle}
                               onChange={(e) => setNewMediaTitle(e.target.value)}
                               placeholder="e.g. Top 5 Tech Gadgets Every Student Needs! 📱"
-                              className="w-full px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                              className="w-full px-2.5 py-1.5 rounded-lg bg-black/50 border border-white/15 text-xs text-white focus:outline-none focus:border-[#5B8BF7]"
                             />
                           </div>
                         </div>
@@ -660,14 +662,14 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                           <button
                             type="button"
                             onClick={() => setShowAddMedia(false)}
-                            className="px-3 py-1.5 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#78716C] hover:text-[#1C1917]"
+                            className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-[#8FA5D9] hover:text-white"
                           >
                             Cancel
                           </button>
                           <button
                             type="button"
                             onClick={handleAddCustomMedia}
-                            className="px-3.5 py-1.5 rounded-lg bg-[#2E523E] text-white text-xs font-medium hover:bg-[#254232] shadow-vintage-xs cursor-pointer"
+                            className="px-3.5 py-1.5 rounded-lg bg-[#5B8BF7] text-white text-xs font-medium hover:bg-[#4F75E8] shadow-md cursor-pointer"
                           >
                             Add to Creator Portfolio
                           </button>
@@ -677,18 +679,18 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
 
                     {/* Media Cards Grid */}
                     {editableMedia.length === 0 ? (
-                      <div className="p-4 rounded-lg bg-[#FAF8F5] border border-dashed border-[#D6CFBF] text-center text-xs text-[#78716C]">
+                      <div className="p-4 rounded-xl bg-white/[0.02] border border-dashed border-white/10 text-center text-xs text-[#8FA5D9]">
                         No recent media attached yet. Click "+ Add Live Reel" to attach creator reels.
                       </div>
                     ) : (
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                         {editableMedia.map((item) => (
-                          <div key={item.id} className="relative rounded-xl overflow-hidden border border-[#E7E2DA] bg-[#FAF8F5] flex flex-col group hover:border-[#1C1917] transition-all">
-                            <div className="relative aspect-[4/5] overflow-hidden bg-[#2A2421]">
+                          <div key={item.id} className="relative rounded-xl overflow-hidden border border-white/10 bg-[#07090F] flex flex-col group hover:border-[#5B8BF7]/60 transition-all">
+                            <div className="relative aspect-[4/5] overflow-hidden bg-[#020307]">
                               {/* Background Fallback in case of slow network */}
-                              <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center bg-gradient-to-b from-[#2E2824] to-[#1C1917] text-white">
-                                <Play className="w-5 h-5 text-[#E7E2DA]/70 mb-1" />
-                                <span className="text-[9px] font-mono text-[#D6CFBF] line-clamp-2">{item.title}</span>
+                              <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center bg-gradient-to-b from-[#0B0E17] to-[#020307] text-[#8FA5D9]">
+                                <Play className="w-5 h-5 text-[#5B8BF7]/70 mb-1" />
+                                <span className="text-[9px] font-mono text-[#7189BA] line-clamp-2">{item.title}</span>
                               </div>
 
                               <img 
@@ -708,19 +710,19 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                                   }
                                 }}
                               />
-                              <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/75 text-[9px] text-white font-mono flex items-center gap-1 z-20">
+                              <div className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-black/75 text-[9px] text-[#8FA5D9] font-mono flex items-center gap-1 z-20 border border-white/10">
                                 <span>{item.type === 'Reel' ? '▶' : item.type === 'Carousel' ? '📷' : '🖼️'}</span>
                                 <span>{item.type}</span>
                               </div>
                               <button
                                 type="button"
                                 onClick={() => handleDeleteMedia(item.id)}
-                                className="absolute top-1.5 right-1.5 p-1 rounded-full bg-black/70 hover:bg-[#C25E3E] text-white transition-colors opacity-0 group-hover:opacity-100 cursor-pointer z-20"
+                                className="absolute top-1.5 right-1.5 p-1 rounded-full bg-black/70 hover:bg-[#F43F5E] text-white transition-colors opacity-0 group-hover:opacity-100 cursor-pointer z-20"
                                 title="Delete media"
                               >
                                 <Trash2 className="w-3 h-3" />
                               </button>
-                              <div className="absolute inset-x-0 bottom-0 p-1.5 bg-gradient-to-t from-black/85 via-black/40 to-transparent text-[10px] text-white font-mono flex items-center justify-between z-20">
+                              <div className="absolute inset-x-0 bottom-0 p-1.5 bg-gradient-to-t from-black/90 via-black/40 to-transparent text-[10px] text-white font-mono flex items-center justify-between z-20">
                                 <span className="font-semibold">{formatFollowerCount(item.views || item.likes)} views</span>
                                 {item.url && (
                                   <a
@@ -736,12 +738,12 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                               </div>
                             </div>
                             <div className="p-2 flex-1 flex flex-col justify-between">
-                              <p className="text-[11px] text-[#1C1917] font-medium line-clamp-2 leading-tight">
+                              <p className="text-[11px] text-[#D7DCEA] font-medium line-clamp-2 leading-tight">
                                 {item.title}
                               </p>
-                              <div className="flex items-center justify-between text-[9px] text-[#78716C] font-mono mt-1 pt-1 border-t border-[#EFECE6]">
+                              <div className="flex items-center justify-between text-[9px] text-[#7189BA] font-mono mt-1 pt-1 border-t border-white/[0.06]">
                                 <span>{item.postedDaysAgo}d ago</span>
-                                <span className="text-[#2E523E] font-semibold">{item.engagement}% ER</span>
+                                <span className="text-[#10B981] font-semibold">{item.engagement}% ER</span>
                               </div>
                             </div>
                           </div>
@@ -753,23 +755,23 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                   {/* Editable Specs */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
-                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1">
+                      <label className="text-[11px] font-semibold text-white block mb-1 font-sans">
                         Creator Full Name
                       </label>
                       <input
                         type="text"
                         value={customName}
                         onChange={(e) => setCustomName(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                        className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/15 text-xs text-white focus:outline-none focus:border-[#5B8BF7]"
                       />
                     </div>
 
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <label className="text-[11px] font-semibold text-[#1C1917]">
+                        <label className="text-[11px] font-semibold text-white font-sans">
                           Followers Count
                         </label>
-                        <span className="text-[10px] font-mono text-[#2E523E] font-semibold">
+                        <span className="text-[10px] font-mono text-[#10B981] font-semibold">
                           ({formatFollowerCount(customFollowers)})
                         </span>
                       </div>
@@ -777,19 +779,19 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                         type="number"
                         value={customFollowers}
                         onChange={(e) => setCustomFollowers(Number(e.target.value))}
-                        className="w-full px-3 py-2 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                        className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/15 text-xs font-mono text-white focus:outline-none focus:border-[#5B8BF7]"
                       />
                     </div>
 
                     <div>
-                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1">
+                      <label className="text-[11px] font-semibold text-white block mb-1 font-sans">
                         Rate Per Reel (₹)
                       </label>
                       <input
                         type="number"
                         value={customRate}
                         onChange={(e) => setCustomRate(Number(e.target.value))}
-                        className="w-full px-3 py-2 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                        className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/15 text-xs font-mono text-white focus:outline-none focus:border-[#5B8BF7]"
                       />
                     </div>
                   </div>
@@ -797,8 +799,8 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                   {/* Profile Pic & Bio Inputs */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1 flex items-center gap-1">
-                        <ImageIcon className="w-3 h-3 text-[#78716C]" />
+                      <label className="text-[11px] font-semibold text-white block mb-1 flex items-center gap-1 font-sans">
+                        <ImageIcon className="w-3 h-3 text-[#5B8BF7]" />
                         <span>Profile Picture Avatar URL</span>
                       </label>
                       <input
@@ -806,13 +808,13 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                         value={customAvatar}
                         onChange={(e) => setCustomAvatar(e.target.value)}
                         placeholder="https://images.unsplash.com/... or Instagram CDN link"
-                        className="w-full px-3 py-2 rounded-lg bg-white border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                        className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/15 text-xs font-mono text-white focus:outline-none focus:border-[#5B8BF7] placeholder-white/30"
                       />
                     </div>
 
                     <div>
-                      <label className="text-[11px] font-semibold text-[#1C1917] block mb-1 flex items-center gap-1">
-                        <FileText className="w-3 h-3 text-[#78716C]" />
+                      <label className="text-[11px] font-semibold text-white block mb-1 flex items-center gap-1 font-sans">
+                        <FileText className="w-3 h-3 text-[#5B8BF7]" />
                         <span>Profile Bio</span>
                       </label>
                       <input
@@ -820,22 +822,22 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                         value={customBio}
                         onChange={(e) => setCustomBio(e.target.value)}
                         placeholder="Digital Creator, YouTuber & Storyteller"
-                        className="w-full px-3 py-2 rounded-lg bg-white border border-[#E7E2DA] text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                        className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/15 text-xs text-white focus:outline-none focus:border-[#5B8BF7] placeholder-white/30"
                       />
                     </div>
                   </div>
 
                   {/* Credentials Setup */}
-                  <div className="p-4 rounded-xl bg-white border border-[#E2DDD5] space-y-3.5 shadow-vintage-xs">
+                  <div className="p-4 rounded-xl bg-[#07090F]/80 border border-white/10 space-y-3.5">
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-[#78716C] font-semibold flex items-center gap-1.5">
-                        <Key className="w-3.5 h-3.5 text-[#C25E3E]" />
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA] font-semibold flex items-center gap-1.5">
+                        <Key className="w-3.5 h-3.5 text-[#5B8BF7]" />
                         <span>Admin-Assigned Login Credentials</span>
                       </span>
                       <button
                         type="button"
                         onClick={handleGenerateStrongPassword}
-                        className="text-[11px] font-sans text-[#C25E3E] hover:underline flex items-center gap-1 cursor-pointer"
+                        className="text-[11px] font-sans text-[#5B8BF7] hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         <Sparkles className="w-3 h-3" />
                         <span>Regenerate Password</span>
@@ -844,7 +846,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
 
                     <div className="space-y-2">
                       <div>
-                        <label className="text-[11px] text-[#78716C] block mb-0.5">Assigned Login Email</label>
+                        <label className="text-[11px] text-[#8FA5D9] block mb-0.5 font-sans">Assigned Login Email</label>
                         <div className="relative">
                           <input
                             type="email"
@@ -852,14 +854,14 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                             value={creatorEmail}
                             onChange={(e) => setCreatorEmail(e.target.value)}
                             placeholder="creator@creators.theicompany.com"
-                            className="w-full pl-8 pr-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] text-xs font-mono text-[#1C1917] focus:bg-white focus:outline-none focus:border-[#1C1917]"
+                            className="w-full pl-8 pr-3 py-2 rounded-lg bg-black/40 border border-white/15 text-xs font-mono text-white focus:outline-none focus:border-[#5B8BF7] placeholder-white/30"
                           />
-                          <Mail className="w-3.5 h-3.5 text-[#78716C] absolute left-2.5 top-3" />
+                          <Mail className="w-3.5 h-3.5 text-[#7189BA] absolute left-2.5 top-3" />
                         </div>
                       </div>
 
                       <div>
-                        <label className="text-[11px] text-[#78716C] block mb-0.5">Assigned Password</label>
+                        <label className="text-[11px] text-[#8FA5D9] block mb-0.5 font-sans">Assigned Password</label>
                         <div className="relative">
                           <input
                             type="text"
@@ -867,9 +869,9 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                             value={creatorPassword}
                             onChange={(e) => setCreatorPassword(e.target.value)}
                             placeholder="creator#123"
-                            className="w-full pl-8 pr-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] text-xs font-mono font-semibold text-[#1C1917] focus:bg-white focus:outline-none focus:border-[#1C1917]"
+                            className="w-full pl-8 pr-3 py-2 rounded-lg bg-black/40 border border-white/15 text-xs font-mono font-semibold text-white focus:outline-none focus:border-[#5B8BF7] placeholder-white/30"
                           />
-                          <Lock className="w-3.5 h-3.5 text-[#78716C] absolute left-2.5 top-3" />
+                          <Lock className="w-3.5 h-3.5 text-[#7189BA] absolute left-2.5 top-3" />
                         </div>
                       </div>
                     </div>
@@ -878,9 +880,9 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                   <button
                     type="button"
                     onClick={handleSave}
-                    className="w-full py-3 rounded-lg bg-[#1C1917] hover:bg-[#2E2A27] text-white font-medium text-xs shadow-vintage-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#5B8BF7] to-[#4F75E8] hover:shadow-[0_0_24px_rgba(91,139,247,0.4)] text-white font-medium text-xs shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <CheckCircle2 className="w-4 h-4 text-[#FBF9F5]" />
+                    <CheckCircle2 className="w-4 h-4 text-white" />
                     <span>Confirm Onboarding & Issue Studio Credentials</span>
                   </button>
                 </div>
@@ -889,41 +891,41 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
           ) : (
             /* SUCCESS CREDENTIALS PACKET */
             <div className="space-y-5">
-              <div className="p-4 rounded-xl bg-[#EEF5F1] border border-[#D1E3D8] text-center space-y-1">
-                <Check className="w-8 h-8 text-[#2E523E] mx-auto" />
-                <h4 className="font-serif text-lg font-bold text-[#1C1917]">
+              <div className="p-4 rounded-xl bg-[#10B981]/15 border border-[#10B981]/30 text-center space-y-1">
+                <Check className="w-8 h-8 text-[#10B981] mx-auto" />
+                <h4 className="font-sans text-lg font-bold text-white tracking-tight">
                   Creator Added to Roster & Credentials Live!
                 </h4>
-                <p className="text-xs text-[#2E523E]">
+                <p className="text-xs text-[#10B981] font-mono">
                   @{scannedResult?.handle} is registered in Supabase Cloud Database and ready to log in.
                 </p>
               </div>
 
               {/* Copyable Slip */}
-              <div className="p-4 rounded-xl bg-white border border-[#E7E2DA] font-mono text-xs space-y-2.5 shadow-vintage-xs">
-                <div className="flex justify-between items-center pb-2 border-b border-[#F0ECE4]">
-                  <span className="text-[#78716C] text-[10px] uppercase font-sans font-semibold">CREATOR CREDENTIALS SLIP</span>
-                  <span className="text-[10px] text-[#2E523E] font-sans font-semibold">ACTIVE TALENT DESK</span>
+              <div className="p-4 rounded-xl bg-black/50 border border-white/10 font-mono text-xs space-y-2.5">
+                <div className="flex justify-between items-center pb-2 border-b border-white/[0.08]">
+                  <span className="text-[#7189BA] text-[10px] uppercase font-sans font-semibold">CREATOR CREDENTIALS SLIP</span>
+                  <span className="text-[10px] text-[#10B981] font-sans font-semibold">ACTIVE TALENT DESK</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#78716C]">Creator Name:</span>
-                  <span className="font-semibold text-[#1C1917]">{customName} (@{handle.replace('@', '')})</span>
+                  <span className="text-[#8FA5D9]/80">Creator Name:</span>
+                  <span className="font-semibold text-white">{customName} (@{handle.replace('@', '')})</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#78716C]">Followers:</span>
-                  <span className="font-bold text-[#2E523E]">{formatFollowerCount(customFollowers)}</span>
+                  <span className="text-[#8FA5D9]/80">Followers:</span>
+                  <span className="font-bold text-[#10B981]">{formatFollowerCount(customFollowers)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#78716C]">Studio URL:</span>
-                  <span className="font-semibold text-[#1C1917]">{portalUrl}</span>
+                  <span className="text-[#8FA5D9]/80">Studio URL:</span>
+                  <span className="font-semibold text-[#5B8BF7]">{portalUrl}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#78716C]">Assigned Email:</span>
-                  <span className="font-semibold text-[#1C1917]">{creatorEmail}</span>
+                  <span className="text-[#8FA5D9]/80">Assigned Email:</span>
+                  <span className="font-semibold text-white">{creatorEmail}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#78716C]">Password:</span>
-                  <span className="font-bold text-[#C25E3E] bg-[#FDF3EE] px-1.5 py-0.5 rounded border border-[#F2DACF]">{creatorPassword}</span>
+                  <span className="text-[#8FA5D9]/80">Password:</span>
+                  <span className="font-bold text-white bg-white/10 px-2 py-0.5 rounded border border-white/20">{creatorPassword}</span>
                 </div>
               </div>
 
@@ -932,9 +934,9 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                 <button
                   type="button"
                   onClick={handleCopyCredentials}
-                  className="py-2.5 px-3 rounded-lg bg-white border border-[#D6CFBF] hover:bg-[#FAF8F5] text-xs font-medium text-[#1C1917] flex items-center justify-center gap-1.5 transition-colors shadow-vintage-xs cursor-pointer"
+                  className="py-2.5 px-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-medium text-white flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5 text-[#2E523E]" /> : <Copy className="w-3.5 h-3.5 text-[#57534E]" />}
+                  {copied ? <Check className="w-3.5 h-3.5 text-[#10B981]" /> : <Copy className="w-3.5 h-3.5 text-[#8FA5D9]" />}
                   <span>{copied ? 'Copied' : 'Copy Slip'}</span>
                 </button>
 
@@ -942,7 +944,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
                   href={`https://wa.me/?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="py-2.5 px-3 rounded-lg bg-[#2E523E] hover:bg-[#244231] text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-colors shadow-vintage-xs"
+                  className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#10B981] to-[#059669] hover:shadow-[0_0_16px_rgba(16,185,129,0.3)] text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-all"
                 >
                   <Send className="w-3.5 h-3.5" />
                   <span>WhatsApp</span>
@@ -950,7 +952,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
 
                 <a
                   href={`mailto:${creatorEmail}?subject=${emailSubject}&body=${emailBody}`}
-                  className="py-2.5 px-3 rounded-lg bg-[#1C1917] hover:bg-[#2E2A27] text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-colors shadow-vintage-xs"
+                  className="py-2.5 px-3 rounded-xl bg-[#5B8BF7] hover:bg-[#4F75E8] text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-all shadow-[0_0_16px_rgba(91,139,247,0.3)]"
                 >
                   <Mail className="w-3.5 h-3.5" />
                   <span>Email Creator</span>
@@ -960,7 +962,7 @@ Please log in to review contracted campaigns, submit video drafts, and withdraw 
               <button
                 type="button"
                 onClick={handleFinish}
-                className="w-full py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E2DA] hover:bg-[#F2EDE4] text-xs font-medium text-[#1C1917] transition-colors cursor-pointer"
+                className="w-full py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-medium text-white transition-colors cursor-pointer"
               >
                 Done & Return to Roster
               </button>

@@ -115,23 +115,24 @@ https://theicompany.netlify.app`;
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#1C1917]/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-fade-in overflow-y-auto">
-      <div className="bg-[#FAF8F5] border border-[#E7E2DA] rounded-2xl w-full max-w-4xl shadow-vintage-2xl overflow-hidden my-auto flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 bg-[#020307]/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in overflow-y-auto">
+      <div className="bg-[#0B0E17]/95 border border-white/10 rounded-2xl w-full max-w-4xl shadow-[0_16px_64px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden my-auto flex flex-col max-h-[92vh] relative text-[#D7DCEA]">
+        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#5B8BF7] to-transparent" />
         
         {/* Top Control Bar (Hidden during Print) */}
-        <div className="p-4 sm:p-5 border-b border-[#E7E2DA] bg-[#F4F0E8] flex flex-wrap items-center justify-between gap-3 print:hidden">
+        <div className="p-4 sm:p-5 border-b border-white/[0.08] bg-[#07090F]/90 flex flex-wrap items-center justify-between gap-3 print:hidden">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#1C1917] text-white flex items-center justify-center shadow-vintage-sm">
-              <Award className="w-5 h-5 text-[#E6C687]" />
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#5B8BF7] to-[#7189BA] text-white flex items-center justify-center shadow-[0_0_16px_rgba(91,139,247,0.3)]">
+              <Award className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-[#78716C]">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#7189BA]">
                   LEGAL DEED & BILLING ENGINE ·
                 </span>
-                <span className="font-mono text-xs font-semibold text-[#1C1917]">{contractId}</span>
+                <span className="font-mono text-xs font-semibold text-[#5B8BF7]">{contractId}</span>
               </div>
-              <h3 className="font-serif text-lg font-bold text-[#1C1917] leading-tight">
+              <h3 className="font-sans text-lg font-bold text-white leading-tight">
                 {campaign.name}
               </h3>
             </div>
@@ -140,24 +141,24 @@ https://theicompany.netlify.app`;
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="px-3 py-1.5 rounded-lg bg-white border border-[#D6CFBF] hover:bg-[#F2EDE4] text-xs font-medium text-[#1C1917] flex items-center gap-1.5 shadow-vintage-xs transition-colors"
+              className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-medium text-white flex items-center gap-1.5 transition-colors cursor-pointer"
               title="Print official document"
             >
-              <Printer className="w-3.5 h-3.5 text-[#57534E]" />
+              <Printer className="w-3.5 h-3.5 text-[#8FA5D9]" />
               <span className="hidden sm:inline">Print / Save PDF</span>
             </button>
 
             <button
               onClick={handleCopySummary}
-              className="px-3 py-1.5 rounded-lg bg-white border border-[#D6CFBF] hover:bg-[#F2EDE4] text-xs font-medium text-[#1C1917] flex items-center gap-1.5 shadow-vintage-xs transition-colors"
+              className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-medium text-white flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-[#2E523E]" /> : <Copy className="w-3.5 h-3.5 text-[#57534E]" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-[#10B981]" /> : <Copy className="w-3.5 h-3.5 text-[#8FA5D9]" />}
               <span className="hidden sm:inline">{copied ? 'Copied' : 'Copy'}</span>
             </button>
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg bg-white border border-[#D6CFBF] hover:bg-[#EAE4D9] text-[#78716C] hover:text-[#1C1917] transition-colors"
+              className="p-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-[#8FA5D9] hover:text-white transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -165,13 +166,13 @@ https://theicompany.netlify.app`;
         </div>
 
         {/* Tab Navigator (Hidden during Print) */}
-        <div className="px-5 pt-3 border-b border-[#E7E2DA] bg-[#F7F4EE] flex items-center gap-2 overflow-x-auto print:hidden">
+        <div className="px-5 pt-3 border-b border-white/[0.08] bg-[#07090F]/70 flex items-center gap-2 overflow-x-auto print:hidden">
           <button
             onClick={() => setActiveTab('agreement')}
             className={`pb-2.5 px-3 text-xs font-medium transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
               activeTab === 'agreement'
-                ? 'border-[#1C1917] text-[#1C1917] font-semibold'
-                : 'border-transparent text-[#78716C] hover:text-[#1C1917]'
+                ? 'border-[#5B8BF7] text-[#5B8BF7] font-semibold'
+                : 'border-transparent text-[#7189BA] hover:text-white'
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
@@ -183,8 +184,8 @@ https://theicompany.netlify.app`;
               onClick={() => setActiveTab('invoice')}
               className={`pb-2.5 px-3 text-xs font-medium transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === 'invoice'
-                  ? 'border-[#1C1917] text-[#1C1917] font-semibold'
-                  : 'border-transparent text-[#78716C] hover:text-[#1C1917]'
+                  ? 'border-[#5B8BF7] text-[#5B8BF7] font-semibold'
+                  : 'border-transparent text-[#7189BA] hover:text-white'
               }`}
             >
               <Receipt className="w-3.5 h-3.5" />
@@ -197,8 +198,8 @@ https://theicompany.netlify.app`;
               onClick={() => setActiveTab('voucher')}
               className={`pb-2.5 px-3 text-xs font-medium transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === 'voucher'
-                  ? 'border-[#1C1917] text-[#1C1917] font-semibold'
-                  : 'border-transparent text-[#78716C] hover:text-[#1C1917]'
+                  ? 'border-[#5B8BF7] text-[#5B8BF7] font-semibold'
+                  : 'border-transparent text-[#7189BA] hover:text-white'
               }`}
             >
               <DollarSign className="w-3.5 h-3.5" />
@@ -210,8 +211,8 @@ https://theicompany.netlify.app`;
             onClick={() => setActiveTab('whatsapp')}
             className={`pb-2.5 px-3 text-xs font-medium transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
               activeTab === 'whatsapp'
-                ? 'border-[#2E523E] text-[#2E523E] font-semibold'
-                : 'border-transparent text-[#78716C] hover:text-[#2E523E]'
+                ? 'border-[#10B981] text-[#10B981] font-semibold'
+                : 'border-transparent text-[#7189BA] hover:text-[#10B981]'
             }`}
           >
             <Send className="w-3.5 h-3.5" />
