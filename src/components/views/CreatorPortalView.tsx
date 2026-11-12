@@ -78,9 +78,9 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Creator Profile Header (Light Glass Banner) */}
-      <div className="p-6 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-2xl shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
+      {/* Creator Profile Header (Weather Card Style Glass Banner) */}
+      <div className="p-6 rounded-3xl weather-glass-card weather-glass-card-hover flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
         
         <div className="flex items-start sm:items-center gap-4">
           <div className="relative flex-shrink-0">
@@ -151,11 +151,11 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
         </div>
       </div>
 
-      {/* Creator Metrics Strip */}
+      {/* Creator Metrics Strip (Weather Card Glassmorphic Pods) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
-          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">AUDIENCE REACH</span>
+        <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">AUDIENCE REACH</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             {formatFollowerCount(creator.followers)}
           </div>
@@ -165,9 +165,9 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
           </span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
-          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">AVG REEL PERFORMANCE</span>
+        <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">AVG REEL PERFORMANCE</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             ~{formatFollowerCount(creator.avgReelViews)} views
           </div>
@@ -176,9 +176,9 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
           </span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
-          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">COMMERCIAL RATE CARD</span>
+        <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">COMMERCIAL RATE CARD</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             ₹{creator.ratePerReel.toLocaleString()}
           </div>
@@ -187,9 +187,9 @@ export const CreatorPortalView: React.FC<CreatorPortalViewProps> = ({
           </span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
-          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-emerald-500/35 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">CLEARED ESCROW BALANCE</span>
+        <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">CLEARED ESCROW BALANCE</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1 tracking-tight">
             ₹{completedEarnings.toLocaleString()}
           </div>

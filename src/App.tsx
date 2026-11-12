@@ -12,6 +12,7 @@ import { AddBrandModal } from './components/modals/AddBrandModal';
 import { SmartCampaignGeneratorModal } from './components/modals/SmartCampaignGeneratorModal';
 import { DealContractModal } from './components/modals/DealContractModal';
 import { databaseService } from './lib/databaseService';
+import { PeacefulLiveWallpaper, WallpaperTheme } from './components/vintage/PeacefulLiveWallpaper';
 import { Check } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -23,6 +24,16 @@ export const App: React.FC = () => {
       return saved ? JSON.parse(saved) : null;
     } catch {
       return null;
+    }
+  });
+
+  // Peaceful Live Wallpaper Theme state
+  const [wallpaperTheme, setWallpaperTheme] = useState<WallpaperTheme>(() => {
+    try {
+      const saved = localStorage.getItem('the_i_company_wallpaper') as WallpaperTheme;
+      return saved || 'dawn';
+    } catch {
+      return 'dawn';
     }
   });
 
@@ -239,7 +250,14 @@ export const App: React.FC = () => {
   // If NOT logged in, show the Login Gateway
   // -------------------------------------------------------------
   if (!currentUser) {
-    return <LoginView accounts={accounts} onLogin={handleLogin} />;
+    return (
+      <LoginView 
+        accounts={accounts} 
+        onLogin={handleLogin} 
+        currentWallpaper={wallpaperTheme}
+        onWallpaperChange={setWallpaperTheme}
+      />
+    );
   }
 
   // -------------------------------------------------------------
@@ -249,8 +267,14 @@ export const App: React.FC = () => {
   const activeCreator = influencers.find(i => i.id === currentUser.associatedId) || influencers[0];
 
   return (
-    <div className="min-h-screen bg-transparent text-slate-900 flex flex-col font-sans selection:bg-blue-500/20 selection:text-blue-900">
-      {/* Minimal Vintage Header */}
+    <div className="min-h-screen bg-transparent text-slate-900 flex flex-col font-sans selection:bg-blue-500/20 selection:text-blue-900 relative">
+      {/* Peaceful Live Wallpaper (Light Theme) */}
+      <PeacefulLiveWallpaper 
+        currentTheme={wallpaperTheme} 
+        onThemeChange={setWallpaperTheme} 
+      />
+
+      {/* Weather-Card Style Frosted Glass Header */}
       <VintageHeader
         currentUser={currentUser}
         onLogout={handleLogout}
@@ -259,6 +283,8 @@ export const App: React.FC = () => {
         onOpenCampaignGenerator={() => setIsCampaignGeneratorOpen(true)}
         creatorsCount={influencers.length}
         activeCampaignsCount={campaigns.length}
+        currentWallpaper={wallpaperTheme}
+        onWallpaperChange={setWallpaperTheme}
       />
 
       {/* Main Command Canvas - Scoped by Role */}

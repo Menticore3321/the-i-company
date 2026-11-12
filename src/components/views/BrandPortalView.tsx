@@ -84,20 +84,20 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
         </div>
       </div>
 
-      {/* Brand KPI Strip */}
+      {/* Brand KPI Strip (Weather Card Glassmorphic Pods) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
-          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">ACTIVE CAMPAIGNS</span>
+        <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">ACTIVE CAMPAIGNS</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             {brandCampaigns.length} Active
           </div>
           <span className="text-[11px] text-slate-500 mt-1 block font-mono">Live across India creator networks</span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
-          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">PROJECTED IMPRESSIONS</span>
+        <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">PROJECTED IMPRESSIONS</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             {(totalImpressions / 1000000).toFixed(1)}M
           </div>
@@ -107,18 +107,18 @@ export const BrandPortalView: React.FC<BrandPortalViewProps> = ({
           </span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
-          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">DEPLOYED BUDGET</span>
+        <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">DEPLOYED BUDGET</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
             ₹{(totalSpent / 100000).toFixed(1)} Lakhs
           </div>
           <span className="text-[11px] text-slate-500 mt-1 block font-mono">Contracted across deliverables</span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white/75 border border-white/90 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
-          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-amber-500/35 to-transparent" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-semibold">PENDING REVIEWS</span>
+        <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
+          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block font-bold">PENDING REVIEWS</span>
           <div className="font-sans text-2xl sm:text-3xl font-extrabold text-amber-600 mt-1 tracking-tight">
             {pendingApprovals.length} Drafts
           </div>

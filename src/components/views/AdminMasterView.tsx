@@ -97,84 +97,84 @@ Please sign in and access your designated workspace.`);
 
   return (
     <div className="space-y-6">
-      {/* SECTION 1: EXECUTIVE KEY METRICS STRIP (Light Glass Cards) */}
+      {/* SECTION 1: EXECUTIVE KEY METRICS STRIP (Weather Card Glassmorphic Pods) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Metric 1 */}
-        <div className="p-5 rounded-2xl bg-white/75 backdrop-blur-2xl border border-white/90 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.07)] hover:bg-white/90 transition-all relative overflow-hidden group">
-          <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-blue-500/35 to-transparent absolute top-0 left-0" />
+        <div className="weather-glass-card weather-glass-card-hover rounded-3xl p-5 relative overflow-hidden group">
+          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white to-transparent absolute top-0 left-0 opacity-90" />
           <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span className="font-mono uppercase tracking-wider text-[10px]">MANAGED ROSTER</span>
-            <span className="p-1.5 rounded-xl bg-blue-50 text-blue-600">
+            <span className="font-mono uppercase tracking-wider text-[10px] font-bold">MANAGED ROSTER</span>
+            <span className="p-2 rounded-2xl bg-blue-50/80 border border-blue-200/80 text-blue-600 shadow-xs">
               <Users className="w-4 h-4" />
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 tracking-tight font-sans">
             {influencers.length} Creators
           </div>
-          <div className="flex items-center justify-between text-xs text-slate-500 mt-2.5 pt-2.5 border-t border-slate-100 font-medium">
+          <div className="flex items-center justify-between text-xs text-slate-600 mt-2.5 pt-2.5 border-t border-white/60 font-medium">
             <span>Total Reach:</span>
-            <strong className="text-slate-900 font-mono font-bold">{(totalFollowers / 1000000).toFixed(1)}M</strong>
+            <strong className="text-slate-900 font-mono font-extrabold">{(totalFollowers / 1000000).toFixed(1)}M</strong>
           </div>
         </div>
 
         {/* Metric 2 */}
-        <div className="p-5 rounded-2xl bg-white/75 backdrop-blur-2xl border border-white/90 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.07)] hover:bg-white/90 transition-all relative overflow-hidden group">
-          <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-emerald-500/35 to-transparent absolute top-0 left-0" />
+        <div className="weather-glass-card weather-glass-card-hover rounded-3xl p-5 relative overflow-hidden group">
+          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white to-transparent absolute top-0 left-0 opacity-90" />
           <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span className="font-mono uppercase tracking-wider text-[10px]">COMMERCIAL VOLUME (GMV)</span>
-            <span className="p-1.5 rounded-xl bg-emerald-50 text-emerald-600">
+            <span className="font-mono uppercase tracking-wider text-[10px] font-bold">COMMERCIAL VOLUME (GMV)</span>
+            <span className="p-2 rounded-2xl bg-emerald-50/80 border border-emerald-200/80 text-emerald-600 shadow-xs">
               <DollarSign className="w-4 h-4" />
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-2 tracking-tight font-sans">
             ₹{(financials.totalGMV / 100000).toFixed(1)} Lakhs
           </div>
-          <div className="flex items-center justify-between text-xs text-slate-500 mt-2.5 pt-2.5 border-t border-slate-100 font-medium">
+          <div className="flex items-center justify-between text-xs text-slate-600 mt-2.5 pt-2.5 border-t border-white/60 font-medium">
             <span>Escrow Secured:</span>
-            <strong className="text-emerald-700 font-mono font-bold">₹{(financials.escrowHeld / 100000).toFixed(1)}L</strong>
+            <strong className="text-emerald-700 font-mono font-extrabold">₹{(financials.escrowHeld / 100000).toFixed(1)}L</strong>
           </div>
         </div>
 
         {/* Metric 3 */}
-        <div className="p-5 rounded-2xl bg-white/75 backdrop-blur-2xl border border-white/90 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.07)] hover:bg-white/90 transition-all relative overflow-hidden group">
-          <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-rose-500/35 to-transparent absolute top-0 left-0" />
+        <div className="weather-glass-card weather-glass-card-hover rounded-3xl p-5 relative overflow-hidden group">
+          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white to-transparent absolute top-0 left-0 opacity-90" />
           <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span className="font-mono uppercase tracking-wider text-[10px]">AGENCY REVENUE (20%)</span>
-            <span className="p-1.5 rounded-xl bg-rose-50 text-rose-600">
+            <span className="font-mono uppercase tracking-wider text-[10px] font-bold">AGENCY REVENUE (20%)</span>
+            <span className="p-2 rounded-2xl bg-purple-50/80 border border-purple-200/80 text-purple-600 shadow-xs">
               <TrendingUp className="w-4 h-4" />
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 tracking-tight font-sans">
             ₹{(financials.agencyRevenue / 100000).toFixed(2)} Lakhs
           </div>
-          <div className="flex items-center justify-between text-xs text-slate-500 mt-2.5 pt-2.5 border-t border-slate-100 font-medium">
+          <div className="flex items-center justify-between text-xs text-slate-600 mt-2.5 pt-2.5 border-t border-white/60 font-medium">
             <span>Disbursed to Talent:</span>
-            <strong className="text-slate-900 font-mono font-bold">₹{(financials.creatorsPaid / 100000).toFixed(1)}L</strong>
+            <strong className="text-slate-900 font-mono font-extrabold">₹{(financials.creatorsPaid / 100000).toFixed(1)}L</strong>
           </div>
         </div>
 
         {/* Metric 4 */}
-        <div className="p-5 rounded-2xl bg-white/75 backdrop-blur-2xl border border-white/90 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.07)] hover:bg-white/90 transition-all relative overflow-hidden group">
-          <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-blue-500/35 to-transparent absolute top-0 left-0" />
+        <div className="weather-glass-card weather-glass-card-hover rounded-3xl p-5 relative overflow-hidden group">
+          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white to-transparent absolute top-0 left-0 opacity-90" />
           <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span className="font-mono uppercase tracking-wider text-[10px]">AUTHENTICITY RATING</span>
-            <span className="p-1.5 rounded-xl bg-blue-50 text-blue-600">
+            <span className="font-mono uppercase tracking-wider text-[10px] font-bold">AUTHENTICITY RATING</span>
+            <span className="p-2 rounded-2xl bg-blue-50/80 border border-blue-200/80 text-blue-600 shadow-xs">
               <ShieldCheck className="w-4 h-4" />
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 tracking-tight font-sans">
             {avgAuthenticity}% Authentic
           </div>
-          <div className="flex items-center justify-between text-xs text-slate-500 mt-2.5 pt-2.5 border-t border-slate-100 font-medium">
+          <div className="flex items-center justify-between text-xs text-slate-600 mt-2.5 pt-2.5 border-t border-white/60 font-medium">
             <span>Bot Shield Verification:</span>
-            <span className="text-emerald-700 font-bold text-[11px] font-mono">ACTIVE</span>
+            <span className="text-emerald-700 font-extrabold text-[11px] font-mono">ACTIVE</span>
           </div>
         </div>
       </div>
 
-      {/* SECTION 2: ADMIN NAVIGATION TABS (Light Frosted Pill Bar) */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-2 border-b border-slate-200/80">
-        <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-slate-200/60 backdrop-blur-md border border-white/80 overflow-x-auto max-w-full shadow-inner">
+      {/* SECTION 2: ADMIN NAVIGATION TABS (Weather Card Frosted Pill Bar) */}
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-2 border-b border-white/60">
+        <div className="flex items-center gap-1.5 p-1.5 rounded-3xl weather-glass-pod overflow-x-auto max-w-full">
           <button
             onClick={() => setActiveTab('roster')}
             className={`whitespace-nowrap px-4 py-1.5 rounded-xl text-xs transition-all select-none cursor-pointer ${
@@ -277,7 +277,7 @@ Please sign in and access your designated workspace.`);
             </button>
           }
         >
-          {/* Search & Filter Bar */}
+          {/* Search & Filter Bar (Weather Card Sub-Pods) */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-5">
             <div className="relative flex-1">
               <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -286,7 +286,7 @@ Please sign in and access your designated workspace.`);
                 placeholder="Search creator by name or @handle..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white/80 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15 transition-all font-sans shadow-xs"
+                className="w-full pl-10 pr-3.5 py-2.5 rounded-2xl weather-glass-pod focus:bg-white focus:border-blue-500 text-xs text-slate-900 placeholder-slate-400 transition-all font-sans outline-none shadow-xs"
               />
             </div>
 
@@ -294,7 +294,7 @@ Please sign in and access your designated workspace.`);
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-3.5 py-2.5 rounded-xl bg-white/80 border border-slate-200 text-xs text-slate-800 font-semibold focus:outline-none focus:border-blue-500 shadow-xs"
+                className="px-3.5 py-2.5 rounded-2xl weather-glass-pod text-xs text-slate-800 font-bold focus:outline-none focus:border-blue-500 shadow-xs"
               >
                 <option value="all">All Categories</option>
                 <option value="Tech & AI">Tech & AI</option>
@@ -308,7 +308,7 @@ Please sign in and access your designated workspace.`);
               <select
                 value={selectedTier}
                 onChange={(e) => setSelectedTier(e.target.value)}
-                className="px-3.5 py-2.5 rounded-xl bg-white/80 border border-slate-200 text-xs text-slate-800 font-semibold focus:outline-none focus:border-blue-500 shadow-xs"
+                className="px-3.5 py-2.5 rounded-2xl weather-glass-pod text-xs text-slate-800 font-bold focus:outline-none focus:border-blue-500 shadow-xs"
               >
                 <option value="all">All Tiers</option>
                 <option value="Mega">Mega (1M+)</option>
@@ -318,26 +318,26 @@ Please sign in and access your designated workspace.`);
             </div>
           </div>
 
-          {/* Table */}
-          <div className="overflow-x-auto rounded-2xl border border-slate-200/90 bg-white/80 shadow-xs">
+          {/* Table (Weather Glass Pod Container) */}
+          <div className="overflow-x-auto rounded-3xl weather-glass-pod shadow-xs">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-50/90 text-slate-500 border-b border-slate-200/80 text-[11px] font-mono uppercase tracking-wider">
-                  <th className="py-3.5 px-4 font-semibold">Creator</th>
-                  <th className="py-3.5 px-4 font-semibold">Niche / Tier</th>
-                  <th className="py-3.5 px-4 font-semibold">Followers</th>
-                  <th className="py-3.5 px-4 font-semibold">ER% / Auth</th>
-                  <th className="py-3.5 px-4 font-semibold">Rate Card</th>
-                  <th className="py-3.5 px-4 font-semibold">Trajectory</th>
-                  <th className="py-3.5 px-4 font-semibold text-right">Audit</th>
+                <tr className="bg-white/40 text-slate-600 border-b border-white/60 text-[11px] font-mono uppercase tracking-wider">
+                  <th className="py-3.5 px-4 font-bold">Creator</th>
+                  <th className="py-3.5 px-4 font-bold">Niche / Tier</th>
+                  <th className="py-3.5 px-4 font-bold">Followers</th>
+                  <th className="py-3.5 px-4 font-bold">ER% / Auth</th>
+                  <th className="py-3.5 px-4 font-bold">Rate Card</th>
+                  <th className="py-3.5 px-4 font-bold">Trajectory</th>
+                  <th className="py-3.5 px-4 font-bold text-right">Audit</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 text-xs">
+              <tbody className="divide-y divide-white/50 text-xs">
                 {filteredInfluencers.map((inf) => (
                   <tr
                     key={inf.id}
                     onClick={() => onSelectInfluencer(inf)}
-                    className="hover:bg-blue-50/40 cursor-pointer transition-colors group"
+                    className="hover:bg-white/60 cursor-pointer transition-colors group"
                   >
                     <td className="py-3.5 px-4">
                       <div className="flex items-center gap-3">

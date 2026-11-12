@@ -99,10 +99,10 @@ export const VintageAudienceMatrix: React.FC = () => {
               <button
                 key={hub.id}
                 onClick={() => setSelectedHub(hub)}
-                className={`p-4 rounded-2xl text-left transition-all border relative overflow-hidden group cursor-pointer ${
+                className={`p-4 rounded-3xl text-left transition-all border relative overflow-hidden group cursor-pointer ${
                   isSelected
-                    ? 'bg-blue-50/80 border-blue-400/90 shadow-[0_4px_20px_rgba(37,99,235,0.12)]'
-                    : 'bg-white/80 border-slate-200/80 hover:border-blue-300 hover:bg-white shadow-xs'
+                    ? 'bg-blue-50/90 border-blue-400 shadow-[0_4px_20px_rgba(37,99,235,0.15)]'
+                    : 'weather-glass-pod hover:bg-white/80'
                 }`}
               >
                 {isSelected && (
@@ -110,19 +110,19 @@ export const VintageAudienceMatrix: React.FC = () => {
                 )}
                 <div className="flex items-start justify-between">
                   <div>
-                    <h4 className="font-sans text-base font-bold text-slate-900 tracking-tight">{hub.city}</h4>
+                    <h4 className="font-sans text-base font-extrabold text-slate-900 tracking-tight">{hub.city}</h4>
                     <span className="text-[11px] text-slate-500 font-sans block mt-0.5 font-medium">{hub.region}</span>
                   </div>
                   <span className={`text-xs font-mono font-bold px-2.5 py-0.5 rounded-full ${
                     isSelected 
                       ? 'bg-blue-600 text-white shadow-xs' 
-                      : 'bg-slate-100 text-slate-700 border border-slate-200'
+                      : 'bg-white/70 text-slate-700 border border-white'
                   }`}>
                     {hub.reach}
                   </span>
                 </div>
 
-                <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <div className="mt-3 pt-3 border-t border-white/60 flex items-center justify-between text-xs text-slate-500 font-medium">
                   <span>{hub.creators} Active Creators</span>
                   <span className="font-bold text-emerald-700 flex items-center gap-1 font-mono">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -135,8 +135,8 @@ export const VintageAudienceMatrix: React.FC = () => {
         </div>
 
         {/* Selected Hub Deep Dive Card (1 col) */}
-        <div className="p-5 rounded-2xl bg-white/85 border border-white/90 flex flex-col justify-between relative overflow-hidden backdrop-blur-xl shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04),0_0_0_1px_rgba(255,255,255,0.8)_inset]">
-          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
+        <div className="p-5 rounded-3xl weather-glass-card weather-glass-card-hover flex flex-col justify-between relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <span className="font-mono text-[10px] tracking-widest text-slate-400 uppercase font-bold">TERRITORY PROFILE</span>

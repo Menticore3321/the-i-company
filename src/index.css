@@ -45,21 +45,63 @@
   background: rgba(148, 163, 184, 0.9);
 }
 
-/* Light Glassmorphic Layer Utilities */
-.light-glass {
-  background: rgba(255, 255, 255, 0.72);
+/* Weather Card & Peaceful Live Wallpaper Glassmorphic Utilities */
+.weather-glass-card {
+  background: rgba(255, 255, 255, 0.48);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 
+    0 20px 60px -15px rgba(15, 23, 42, 0.08), 
+    0 0 0 1px rgba(255, 255, 255, 0.5),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.95), 
+    inset 0 -1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.weather-glass-card-hover {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.weather-glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.62);
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    0 25px 70px -15px rgba(15, 23, 42, 0.12),
+    inset 0 2px 2px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.weather-glass-pod {
+  background: rgba(255, 255, 255, 0.42);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 
+    0 4px 20px rgba(15, 23, 42, 0.03), 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.weather-glass-pod:hover {
+  background: rgba(255, 255, 255, 0.60);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Light Glassmorphic Layer Utilities (Backwards Compatibility) */
+.light-glass {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 12px 35px -5px rgba(15, 23, 42, 0.05), inset 0 1.5px 1px rgba(255, 255, 255, 0.9);
 }
 
 .light-glass-elevated {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(24px) saturate(190%);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.07), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 22px 50px -10px rgba(15, 23, 42, 0.08), inset 0 2px 1.5px rgba(255, 255, 255, 0.95);
 }
 
 /* Luminous specular edge glint */
@@ -74,6 +116,85 @@
   left: 0;
   right: 0;
   height: 1.5px;
-  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.35), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
   pointer-events: none;
+}
+
+/* Peaceful Live Wallpaper Ambient Animations */
+@keyframes peacefulOrb1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(80px, -60px) scale(1.12);
+  }
+  66% {
+    transform: translate(-50px, 70px) scale(0.92);
+  }
+}
+
+@keyframes peacefulOrb2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(-90px, 80px) scale(1.18);
+  }
+  66% {
+    transform: translate(70px, -50px) scale(0.88);
+  }
+}
+
+@keyframes peacefulOrb3 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(60px, 90px) scale(1.15);
+  }
+}
+
+@keyframes peacefulMote {
+  0% {
+    transform: translateY(100vh) translateX(0px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  85% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-10vh) translateX(35px);
+    opacity: 0;
+  }
+}
+
+@keyframes peacefulSkyDrift {
+  0% {
+    transform: scale(1.02) translate(0%, 0%);
+  }
+  50% {
+    transform: scale(1.06) translate(-1%, -1.5%);
+  }
+  100% {
+    transform: scale(1.02) translate(0%, 0%);
+  }
+}
+
+.animate-peaceful-orb-1 {
+  animation: peacefulOrb1 32s ease-in-out infinite;
+}
+
+.animate-peaceful-orb-2 {
+  animation: peacefulOrb2 42s ease-in-out infinite;
+}
+
+.animate-peaceful-orb-3 {
+  animation: peacefulOrb3 38s ease-in-out infinite;
+}
+
+.animate-peaceful-sky {
+  animation: peacefulSkyDrift 60s ease-in-out infinite alternate;
 }
